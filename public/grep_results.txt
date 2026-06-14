@@ -1,0 +1,32 @@
+
+index.html:369:                    <a href="index.html" class="logo">
+accessories\index.html:332:        <a href="" target="_blank" title="JBL">
+accessories\index.html:335:        <a href="" target="_blank" title="SONY">
+accessories\index.html:339:        <a href="" target="_blank" title="Soundcore">
+accessories\index.html:342:        <a href="" target="_blank" title="Anker">
+accessories\index.html:345:            <a href="" target="_blank" title="Logitech">
+accessories\index.html:348:            <a href="" target="_blank" title="TP Link">
+contact\contact.html:312:                    <li>Email: <a href="mailto:info@techcity.com">info@techcity.com</a></li>
+printers\index.html:332:        <a href="" target="_blank" title="JBL">
+printers\index.html:335:        <a href="" target="_blank" title="SONY">
+printers\index.html:339:        <a href="" target="_blank" title="Soundcore">
+printers\index.html:342:        <a href="" target="_blank" title="Anker">
+printers\index.html:345:            <a href="" target="_blank" title="Logitech">
+printers\index.html:348:            <a href="" target="_blank" title="TP Link">
+register\index.html:133:        <span>Already have an account? <a href="login.html">Login</a></span>
+shop\index.html:336:        <a href="" target="_blank" title="JBL">
+shop\index.html:340:        <a href="" target="_blank" title="SONY">
+shop\index.html:344:        <a href="" target="_blank" title="Soundcore">
+shop\index.html:348:        <a href="" target="_blank" title="Anker">
+shop\index.html:352:        <a href="" target="_blank" title="Logitech">
+shop\index.html:356:        <a href="" target="_blank" title="TP Link">
+shop\index.html:495:                    <a href="index.html" class="logo">
+smartphones\index.html:335:        <a href="" target="_blank" title="SAMSUNG">
+smartphones\index.html:338:        <a href="" target="_blank" title="REDMI">
+smartphones\index.html:342:        <a href="" target="_blank" title="">
+smartphones\index.html:345:         <a href="" target="_blank" title="INFINIX">
+smartphones\index.html:348:         <a href="" target="_blank" title="ITEL">
+smartphones\index.html:351:          <a href="" target="_blank" title="OPPO">
+smartphones\index.html:354:         <a href="" target="_blank" title="HUAWEI">
+
+

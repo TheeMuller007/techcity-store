@@ -1,0 +1,20 @@
+<svg id="techcity-logo" width="180" viewBox="0 0 180 80" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Buildings -->
+  <path d="M20 70 L20 25 L35 10 L50 25 L50 70 Z" fill="#FF7F27"></path>
+  <rect x="55" y="35" width="15" height="35" fill="#00AEEF"></rect>
+  <rect x="75" y="45" width="12" height="25" fill="#00AEEF"></rect>
+
+  <!-- Cable -->
+  <path id="cable-path" d="M10 60 
+           C40 55, 70 55, 95 60
+           C115 63, 130 63, 150 50" stroke="#000" stroke-width="4" fill="none"></path>
+
+  <!-- Plug -->
+  <path d="M150 50 L160 45 L165 55 L155 60 Z" fill="#000"></path>
+
+  <!-- Text -->
+  <text x="80" y="30" font-family="Arial" font-size="20" fill="#009FE3">Tech</text>
+  <text x="130" y="30" font-family="Arial" font-size="20" fill="#F26522">City</text>
+
+</svg>

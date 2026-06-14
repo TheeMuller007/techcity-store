@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | TECH CITY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../styles/dashboard.css">
+  <link rel="stylesheet" href="../../styles/dashboard-mobile.css?v=13" media="(max-width: 767px)">
+  <style>
+    /* Ã¢â€â‚¬Ã¢â€â‚¬ Admin-specific overrides Ã¢â€â‚¬Ã¢â€â‚¬ */
+    :root {
+      --admin-accent: #6366f1;
+      --admin-accent-glow: rgba(99,102,241,0.25);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+    }
+
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Sidebar nav active override */
+    .nav-item.active { color: var(--admin-accent); border-left-color: var(--admin-accent); }
+
+    /* Stat cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; margin-bottom: 28px; }
+    .stat-card { background: var(--card-bg, #fff); border-radius: 14px; padding: 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--border-color, #e5e7eb); transition: transform .2s; }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .stat-icon.primary { background: rgba(99,102,241,0.15); color: var(--admin-accent); }
+    .stat-icon.success { background: rgba(16,185,129,0.15); color: var(--success); }
+    .stat-icon.warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+    .stat-icon.danger  { background: rgba(239,68,68,0.15);  color: var(--danger); }
+    .stat-icon.info    { background: rgba(59,130,246,0.15); color: var(--info); }
+    .stat-details h3 { font-size: 0.78rem; color: var(--text-secondary, #6b7280); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 4px; }
+    .stat-details p  { font-size: 1.6rem; font-weight: 700; margin: 0; color: var(--text-primary, #111); }
+
+    /* Users grid */
+    .users-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .user-card {
+      background: var(--card-bg, #fff);
+      border-radius: 16px;
+      border: 1px solid var(--border-color, #e5e7eb);
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .user-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+    .user-card-header {
+      background: linear-gradient(135deg, var(--admin-accent), #818cf8);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .user-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.4);
+      object-fit: cover;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+    .user-avatar-placeholder {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .user-header-info h3 { color: #fff; margin: 0; font-size: 1rem; font-weight: 600; }
+    .user-header-info p  { color: rgba(255,255,255,0.75); margin: 2px 0 0; font-size: 0.8rem; }
+    .user-badge { display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
+    .badge-admin { background: rgba(255,215,0,0.3); color: #ffd700; }
+    .badge-user  { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); }
+
+    .user-card-body { padding: 16px; }
+    .user-info-row { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; color: var(--text-secondary, #6b7280); margin-bottom: 8px; }
+    .user-info-row i { width: 16px; color: var(--admin-accent); }
+    .user-info-row span { color: var(--text-primary, #111); font-weight: 500; }
+
+    .section-divider { border: none; border-top: 1px solid var(--border-color, #e5e7eb); margin: 12px 0; }
+
+    .mini-badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .mini-badge { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; }
+    .mini-badge.cart    { background: rgba(59,130,246,0.12); color: var(--info); }
+    .mini-badge.wishlist{ background: rgba(239,68,68,0.12);  color: var(--danger); }
+    .mini-badge.orders  { background: rgba(16,185,129,0.12); color: var(--success); }
+
+    .expand-btn {
+      width: 100%; padding: 8px;
+      background: none; border: 1px solid var(--border-color, #e5e7eb);
+      border-radius: 8px; cursor: pointer; font-size: 0.8rem;
+      color: var(--text-secondary, #6b7280); transition: all .2s;
+    }
+    .expand-btn:hover { background: var(--admin-accent); color: #fff; border-color: var(--admin-accent); }
+
+    .user-details-panel {
+      display: none;
+      margin-top: 10px;
+      border-top: 1px solid var(--border-color, #e5e7eb);
+      padding-top: 10px;
+    }
+    .user-details-panel.open { display: block; }
+    .user-details-panel h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-secondary, #6b7280); margin: 8px 0 6px; }
+    .detail-item { font-size: 0.8rem; color: var(--text-primary, #111); padding: 4px 0; border-bottom: 1px dashed var(--border-color, #e5e7eb); display: flex; justify-content: space-between; }
+    .detail-item:last-child { border-bottom: none; }
+    .empty-detail { font-size: 0.78rem; color: var(--text-secondary, #6b7280); font-style: italic; }
+
+    /* Refresh indicator */
+    .refresh-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary, #6b7280); }
+    .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.3); } }
+
+    /* Section header */
+    .section-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .section-top h2 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+
+    /* Search */
+    .search-input-admin {
+      padding: 8px 14px; border-radius: 8px;
+      border: 1px solid var(--border-color, #e5e7eb);
+      background: var(--card-bg, #fff); color: var(--text-primary, #111);
+      font-size: 0.85rem; width: 220px; outline: none;
+    }
+    .search-input-admin:focus { border-color: var(--admin-accent); box-shadow: 0 0 0 3px var(--admin-accent-glow); }
+
+    /* Dashboard sections */
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+
+    /* Sidebar nav active item */
+    .sidebar-nav .nav-item { cursor: pointer; display: flex; align-items: center; gap: 10px; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #1e1e2e; color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 0.85rem; z-index: 9999; animation: slideUp .3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Draggable rows */
+    .product-row { transition: background 0.2s; }
+    .product-row.dragging { opacity: 0.5; background: #f1f5f9; border: 2px dashed var(--admin-accent); }
+    .drag-handle { color: #94a3b8; padding-right: 10px; cursor: grab; }
+    .drag-handle:active { cursor: grabbing; }
+    .category-header-row { pointer-events: auto; } /* MUST allow pointer events for dragover */
+    .category-header-row.drag-over { background: #f1f5f9 !important; border-top: 2px solid var(--admin-accent) !important; }
+  </style>
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+  <div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header" style="justify-content: center; padding: 0;">
+        <a href="/" class="logo">
+            <img src="../../images/techcity1.jpg" alt="Logo" class="logo-icon">
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-section="overview" onclick="switchSection('overview', this)">
+          <i class="fas fa-home"></i> Overview
+        </a>
+        <a class="nav-item" data-section="users" onclick="switchSection('users', this)">
+          <i class="fas fa-users"></i> All Users
+        </a>
+        <a class="nav-item" data-section="carts" onclick="switchSection('carts', this)">
+          <i class="fas fa-shopping-cart"></i> Cart Activity
+        </a>
+        <a class="nav-item" data-section="wishlists" onclick="switchSection('wishlists', this)">
+          <i class="fas fa-heart"></i> Wishlists
+        </a>
+        <a class="nav-item" data-section="orders" onclick="switchSection('orders', this)">
+          <i class="fas fa-box"></i> Orders
+        </a>
+        <a class="nav-item" data-section="products" onclick="switchSection('products', this); fetchProductsAdmin();">
+          <i class="fas fa-tag"></i> Products
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/index.html" class="nav-item"><i class="fas fa-home"></i> Back to Site</a>
+        <a href="#" class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+          <div class="page-title" id="page-title">Admin Overview</div>
+        </div>
+        <div class="header-right">
+          <div class="refresh-indicator">
+            <div class="pulse-dot"></div>
+            <span id="last-refresh">LoadingÃ¢â‚¬Â¦</span>
+          </div>
+          <button class="theme-toggle-btn" id="themeToggle" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="user-profile">
+            <img src="../../images/techcity1.jpg" alt="Admin" id="admin-avatar">
+            <span id="admin-name">Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-area">
+
+        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ OVERVIEW SECTION Ã¢â€â‚¬Ã¢â€â‚¬ -->
+        <div id="section-overview" class="admin-section active">
+          <div class="welcome-banner">
+            <h1>Welcome back, <span id="admin-welcome-name">Admin</span>!</h1>
+            <p>Here is a live snapshot of your store right now.</p>
+          </div>
+
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon primary"><i class="fas fa-users"></i></div>
+              <div class="stat-details"><h3>Total Users</h3><p id="stat-total-users">Ã¢â‚¬â€</p></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon info"><i class="fas fa-shopping-cart"></i></div>
+              <div class="stat-details"><h3>Active Carts</h3><p id="stat-active-carts">Ã¢â‚¬â€</p></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon danger"><i class="fas fa-heart"></i></div>
+              <div class="stat-details"><h3>Wishlist Items</h3><p id="stat-wishlist-items">Ã¢â‚¬â€</p></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon success"><i class="fas fa-user-shield"></i></div>
+              <div class="stat-details"><h3>Admins</h3><p id="stat-admins">Ã¢â‚¬â€</p></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon warning"><i class="fas fa-user-check"></i></div>
+              <div class="stat-details"><h3>With Profile Pic</h3><p id="stat-profile-pics">Ã¢â‚¬â€</p></div>
+            </div>
+          </div>
+
+          <!-- Recent users table -->
+          <div class="table-container">
+            <div class="table-header">
+              <h3>Registered Users</h3>
+              <button class="btn btn-primary" onclick="switchSection('users', document.querySelector('[data-section=users]'))">View All</button>
+            </div>
+            <div class="table-scroll">
+              <table id="overview-users-table">
+                <thead>
+                  <tr>
+                    <th>Avatar</th><th>Username</th><th>Email</th><th>Role</th>
+                    <th>Cart Items</th><th>Wishlist</th><th>Joined</th>
+                  </tr>
+                </thead>
+                <tbody id="overview-table-body">
+                  <tr><td colspan="7" style="text-align:center; padding:20px; color:#6b7280;">Loading usersÃ¢â‚¬Â¦</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ ALL USERS SECTION Ã¢â€â‚¬Ã¢â€â‚¬ -->
+        <div id="section-users" class="admin-section">
+          <div class="section-top">
+            <h2><i class="fas fa-users" style="color:var(--admin-accent)"></i> All Users</h2>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <input type="search" id="user-search" class="search-input-admin" placeholder="Search usersÃ¢â‚¬Â¦" oninput="filterUsers()">
+              <button class="btn btn-primary" onclick="fetchUsers()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+          </div>
+          <div class="users-grid" id="users-grid">
+            <p style="color:#6b7280;">Loading usersÃ¢â‚¬Â¦</p>
+          </div>
+        </div>
+
+        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ CART ACTIVITY SECTION Ã¢â€â‚¬Ã¢â€â‚¬ -->
+        <div id="section-carts" class="admin-section">
+          <div class="section-top">
+            <h2><i class="fas fa-shopping-cart" style="color:var(--info)"></i> Cart Activity</h2>
+            <button class="btn btn-primary" onclick="fetchUsers()"><i class="fas fa-sync-alt"></i> Refresh</button>
+          </div>
+          <div class="table-container">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr><th>Avatar</th><th>User</th><th>Items in Cart</th><th>Cart Value</th><th>Top Item</th></tr>
+                </thead>
+                <tbody id="carts-table-body">
+                  <tr><td colspan="5" style="text-align:center;padding:20px;color:#6b7280;">LoadingÃ¢â‚¬Â¦</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ WISHLISTS SECTION Ã¢â€â‚¬Ã¢â€â‚¬ -->
+        <div id="section-wishlists" class="admin-section">
+          <div class="section-top">
+            <h2><i class="fas fa-heart" style="color:var(--danger)"></i> Wishlists</h2>
+            <button class="btn btn-primary" onclick="fetchUsers()"><i class="fas fa-sync-alt"></i> Refresh</button>
+          </div>
+          <div class="table-container">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr><th>Avatar</th><th>User</th><th>Wishlist Items</th><th>Top Wished</th></tr>
+                </thead>
+                <tbody id="wishlists-table-body">
+                  <tr><td colspan="4" style="text-align:center;padding:20px;color:#6b7280;">LoadingÃ¢â‚¬Â¦</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ ORDERS SECTION Ã¢â€â‚¬Ã¢â€â‚¬ -->
+        <div id="section-orders" class="admin-section">
+          <div class="section-top">
+            <h2><i class="fas fa-box" style="color:var(--success)"></i> Order Management</h2>
+            <button class="btn btn-primary" onclick="fetchOrders()"><i class="fas fa-sync-alt"></i> Refresh</button>
+          </div>
+          <div class="table-container">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr><th>Order ID</th><th>User</th><th>Total</th><th>Status</th><th>Date</th><th>Action</th></tr>
+                </thead>
+                <tbody id="orders-table-body">
+                  <tr><td colspan="6" style="text-align:center;padding:20px;color:#6b7280;">Loading ordersÃ¢â‚¬Â¦</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ PRODUCTS SECTION Ã¢â€â‚¬Ã¢â€â‚¬ -->
+        <div id="section-products" class="admin-section">
+          <div class="section-top">
+            <h2><i class="fas fa-tag" style="color:var(--admin-accent)"></i> Product Management</h2>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-primary" onclick="openProductModal()"><i class="fas fa-plus"></i> Add Product</button>
+              <button class="btn btn-secondary" onclick="fetchProductsAdmin()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+            <input type="text" id="prodSearch" placeholder="Search products..." oninput="filterProducts()" style="padding:8px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:0.85rem;min-width:200px;outline:none;">
+            <select id="prodCategoryFilter" onchange="filterProducts()" style="padding:8px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:0.85rem;outline:none;">
+              <option value="">All Categories</option>
+              <option value="laptops">Laptops</option>
+              <option value="smartphones">Smartphones</option>
+              <option value="accessories">Accessories</option>
+              <option value="Printers">Printers</option>
+              <option value="bags">Bags</option>
+            </select>
+          </div>
+          <div class="table-container">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr><th>ID</th><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Action</th></tr>
+                </thead>
+                <tbody id="products-table-body">
+                  <tr><td colspan="7" style="text-align:center;padding:20px;color:#6b7280;">Loading productsÃ¢â‚¬Â¦</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /content-area -->
+    </main>
+  </div>
+
+  <!-- Product Modal -->
+  <div id="productModal" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative;">
+        <button type="button" onclick="closeProductModal()" style="position: absolute; right: 20px; top: 20px; background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer; color: #6b7280; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.1)';this.style.color='#111'" onmouseout="this.style.background='rgba(0,0,0,0.05)';this.style.color='#6b7280'"><i class="fas fa-times"></i></button>
+        <h2 id="productModalTitle" style="margin-bottom: 20px;">Add New Product</h2>
+        <form id="productForm" onsubmit="saveProduct(event)">
+            <input type="hidden" id="editProductId">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Product Name</label>
+                <input type="text" id="prodName" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Category</label>
+                    <select id="prodCategory" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                        <option value="laptops">Laptops</option>
+                        <option value="smartphones">Smartphones</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="Printers">Printers</option>
+                        <option value="bags">Bags</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Price ($)</label>
+                    <input type="number" step="0.01" id="prodPrice" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Stock Quantity</label>
+                    <input type="number" id="prodStock" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Rating (1-5)</label>
+                    <input type="number" step="0.1" min="1" max="5" id="prodRating" value="5" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">Product Images</label>
+                <div style="display: grid; gap: 10px;">
+                    <!-- Multiple File Upload -->
+                    <div style="background: #f8fafc; border: 2px dashed #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; position: relative; transition: all 0.2s; cursor: pointer;" 
+                         onmouseover="this.style.borderColor='#6366f1';this.style.background='#f5f7ff'" 
+                         onmouseout="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'"
+                         onclick="document.getElementById('prodImageFile').click()">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 1.5rem; color: #6366f1; margin-bottom: 8px;"></i>
+                        <p style="font-size: 0.8rem; color: #64748b; margin: 0;">Click to upload multiple images</p>
+                        <input type="file" id="prodImageFile" multiple accept="image/*" onchange="handleImageUpload(event)" style="display: none;">
+                    </div>
+                    
+                    <!-- URL Input for Remote Images -->
+                    <div style="position: relative;">
+                        <textarea id="prodImage" placeholder="Or enter image URLs (one per line)" rows="3" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.85rem; font-family: monospace;" oninput="updateImageGallery()"></textarea>
+                        <small style="color: #94a3b8; font-size: 0.75rem;">Tip: You can mix uploaded files and external URLs.</small>
+                    </div>
+
+                    <!-- Multi-Image Gallery Preview -->
+                    <div id="imageGalleryPreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <!-- Previews will be injected here -->
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Description</label>
+                <textarea id="prodDescription" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;"></textarea>
+            </div>
+            <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px; background: #f0f4ff; padding: 12px; border-radius: 8px; border: 1px solid #d0dfff;">
+                <input type="checkbox" id="prodIsFeatured" style="width: 18px; height: 18px; cursor: pointer;">
+                <label for="prodIsFeatured" style="font-size: 0.9rem; cursor: pointer; font-weight: 600; color: #1e40af;">Feature this product on homepage</label>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Badge (Optional, e.g., 'New', 'Sale')</label>
+                <input type="text" id="prodBadge" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.85rem; margin-bottom: 5px;">Specifications (Optional, comma-separated)</label>
+                <textarea id="prodSpecs" rows="3" placeholder="e.g. 16GB RAM, 512GB SSD, Intel Core i7" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;"></textarea>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="closeProductModal()" class="btn btn-secondary" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-weight: 600;">Cancel</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1; padding: 12px; border-radius: 8px; border: none; background: #6366f1; color: white; cursor: pointer; font-weight: 600;">Save Product</button>
+            </div>
+        </form>
+    </div>
+  </div>
+
+  <nav class="app-tab-bar" id="appTabBar" aria-label="Admin navigation">
+    <button type="button" class="tab-item active" data-section="overview" aria-label="Overview">
+      <i class="fas fa-chart-pie"></i>
+      <span>Home</span>
+    </button>
+    <button type="button" class="tab-item" data-section="orders" aria-label="Orders">
+      <i class="fas fa-box"></i>
+      <span>Orders</span>
+    </button>
+    <button type="button" class="tab-item" data-section="users" aria-label="Users">
+      <i class="fas fa-users"></i>
+      <span>Users</span>
+    </button>
+    <button type="button" class="tab-item" data-section="products" aria-label="Products">
+      <i class="fas fa-tag"></i>
+      <span>Products</span>
+    </button>
+    <button type="button" class="tab-item tab-item--menu" data-section="menu" aria-label="More">
+      <i class="fas fa-grip"></i>
+      <span>More</span>
+    </button>
+  </nav>
+
+  <script src="../../scripts/config.js"></script>
+  <script src="../../scripts/auth.js"></script>
+  <script src="../dashboard-mobile.js"></script>
+  <script src="./scripts/admin.js?v=5"></script>
+
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+    <script src="/scripts/bot.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

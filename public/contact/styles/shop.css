@@ -1,0 +1,208 @@
+/* Shop Page Styles */
+.shop-layout {
+    padding: 2rem 0;
+    min-height: calc(100vh - 4rem);
+}
+
+.shop-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .shop-content-wrapper {
+        grid-template-columns: 280px 1fr;
+    }
+}
+
+.shop-sidebar {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    height: fit-content;
+    position: sticky;
+    top: 5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+.shop-sidebar:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+@media (max-width: 1023px) {
+    .shop-sidebar {
+        position: static;
+    }
+}
+
+.sidebar-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.1); /* Subtle background for sections */
+    transition: background 0.3s; /* Smooth transition */
+}
+
+.sidebar-section:hover {
+    background: rgba(255, 255, 255, 0.2); /* Highlight on hover */
+}
+
+.sidebar-title {
+    font-size: 1.2rem; /* Increased font size */
+    font-weight: 700; /* Bolder font */
+    margin-bottom: 1rem;
+    color: var(--primary); /* Color variable for titles */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Slight letter spacing */
+}
+
+.filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.filter-item {
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+/* Clickable box styles */
+.filter-item a {
+    text-decoration: none; /* Remove underline */
+    color: var(--text-color); /* Use variable for text color */
+    padding: 0.5rem 1rem; /* Add padding for better click area */
+    border-radius: var(--radius); /* Rounded corners */
+    transition: background 0.3s, color 0.3s; /* Smooth transitions */
+    position: relative; /* For pseudo-elements */
+    display: flex; /* Use flexbox for uniform size */
+    justify-content: center; /* Center text */
+    align-items: center; /* Center text vertically */
+    width: 100%; /* Full width */
+    min-width: 150px; /* Minimum width for uniformity */
+    height: 40px; /* Fixed height for uniform boxes */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+.filter-item a:hover {
+    background: rgba(0, 0, 0, 0.1); /* Light background on hover */
+    color: var(--primary); /* Change text color on hover */
+}
+
+/* Removed underline effect */
+/* .filter-item a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--primary); /* Underline effect */
+    transition: width 0.3s ease; /* Smooth underline effect */
+} */
+
+/* .filter-item a:hover::after {
+    width: 100%; /* Full width on hover */
+} */
+
+.price-range {
+    padding: 0.5rem 0;
+}
+
+.price-range input[type="range"] {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.price-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.shop-main {
+    flex: 1;
+}
+
+.shop-header {
+    margin-bottom: 2rem;
+}
+
+.shop-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+}
+
+.shop-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .shop-controls {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.search-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-wrapper svg {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+}
+
+.search-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.select-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+    background: var(--background);
+    cursor: pointer;
+    min-width: 200px;
+}
+
+.select-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}
+
+.pagination .btn {
+    min-width: auto;
+    padding: 0.5rem 1rem;
+}
+
+.product-specs-overlay { display: none !important; }

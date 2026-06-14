@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | TECH CITY</title>
+    <meta name="description" content="Complete your order securely at TECH CITY.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles/checkout.css">
+</head>
+<body>
+
+<!-- Progress Header -->
+<header class="co-header">
+    <div class="co-header-inner">
+        <a href="/index.html" class="co-logo">
+            <img src="/images/techcity1.jpg" alt="TECH CITY" class="co-logo-img">
+        </a>
+        <div class="co-steps">
+            <div class="co-step active" id="step1">
+                <div class="co-step-bubble">1</div>
+                <span>Delivery</span>
+            </div>
+            <div class="co-step-line"></div>
+            <div class="co-step" id="step2">
+                <div class="co-step-bubble">2</div>
+                <span>Shipping</span>
+            </div>
+            <div class="co-step-line"></div>
+            <div class="co-step" id="step3">
+                <div class="co-step-bubble">3</div>
+                <span>Payment</span>
+            </div>
+        </div>
+        <a href="/dashboards/user/index.html" class="co-user-link" title="My Account">
+            <i class="fas fa-user-circle"></i>
+        </a>
+    </div>
+</header>
+
+<main class="co-main">
+    <div class="co-layout">
+
+        <!-- LEFT: Form -->
+        <div class="co-form-col">
+            <form id="checkoutForm" novalidate>
+
+                <!-- STEP 1: Delivery Info -->
+                <div class="co-card co-section" id="section-delivery">
+                    <div class="co-card-header">
+                        <div class="co-section-num">01</div>
+                        <div>
+                            <h2 class="co-section-title">Delivery Information</h2>
+                            <p class="co-section-sub">Where should we send your order?</p>
+                        </div>
+                    </div>
+                    <div class="co-card-body">
+                        <div class="co-grid-2">
+                            <div class="co-field">
+                                <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
+                                <input type="text" id="fullName" required placeholder="John Doe" autocomplete="name">
+                                <span class="co-field-err" id="err-fullName">Please enter your full name</span>
+                            </div>
+                            <div class="co-field">
+                                <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                                <input type="tel" id="phone" required placeholder="+263 7xx xxx xxx" autocomplete="tel">
+                                <span class="co-field-err" id="err-phone">Please enter a valid phone number</span>
+                            </div>
+                        </div>
+                        <div class="co-field mt">
+                            <label for="address"><i class="fas fa-map-marker-alt"></i> Street Address</label>
+                            <input type="text" id="address" required placeholder="123 Tech Lane, Harare" autocomplete="street-address">
+                            <span class="co-field-err" id="err-address">Please enter your address</span>
+                        </div>
+                        <div class="co-grid-2 mt">
+                            <div class="co-field">
+                                <label for="city"><i class="fas fa-city"></i> City</label>
+                                <input type="text" id="city" required placeholder="Harare" autocomplete="address-level2">
+                                <span class="co-field-err" id="err-city">Please enter your city</span>
+                            </div>
+                            <div class="co-field">
+                                <label for="zipCode"><i class="fas fa-mail-bulk"></i> Postal Code <span class="co-optional">(Optional)</span></label>
+                                <input type="text" id="zipCode" placeholder="0000" autocomplete="postal-code">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Delivery Option -->
+                <div class="co-card co-section" id="section-shipping">
+                    <div class="co-card-header">
+                        <div class="co-section-num">02</div>
+                        <div>
+                            <h2 class="co-section-title">Shipping Method</h2>
+                            <p class="co-section-sub">Choose how you want to receive your order</p>
+                        </div>
+                    </div>
+                    <div class="co-card-body">
+                        <div class="co-delivery-options">
+                            <label class="co-delivery-card" id="opt-standard">
+                                <input type="radio" name="deliveryOption" value="Standard" checked>
+                                <div class="co-delivery-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="co-delivery-info">
+                                    <div class="co-delivery-name">Standard Delivery</div>
+                                    <div class="co-delivery-time"><i class="far fa-clock"></i> 2â€“4 Business Days</div>
+                                </div>
+                                <div class="co-delivery-price">$10.00</div>
+                                <div class="co-delivery-check"><i class="fas fa-check-circle"></i></div>
+                            </label>
+
+                            <label class="co-delivery-card" id="opt-express">
+                                <input type="radio" name="deliveryOption" value="Express">
+                                <div class="co-delivery-icon express">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="co-delivery-info">
+                                    <div class="co-delivery-name">Express Delivery <span class="co-badge-fast">FASTEST</span></div>
+                                    <div class="co-delivery-time"><i class="far fa-clock"></i> Same or Next Day</div>
+                                </div>
+                                <div class="co-delivery-price">$25.00</div>
+                                <div class="co-delivery-check"><i class="fas fa-check-circle"></i></div>
+                            </label>
+
+                            <label class="co-delivery-card" id="opt-pickup">
+                                <input type="radio" name="deliveryOption" value="Pickup">
+                                <div class="co-delivery-icon pickup">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <div class="co-delivery-info">
+                                    <div class="co-delivery-name">Store Pickup</div>
+                                    <div class="co-delivery-time"><i class="far fa-clock"></i> Ready in 2 hours</div>
+                                </div>
+                                <div class="co-delivery-price free">Free</div>
+                                <div class="co-delivery-check"><i class="fas fa-check-circle"></i></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Payment -->
+                <div class="co-card co-section" id="section-payment">
+                    <div class="co-card-header">
+                        <div class="co-section-num">03</div>
+                        <div>
+                            <h2 class="co-section-title">Payment Method</h2>
+                            <p class="co-section-sub">All transactions are safe and encrypted</p>
+                        </div>
+                    </div>
+                    <div class="co-card-body">
+                        <div class="co-payment-options">
+                            <label class="co-payment-card active-pay">
+                                <input type="radio" name="paymentMethod" value="Cash" checked>
+                                <div class="co-payment-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="co-payment-info">
+                                    <div class="co-payment-name">Cash on Delivery</div>
+                                    <div class="co-payment-sub">Pay when your order arrives</div>
+                                </div>
+                                <div class="co-payment-check"><i class="fas fa-check-circle"></i></div>
+                            </label>
+
+                            <label class="co-payment-card co-disabled">
+                                <input type="radio" name="paymentMethod" value="Card" disabled>
+                                <div class="co-payment-icon card">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="co-payment-info">
+                                    <div class="co-payment-name">Credit / Debit Card <span class="co-coming-soon">Coming Soon</span></div>
+                                    <div class="co-payment-sub">Visa, Mastercard, and more</div>
+                                </div>
+                            </label>
+
+                            <label class="co-payment-card co-disabled">
+                                <input type="radio" name="paymentMethod" value="EcoCash" disabled>
+                                <div class="co-payment-icon eco">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="co-payment-info">
+                                    <div class="co-payment-name">EcoCash <span class="co-coming-soon">Coming Soon</span></div>
+                                    <div class="co-payment-sub">Mobile money payment</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="co-trust-bar">
+                            <span><i class="fas fa-lock"></i> SSL Secured</span>
+                            <span><i class="fas fa-shield-alt"></i> Buyer Protection</span>
+                            <span><i class="fas fa-undo"></i> Easy Returns</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place Order Button (mobile visible) -->
+                <button type="submit" class="co-place-order-btn" id="placeOrderBtn">
+                    <span id="btn-label"><i class="fas fa-lock"></i> Place Order Securely</span>
+                    <span id="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i> Processingâ€¦</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- RIGHT: Order Summary -->
+        <div class="co-summary-col">
+            <div class="co-summary-card">
+                <div class="co-summary-header">
+                    <h2><i class="fas fa-shopping-bag"></i> Order Summary</h2>
+                    <span id="co-item-count" class="co-item-badge">0 items</span>
+                </div>
+
+                <div id="checkoutItems" class="co-items-list"></div>
+
+                <div class="co-divider"></div>
+
+                <div class="co-totals">
+                    <div class="co-total-row">
+                        <span>Subtotal</span>
+                        <span id="subtotalPrice">$0.00</span>
+                    </div>
+                    <div class="co-total-row">
+                        <span>Shipping</span>
+                        <span id="shippingPrice">$10.00</span>
+                    </div>
+                    <div class="co-total-row">
+                        <span>Tax (10%)</span>
+                        <span id="taxPrice">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="co-total-final">
+                    <span>Total</span>
+                    <span id="totalPrice">$0.00</span>
+                </div>
+
+                <button type="submit" form="checkoutForm" class="co-place-order-btn co-desktop-btn" id="placeOrderBtnDesktop">
+                    <span><i class="fas fa-lock"></i> Place Order Securely</span>
+                </button>
+
+                <p class="co-secure-note">
+                    <i class="fas fa-shield-alt"></i>
+                    Your personal data is protected and will only be used to process your order.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Success Modal -->
+<div id="successModal" class="co-modal" style="display:none;">
+    <div class="co-modal-overlay"></div>
+    <div class="co-modal-box">
+        <div class="co-success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Order Confirmed! ðŸŽ‰</h2>
+        <p>Thank you for your purchase. Your order <strong id="successOrderId"></strong> has been placed and is being processed.</p>
+        <a href="/dashboards/user/index.html" class="co-modal-btn">
+            <i class="fas fa-box"></i> Track My Order
+        </a>
+    </div>
+</div>
+
+<script src="/scripts/config.js"></script>
+<script src="/scripts/auth.js"></script>
+<script src="/scripts/checkout.js"></script>
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+    <script src="/scripts/bot.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,601 @@
+﻿<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop premium laptops, smartphones, and tech accessories at TECH CITY">
+    <title>Shop - TECH CITY</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/shop.css">
+    <link rel="stylesheet" href="/styles/mobile.css?v=13" media="(max-width: 767px)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="images/shop/techcity.jpg" alt="Logo" width="24" height="24" class="logo-icon">
+                <!--<span class="logo-text">TECH CITY</span>-->
+            </a>
+            
+            <nav class="nav" id="mainNav">
+                <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/index.html" class="nav-link active">Home</a>
+                <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/shop/shop.html" class="nav-link">Shop</a>
+                <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/about/about.html" class="nav-link">About</a>
+                <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/contact/contact.html" class="nav-link">Contact</a>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/login/index.html" class="nav-button">Login</a>
+                <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/register/index.html" class="nav-button">Register</a>
+                
+                <button class="icon-btn" id="searchBtn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                
+                <button class="icon-btn" id="cartBtn" aria-label="Shopping cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-badge" id="cartCount">0</span>
+                </button>
+                
+                <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+  <!-- Main Content -->
+<div class="shop-layout">
+    <div class="container">
+        <div class="shop-content-wrapper">
+            <!-- Sidebar -->
+            <aside class="shop-sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Categories</h3>
+                    <div class="filter-list">
+                        <label class="filter-item">
+                            <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/shop/shop.html" data-category="all" onclick="filterProducts('all'); return false;">
+                                All Products
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/Laptops/index.html" data-category="laptops" onclick="filterProducts('laptops'); return false;">
+                                Laptops
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/smartphones/index.html" data-category="smartphones" onclick="filterProducts('smartphones'); return false;">
+                                Smartphones
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/accessories/index.html" data-category="accessories" onclick="filterProducts('accessories'); return false;">
+                                Accessories
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="file:///C:/Users/Clyde/Desktop/TECHCITY/public/printers/index.html" data-category="bags" onclick="filterProducts('bags'); return false;">
+                                Printers
+                            </a>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Price Range</h3>
+                    <div class="price-range">
+                        <input type="range" id="priceRange" min="0" max="3000" value="3000" step="100">
+                        <div class="price-display">
+                            <span>$0</span>
+                            <span id="maxPrice">$3000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Brands</h3>
+                    <div class="filter-list">
+                        <label class="filter-item">
+                            <a href="#" data-brand="dell" onclick="filterBrands('dell'); return false;">
+                                DELL
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="#" data-brand="hp" onclick="filterBrands('hp'); return false;">
+                                HP
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="#" data-brand="lenovo" onclick="filterBrands('lenovo'); return false;">
+                                LENOVO
+                            </a>
+                        </label>
+                        <label class="filter-item">
+                            <a href="#" data-brand="samsung" onclick="filterBrands('samsung'); return false;">
+                                SAMSUNG
+                            </a>
+                        </label>
+                    </div>
+                </div>
+
+        
+    
+                    <button class="btn btn-secondary btn-full" id="clearFilters">Clear Filters</button>
+                </aside>
+
+                <!-- Products -->
+                <main class="shop-main">
+                    <div class="shop-header">
+                        <!--
+                        <h1>All Products</h1>
+                        <div class="shop-controls">
+                            <div class="search-wrapper">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                                <input type="search" placeholder="Search products..." id="shopSearchInput">
+                            </div>
+                            <select id="sortBy" class="select-input">
+                                <option value="featured">Featured</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+                                <option value="rating">Rating: High to Low</option>
+                            </select>
+                        </div>
+                    </div>-->
+
+                    <div class="product-grid" id="allProducts">
+                        <div class="product-item">
+                            <img src="images/laptop.jpg" alt="Premium Laptop" class="product-image">
+                            <h3 class="product-title">Premium Laptop</h3>
+                            <p class="product-price">$999.99</p>
+                        </div>
+                        <div class="product-item">
+                            <img src="images/smartphone.jpg" alt="Smartphone" class="product-image">
+                            <h3 class="product-title">Smartphone</h3>
+                            <p class="product-price">$699.99</p>
+                        </div>
+                        <!-- Add more products as needed -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="btn btn-secondary">Previous</button>
+                        <button class="btn btn-primary">1</button>
+                        <button class="btn btn-secondary">2</button>
+                        <button class="btn btn-secondary">3</button>
+                        <button class="btn btn-secondary">Next</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--QUICKVIEW MODAL SECTION-->
+    <div id="quickViewModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeQuickView()">Ã—</span>
+        <h2 id="modalProductName"></h2>
+        <img id="modalProductImage" src="" alt="" />
+        <div id="modalProductDetails"></div>
+        <button class="btn btn-primary" onclick="addToCart(modalProductId)">Add to Cart</button>
+    </div>
+</div>
+
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+    <div class="footer-content">
+        <div class="footer-section">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                <span class="logo-text">TECH CITY</span>
+            </div>
+            <p class="footer-description">Your trusted destination for premium tech products and accessories.</p>
+
+            <div class="footer-section social-icons">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="shop.html?category=laptops">Laptops</a></li>
+                        <li><a href="shop.html?category=smartphones">Smartphones</a></li>
+                        <li><a href="shop.html?category=accessories">Accessories</a></li>
+                        <li><a href="shop.html?category=bags">Bags & Satchels</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li>Email: info@techcity.com</li>
+                        <li>Phone: +263......</li>
+                        <li>Address: 63 Speke Ave, Harare</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TECH CITY. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Shopping Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-backdrop"></div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="icon-btn" id="closeCartBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer" id="cartFooter"></div>
+        </div>
+    </div>
+        
+<script>
+
+const products = [
+    {
+        id: '1',
+        name: 'HP OMEN 16',
+        price: 1299.99,
+        image: 'images/shop/Omen 16.jpg',
+        rating: 4,
+        category: 'laptops',
+        badge: 'Featured'
+    },
+    {
+        id: '2',
+        name: 'SAMSUNG S25',
+        price: 999.99,
+        image: 'images/shop/s25.jpg',
+        rating: 5,
+        category: 'smartphones'
+    },
+    {
+        id: '3',
+        name: 'All IN 1 MONITOR',
+        price: 450.99,
+        image: 'images/shop/All in 1 hp.png',
+        rating: 3,
+        category: 'accessories'
+    },
+    {
+        id: '4',
+        name: 'Gaming CPU',
+        price: 350.99,
+        image: 'images/shop/cpu.jpg',
+        rating: 4,
+        category: 'accessories'
+    },
+    {
+        id: '5',
+        name: 'Wireless Headphones',
+        price: 60.99,
+        image: 'images/shop/headset.jpg',
+        rating: 3,
+        category: 'accessories'
+    },
+    {
+        id: '6',
+        name: 'Tech Bag',
+        price: 15.00,
+        image: 'images/shop/hpbag.webp',
+        rating: 4,
+        category: 'bags'
+    },
+    {
+        id: '7',
+        name: 'Tecno Camon 40',
+        price: 400.00,
+        image: 'images/shop/camon40.jpg',
+        rating: 5,
+        category: 'smartphones'
+    },
+    {
+        id: '8',
+        name: 'Infinix note 50 Pro',
+        price: 299.99,
+        image: 'images/shop/infinix50.jpg',
+        rating: 5,
+        category: 'smartphones'
+    },
+     {
+        id: '9',
+        name: 'F11 2.0 MICROPHONE',
+        price: 15.00,
+        image: 'images/shop/f11.webp',
+        rating: 5,
+        category: 'accessories'
+    },
+     {
+        id: '10',
+        name: 'FIRE HD KIDS TAB',
+        price: 144.99,
+        image: 'images/shop/kids tab.avif',
+        rating: 5,
+        category: 'smartphones'
+    },
+
+     {
+        id: '11',
+        name: 'X3 SMART CONTROLLER',
+        price: 40.00,
+        image: 'images/shop/x3 2.webp',
+        rating: 3,
+        category: 'accessories'
+    },
+     {
+        id: '12',
+        name: 'COOLER PAD',
+        price: 145.00 ,
+        image: 'images/shop/cooler pad.avif',
+        rating: 5,
+        category: 'accessories'
+    },
+     {
+        id: '13',
+        name: '4K PROJECTOR',
+        price: 145.00 ,
+        image: 'images/shop/projector2.jpg',
+        rating: 5,
+        category: 'accessories'
+    },
+    {
+        id: '14',
+        name: 'MINI SMART BAG',
+        price: 10.00 ,
+        image: 'images/shop/mini bag.jpg',
+        rating: 5,
+        category: 'bags'
+    },
+     {
+        id: '15',
+        name: 'TP LINK MIFI',
+        price: 45.00 ,
+        image: 'images/shop/mifi 2.jpg',
+        rating: 5,
+        category: 'accessories'
+    },
+];
+// Render star rating
+function renderStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        stars += `<span class="${i <= rating ? 'star-filled' : 'star-empty'}">â˜…</span>`;
+    }
+    return stars;
+}
+
+// Create product card
+function createProductCard(product) {
+    return `
+        <div class="product-card fade-in">
+            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            <button class="wishlist-btn" data-id="${product.id}" onclick="toggleWishlist('${product.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </button>
+            <div class="product-image-wrapper">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+            </div>
+            <h3 class="product-title">${product.name}</h3>
+            <div class="product-rating">${renderStars(product.rating)}</div>
+            <div class="product-price">$${product.price.toFixed(2)}</div>
+            <button class="btn btn-primary btn-full" onclick="addToCart('${product.id}')">Add to Cart</button>
+        </div>
+    `;
+}
+
+// Toggle wishlist
+function toggleWishlist(productId) {
+    const btn = document.querySelector(`.wishlist-btn[data-id="${productId}"]`);
+    btn.classList.toggle('active');
+    console.log('Wishlist toggled for product:', productId);
+}
+
+// Get products by category
+function getProductsByCategory(category) {
+    if (!category || category === 'all') {
+        return products;
+    }
+    return products.filter(p => p.category === category);
+}
+
+// Load featured products on home page
+if (document.getElementById('featuredProducts')) {
+    const featuredProducts = products.slice(0, 4);
+    document.getElementById('featuredProducts').innerHTML = featuredProducts
+        .map(product => createProductCard(product))
+        .join('');
+}
+
+// Load all products on shop page
+if (document.getElementById('allProducts')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+    const displayProducts = getProductsByCategory(category);
+    
+    document.getElementById('allProducts').innerHTML = displayProducts
+        .map(product => createProductCard(product))
+        .join('');
+}
+
+
+
+
+
+
+
+
+
+
+/*QUICK BUTTON VIEW SECTION*/
+
+
+// Create product card
+function createProductCard(product) {
+    return `
+        <div class="product-card fade-in">
+            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            <button class="wishlist-btn" data-id="${product.id}" onclick="toggleWishlist('${product.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </button>
+            <div class="product-image-wrapper">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <button class="quick-view" onclick="showQuickView('${product.id}')">Quick View</button>
+            </div>
+            <h3 class="product-title">${product.name}</h3>
+            <div class="product-rating">${renderStars(product.rating)}</div>
+            <div class="product-price">$${product.price.toFixed(2)}</div>
+            <button class="btn btn-primary btn-full" onclick="addToCart('${product.id}')">Add to Cart</button>
+        </div>
+    `;
+}
+
+// Function to handle Quick View
+
+function openQuickView(product) {
+    document.getElementById('modalProductName').innerText = product.name;
+    document.getElementById('modalProductImage').src = product.image; // Set the image source
+    document.getElementById('modalProductDetails').innerText = product.details; // Set product details
+    document.getElementById('quickViewModal').style.display = 'flex'; // Show the modal
+}
+
+function closeQuickView() {
+    document.getElementById('quickViewModal').style.display = 'none'; // Hide the modal
+}
+
+
+
+
+
+
+
+
+
+
+// Function to handle Quick View
+let modalProductId;
+
+function showQuickView(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    modalProductId = product.id; // Store the product ID for adding to the cart
+
+    // Populate modal with product data
+    document.getElementById('modalProductName').innerText = product.name;
+    document.getElementById('modalProductImage').src = product.image;
+
+    // Create detailed information (specifications)
+    const details = `
+        <h4>Specifications:</h4>
+        <ul>
+            <li>Price: $${product.price.toFixed(2)}</li>
+            <li>Category: ${product.category}</li>
+            <li>Rating: ${renderStars(product.rating)}</li>
+            ${product.specs ? product.specs.map(spec => `<li>${spec}</li>`).join('') : `<li>No specifications available.</li>`}
+        </ul>
+    `;
+    document.getElementById('modalProductDetails').innerHTML = details;
+
+    // Show the modal
+    document.getElementById('quickViewModal').style.display = 'flex';
+}
+
+// Function to close the modal
+function closeQuickView() {
+    document.getElementById('quickViewModal').style.display = 'none';
+}
+
+
+
+
+  // Optionally, you can add further interactivity with JavaScript
+        const lightning = document.querySelector('.lightning');
+        const logoIcon = document.querySelector('.logo-icon');
+
+        logoIcon.addEventListener('mouseover', () => {
+            lightning.style.animationPlayState = 'running';
+        });
+
+        logoIcon.addEventListener('mouseout', () => {
+            lightning.style.animationPlayState = 'paused';
+        });
+
+
+    </script>
+    <script src="scripts/cart.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/bot.js"></script>
+</body>
+</html>

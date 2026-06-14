@@ -1,0 +1,64 @@
+# Implementation Plan - Order System & Inventory Management
+
+This plan outlines the steps to build a robust e-commerce backend and frontend for TechCity, including order lifecycle, inventory tracking, security enhancements, and notifications.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Product Data Migration**: We will move all products from the hardcoded `products.js` file into the PostgreSQL database. This allows for real-time stock management but means you will manage products via the Admin Dashboard instead of editing JS files.
+
+> [!NOTE]
+> **Notifications**: I will implement email notifications using `nodemailer`. You will need to provide SMTP credentials (e.g., for Gmail or a professional email service) in the `.env` file later.
+
+## Proposed Changes
+
+### 1. Database Schema Expansion
+#### [MODIFY] [setup_db.cjs](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/setup_db.cjs)
+- Add `CREATE TABLE` statements for `products`, `orders`, and `order_items`.
+- Add `stock_quantity` column to `products`.
+- Add status and delivery columns to `orders`.
+
+### 2. Product Management (Inventory)
+#### [NEW] [products.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/routes/products.js)
+- API routes to fetch and manage products from the DB.
+#### [NEW] [productController.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/controllers/productController.js)
+- Logic for CRUD operations and stock reduction.
+#### [MODIFY] [products.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/public/scripts/products.js)
+- Replace hardcoded array with an `async` fetch from `/api/products`.
+- Disable "Add to cart" buttons if `stock_quantity <= 0`.
+
+### 3. Order Lifecycle System
+#### [NEW] [orders.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/routes/orders.js)
+- Routes for order creation, status updates, and history.
+#### [NEW] [orderController.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/controllers/orderController.js)
+- Transactional logic: Create order + Reduce stock + Send notification.
+- Status update logic.
+#### [MODIFY] [cart.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/public/scripts/cart.js)
+- Update `checkout()` to send a POST request to `/api/orders` with delivery details.
+
+### 4. Admin & User Dashboard Enhancements
+#### [MODIFY] [admin.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/public/dashboards/admin/scripts/admin.js)
+- Add "Orders" tab to view all orders and update statuses.
+- Add "Inventory" tab to manage product stock and add new products.
+#### [MODIFY] [user.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/public/dashboards/user/scripts/user.js)
+- Add "My Orders" tab to show order history and tracking status.
+
+### 5. Security & Logistics
+#### [MODIFY] [server.js](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/server.js)
+- Register new routes.
+- Add input validation middleware.
+#### [NEW] [delivery.html](file:///c:/Users/Clyde T.M/Desktop/TECHCITY/public/checkout/delivery.html)
+- A dedicated step in checkout for delivery options and address.
+
+## Verification Plan
+
+### Automated Tests
+- Test order creation with `test_api.cjs` (mocking stock checks).
+- Verify stock decrement after a successful checkout.
+- Check that Admin can update order status.
+
+### Manual Verification
+- Place a test order as a user.
+- View the order in the Admin dashboard and change status to "Shipped".
+- Verify that the User dashboard shows the updated status.
+- Attempt to buy an "out of stock" product and verify the button is disabled.

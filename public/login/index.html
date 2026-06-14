@@ -1,0 +1,805 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="TECH CITY - Your trusted destination for premium laptops, smartphones, and tech accessories">
+        <title>LOG IN PAGE</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/login/styles/styles.css">
+        <link rel="stylesheet" href="/styles/mobile.css?v=13" media="(max-width: 767px)">
+    </head>
+
+    <body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="/index.html" class="logo">
+                <img src="/images/techcity1.jpg" alt="Logo" class="logo-icon">
+                <!--<span class="logo-text">TECH CITY</span>-->
+            </a>
+            
+            <nav class="nav" id="mainNav">
+                <a href="/index.html" class="nav-link">Home</a>
+                <a href="/shop/index.html" class="nav-link">Shop</a>
+                <a href="/about/about.html" class="nav-link">About</a>
+                <a href="/contact/contact.html" class="nav-link">Contact</a>
+                <div class="nav-auth-mobile">
+                    <a href="/login/index.html" class="nav-link">Login</a>
+                    <a href="/register/index.html" class="nav-link">Register</a>
+                </div>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="/login/index.html" class="nav-button">Login</a>
+                <a href="/register/index.html" class="nav-button">Register</a>
+                
+                <button class="icon-btn" id="searchBtn" aria-label="Search" onclick="if(window.openSearch)window.openSearch();else console.error(`[Search] openSearch not defined`)" style="cursor: pointer; position: relative; z-index: 1000;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                
+                <button class="icon-btn" id="cartBtn" aria-label="Shopping cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-badge" id="cartCount">0</span>
+                </button>
+                
+                <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="anime-character">
+    <img src="/images/anime-character.png" alt="Anime Character">
+</div>
+<section class="login-section">
+  <div class="wrapper">
+    <div class="login_box">
+      
+      <div class="notch-logo">
+        <img src="/images/techcity1.jpg" alt="TechCity Logo">
+      </div>
+      
+      <h2 class="login-title">Login</h2>
+
+      <!-- Form for backend login -->
+      <form id="loginForm" action="/login" method="POST">
+
+        <div class="input_box">
+          <input type="text" id="user" name="username" class="input-field" required>
+          <label for="user" class="label">Username</label>
+          <i class="bx bx-user icon"></i>
+        </div>
+
+        <div class="input_box">
+          <input type="password" id="pass" name="password" class="input-field" required>
+          <label for="pass" class="label">Password</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <div class="forgot">
+            <a href="#">Forgot password?</a>
+          </div>
+        </div>
+
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Login">
+        </div>
+
+        <div class="register">
+          <span>Don't have an account? <a href="#">Register</a></span>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+ <!-- Footer -->
+<!-- Sponsors Section -->
+<section class="product-sponsors">
+    <div class="container sponsor-logos">
+         <a href="https://www.hp.com" target="_blank" title="HP">
+            <img src="/images/hp.png" alt="HP Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.dell.com" target="_blank" title="Dell">
+            <img src="/images/dell.png" alt="Dell Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.lenovo.com" target="_blank" title="Lenovo">
+            <img src="/images/lenovo.png" alt="Lenovo Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.acer.com" target="_blank" title="Acer">
+            <img src="/images/acer.png" alt="Acer Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.epson.com" target="_blank" title="Epson">
+            <img src="/images/epson.png" alt="Epson Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.tp-link.com" target="_blank" title="TP Link">
+            <img src="/images/tp link.png" alt="TP Link Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.oraimo.com" target="_blank" title="Oraimo">
+            <img src="/images/oraimo.png" alt="Oraimo Logo" class="sponsor-logo">
+        </a>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="header-content">
+                    <a href="/index.html" class="logo">
+                        <img src="/images/techcity1.jpg" alt="Logo" class="logo-icon">
+                    </a>
+                </div>
+                <p class="footer-description">Your trusted destination for premium tech products and accessories.</p>
+
+                <div class="social-icons">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+            </div>
+
+            
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/shop/index.html">Shop</a></li>
+                    <li><a href="/about/about.html">About</a></li>
+                    <li><a href="/contact/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="/Laptops/index.html">Laptops</a></li>
+                    <li><a href="/smartphones/index.html">Smartphones</a></li>
+                    <li><a href="/accessories/index.html">Accessories</a></li>
+                    <li><a href="/bags/bags.html">Bags & Satchels</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li>Email: info@techcity.com</li>
+                    <li>Phone: +263......</li>
+                    <li>Address: 63 Speke Ave, Harare, Zimbabwe</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 TECH CITY. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+        <script src="/scripts/config.js"></script>
+        <script src="/scripts/products.js"></script>
+        <script src="/scripts/cart.js"></script>
+        <script src="/scripts/search.js"></script>
+        <script src="/scripts/main.js"></script>
+        <script src="/scripts/bot.js"></script>
+        <script src="/scripts/auth.js"></script>
+
+       <script>
+
+
+
+
+    const cardData = [
+     
+        {
+            img: 'images/im2.jpg',
+            title: 'Our Journey',
+            text: 'From repairing devices to offering premium refurbished laptops and accessories, our journey has been shaped by innovation and customer trust.'
+        },
+        {
+            img: 'images/im3.jpg',
+            title: 'Our Vision',
+            text: 'We aim to build a future where quality tech is accessible to everyone, delivering reliable products and seamless digital experiences.'
+        },
+        {
+            img: 'images/im6.jpg',
+            title: 'New Innovations',
+            text: 'Expanding into smarter tools, better software solutions, and modern e-commerce features designed to simplify your tech life.'
+        },
+        {
+            img: 'images/im7.jpg',
+            title: 'Community Support',
+            text: 'We collaborate with local schools, small businesses, and communities, providing tech guidance, support, and affordable digital solutions.'
+        },
+        {
+            img: 'images/bck.jpg',
+            title: 'Our Commitment',
+            text: 'By refurbishing devices and promoting repair over disposal, we’re helping reduce e-waste and building a more sustainable tech ecosystem.'
+        }
+    ];
+
+
+            function getRandomCards(num) {
+                const shuffled = cardData.sort(() => 0.5 - Math.random());
+                return shuffled.slice(0, num);
+            }
+
+            function createCards(cards) {
+                const container = document.getElementById('card-container');
+                container.innerHTML = ''; // Clear previous cards
+                cards.forEach(card => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card';
+                    cardElement.innerHTML = `
+                        <img src="${card.img}" alt="${card.title}">
+                        <h2>${card.title}</h2>
+                        <p>${card.text}</p>
+                    `;
+                    container.appendChild(cardElement);
+                });
+                // Activate the cards
+                const activeCards = container.querySelectorAll('.card');
+                activeCards.forEach(card => card.classList.add('active'));
+            }
+
+            function showNextCards() {
+                const currentCards = document.querySelectorAll('.card');
+                currentCards.forEach(card => card.classList.remove('active'));
+
+                // Randomly select the next set of three cards
+                const selectedCards = getRandomCards(3);
+                createCards(selectedCards);
+            }
+
+            const initialCards = getRandomCards(3); // Get initial set of 3 cards
+            createCards(initialCards);
+
+            setInterval(showNextCards, 3000); // Change cards every 3 seconds
+
+
+
+
+
+
+
+
+
+
+
+            // Shopping Cart Management
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Update cart count
+    function updateCartCount() {
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+    }
+
+    // Add to cart
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const existingItem = cart.find(item => item.id === productId);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity: 1
+            });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        showNotification('Product added to cart!');
+    }
+
+    // Remove from cart
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCart();
+    }
+
+    // Update quantity
+    function updateQuantity(productId, change) {
+        const item = cart.find(item => item.id === productId);
+        if (item) {
+            item.quantity = Math.max(1, item.quantity + change);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+    }
+
+    // Render cart
+    function renderCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartFooter = document.getElementById('cartFooter');
+        
+        if (!cartItems) return;
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="cart-empty">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <p style="font-weight: 500; margin-bottom: 0.5rem;">Your cart is empty</p>
+                    <p style="font-size: 0.875rem;">Add some products to get started</p>
+                    <button class="btn btn-primary" onclick="closeCart()" style="margin-top: 1rem;">Continue Shopping</button>
+                </div>
+            `;
+            cartFooter.innerHTML = '';
+            return;
+        }
+
+        cartItems.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-content">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <h3 class="cart-item-name">${item.name}</h3>
+                            <button class="icon-btn" onclick="removeFromCart('${item.id}')" style="width: 1.5rem; height: 1.5rem; margin-top: -0.25rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</p>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </button>
+                            <span style="width: 2rem; text-align: center;">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const tax = subtotal * 0.1;
+        const shipping = subtotal > 100 ? 0 : 10;
+        const total = subtotal + tax + shipping;
+
+        cartFooter.innerHTML = `
+            <div class="cart-summary">
+                <div class="cart-summary-row">
+                    <span style="color: var(--muted-foreground);">Subtotal</span>
+                    <span>$${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span style="color: var(--muted-foreground);">Shipping</span>
+                    <span>$${shipping.toFixed(2)}</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span style="color: var(--muted-foreground);">Tax (10%)</span>
+                    <span>$${tax.toFixed(2)}</span>
+                </div>
+                <div class="cart-summary-row total">
+                    <span>Total</span>
+                    <span>$${total.toFixed(2)}</span>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="checkout()">Proceed to Checkout</button>
+        `;
+    }
+
+    // Show/hide cart
+    function openCart() {
+        document.getElementById('cartDrawer').classList.add('active');
+        renderCart();
+    }
+
+    function closeCart() {
+        document.getElementById('cartDrawer').classList.remove('active');
+    }
+
+    // Checkout
+    function checkout() {
+        alert('STILL UNDER DEVELOPMENT');
+        console.log('Checkout with items:', cart);
+    }
+
+    // Show notification
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 5rem;
+            right: 1rem;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'fadeOut 0.3s ease-out';
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+
+    // Initialize cart
+    updateCartCount();
+
+
+
+
+
+
+
+
+
+
+    // Main JavaScript
+
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+        const nav = document.getElementById('mainNav');
+        nav.classList.toggle('active');
+    });
+
+    // Cart drawer
+    document.getElementById('cartBtn')?.addEventListener('click', openCart);
+    document.getElementById('closeCartBtn')?.addEventListener('click', closeCart);
+    document.querySelector('.cart-backdrop')?.addEventListener('click', closeCart);
+
+    // Search functionality
+    let searchOpen = false;
+    document.getElementById('searchBtn')?.addEventListener('click', function() {
+        searchOpen = !searchOpen;
+        if (searchOpen) {
+            const searchBar = document.createElement('div');
+            searchBar.className = 'search-bar';
+            searchBar.innerHTML = `
+                <input type="search" placeholder="Search products..." class="search-input" id="searchInput" autofocus>
+                <button class="icon-btn" onclick="closeSearch()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            `;
+            this.parentElement.insertBefore(searchBar, this);
+            this.style.display = 'none';
+        }
+    });
+
+    function closeSearch() {
+        const searchBar = document.querySelector('.search-bar');
+        if (searchBar) {
+            searchBar.remove();
+            document.getElementById('searchBtn').style.display = 'flex';
+            searchOpen = false;
+        }
+    }
+
+    // Set active nav link
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
+    // Add CSS for search bar (mobile nav handled by /styles/mobile.css)
+    const style = document.createElement('style');
+    style.textContent = `
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .search-input {
+            width: 16rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-family: var(--font-sans);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+
+
+
+
+
+
+
+    const products = [
+        {
+            id: '1',
+            name: 'HP OMEN 16',
+            price: 1299.99,
+            image: 'images/shop/omen 16.jpg',
+            rating: 4,
+            category: 'laptops',
+            badge: 'Featured'
+        },
+        {
+            id: '2',
+            name: 'Samsung S25',
+            price: 999.99,
+            image: 'images/shop/s25.jpg',
+            rating: 5,
+            category: 'smartphones'
+        },
+        {
+            id: '3',
+            name: 'All in 1 HP MONITOR',
+            price: 450.99,
+            image: 'images/shop/All in 1 hp.png',
+            rating: 3,
+            category: 'accessories'
+        },
+        {
+            id: '4',
+            name: 'Gaming CPU',
+            price: 350.99,
+            image: 'images/shop/cpu.jpg',
+            rating: 4,
+            category: 'accessories'
+        },
+        {
+            id: '5',
+            name: 'Wireless Headphones',
+            price: 60.99,
+            image: 'images/shop/headset.jpg',
+            rating: 3,
+            category: 'accessories'
+        },
+        {
+            id: '6',
+            name: 'Tech Bag',
+            price: 15.00,
+            image: 'images/shop/hpbag.webp',
+            rating: 4,
+            category: 'bags'
+        },
+        {
+            id: '7',
+            name: 'Tecno Camon 40',
+            price: 400.00,
+            image: 'images/shop/camon40.jpg',
+            rating: 5,
+            category: 'smartphones'
+        },
+        {
+            id: '8',
+            name: 'Infinix note 50 Pro',
+            price: 299.99,
+            image: 'images/shop/infinix50.jpg',
+            rating: 5,
+            category: 'smartphones'
+        }
+    ];
+    // Render star rating
+    function renderStars(rating) {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            stars += `<span class="${i <= rating ? 'star-filled' : 'star-empty'}">★</span>`;
+        }
+        return stars;
+    }
+
+    // Create product card
+    function createProductCard(product) {
+        return `
+            <div class="product-card fade-in">
+                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                <button class="wishlist-btn" data-id="${product.id}" onclick="toggleWishlist('${product.id}')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+                <div class="product-image-wrapper">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                </div>
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-rating">${renderStars(product.rating)}</div>
+                <div class="product-price">$${product.price.toFixed(2)}</div>
+                <button class="btn btn-primary btn-full" onclick="addToCart('${product.id}')">Add to Cart</button>
+            </div>
+        `;
+    }
+
+    // Toggle wishlist
+    function toggleWishlist(productId) {
+        const btn = document.querySelector(`.wishlist-btn[data-id="${productId}"]`);
+        btn.classList.toggle('active');
+        console.log('Wishlist toggled for product:', productId);
+    }
+
+    // Get products by category
+    function getProductsByCategory(category) {
+        if (!category || category === 'all') {
+            return products;
+        }
+        return products.filter(p => p.category === category);
+    }
+
+    // Load featured products on home page
+    if (document.getElementById('featuredProducts')) {
+        const featuredProducts = products.slice(0, 4);
+        document.getElementById('featuredProducts').innerHTML = featuredProducts
+            .map(product => createProductCard(product))
+            .join('');
+    }
+
+    // Load all products on shop page
+    if (document.getElementById('allProducts')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const displayProducts = getProductsByCategory(category);
+        
+        document.getElementById('allProducts').innerHTML = displayProducts
+            .map(product => createProductCard(product))
+            .join('');
+    }
+
+
+
+
+
+
+
+
+
+    //Add Firebase login script HERE 
+    type="module">
+      import { loginUser } from "../scripts/auth.js";
+      window.loginUser = loginUser;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCZSUBvAaSQtA8-0DnSo8r1trARelhe8G4",
+        authDomain: "tech-city-ecommerce.firebaseapp.com",
+        projectId: "tech-city-ecommerce",
+        storageBucket: "tech-city-ecommerce.firebasestorage.app",
+        messagingSenderId: "177221241174",
+        appId: "1:177221241174:web:045f16951dcb86f9c7eef7",
+        measurementId: "G-7W1X2V4DCR"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      
+
+
+
+
+
+      <script>
+window.addEventListener('DOMContentLoaded', () => {
+    const loginSection = document.querySelector('.login-section');
+    
+    // Add class after short delay for smooth animation
+    setTimeout(() => {
+        loginSection.classList.add('active');
+    }, 300); // 0.3s delay
+});
+</script>
+    </script>
+
+    <a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+</body>
+    </html>
+
+
+
+
+
+
+
+

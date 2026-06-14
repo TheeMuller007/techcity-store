@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact TECH CITY - Get in touch with us for any questions or inquiries">
+    <title>Contact Us - TECH CITY</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    <span class="logo-text">TECH CITY</span>
+                </a>
+                
+                <nav class="nav" id="mainNav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                </nav>
+
+                <div class="header-actions">
+                    <button class="icon-btn" id="searchBtn" aria-label="Search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="cartBtn" aria-label="Shopping cart">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </button>
+                    <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 4rem 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" style="margin-bottom: 1rem;">Get in Touch</h1>
+                <p class="hero-subtitle">Have questions? We'd love to hear from you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr; gap: 3rem;">
+                <!-- Contact Form -->
+                <div style="background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 2rem;">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; font-family: var(--font-serif); margin-bottom: 0.5rem;">Send us a Message</h2>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">
+                        Fill out the form below and we'll get back to you shortly.
+                    </p>
+
+                    <form id="contactForm">
+                        <div style="display: grid; gap: 1rem;">
+                            <div>
+                                <label for="name" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Full Name</label>
+                                <input type="text" id="name" name="name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; font-family: var(--font-sans);">
+                            </div>
+
+                            <div>
+                                <label for="email" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Email Address</label>
+                                <input type="email" id="email" name="email" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; font-family: var(--font-sans);">
+                            </div>
+
+                            <div>
+                                <label for="phone" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; font-family: var(--font-sans);">
+                            </div>
+
+                            <div>
+                                <label for="subject" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Subject</label>
+                                <select id="subject" name="subject" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; font-family: var(--font-sans); background: var(--background);">
+                                    <option value="">Select a subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="support">Product Support</option>
+                                    <option value="order">Order Status</option>
+                                    <option value="return">Returns & Refunds</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="message" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Message</label>
+                                <textarea id="message" name="message" rows="6" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; font-family: var(--font-sans); resize: vertical;"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div style="display: grid; gap: 1.5rem;">
+                    <div style="background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; display: flex; gap: 1rem;">
+                        <div style="flex-shrink: 0;">
+                            <div style="padding: 0.75rem; border-radius: 9999px; background: rgba(59, 130, 246, 0.1);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Address</h3>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">63 Speke Ave</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Harare</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Zimbabwe</p>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; display: flex; gap: 1rem;">
+                        <div style="flex-shrink: 0;">
+                            <div style="padding: 0.75rem; border-radius: 9999px; background: rgba(59, 130, 246, 0.1);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Phone</h3>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Main: +263......</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Support: +263......</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Mon-Sat, 8am-6pm CAT</p>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; display: flex; gap: 1rem;">
+                        <div style="flex-shrink: 0;">
+                            <div style="padding: 0.75rem; border-radius: 9999px; background: rgba(59, 130, 246, 0.1);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Email</h3>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">General: info@techcity.com</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Support: support@techcity.com</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Sales: sales@techcity.com</p>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; display: flex; gap: 1rem;">
+                        <div style="flex-shrink: 0;">
+                            <div style="padding: 0.75rem; border-radius: 9999px; background: rgba(59, 130, 246, 0.1);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Business Hours</h3>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Monday - Friday: 8am - 6pm</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Saturday: 8am - 5pm</p>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span class="logo-text">TECH CITY</span>
+                    </div>
+                    <p class="footer-description">Your trusted destination for premium tech products and accessories.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="shop.html?category=laptops">Laptops</a></li>
+                        <li><a href="shop.html?category=smartphones">Smartphones</a></li>
+                        <li><a href="shop.html?category=accessories">Accessories</a></li>
+                        <li><a href="shop.html?category=bags">Bags & Satchels</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li>Email: info@techcity.com</li>
+                        <li>Phone: +263......</li>
+                        <li>Address: 63 Speke Ave, Harare</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TECH CITY. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-backdrop"></div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="icon-btn" id="closeCartBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer" id="cartFooter"></div>
+        </div>
+    </div>
+
+    <script src="scripts/config.js"></script>
+    <script src="scripts/products.js"></script>
+    <script src="scripts/cart.js"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+
+    <script src="/scripts/bot.js"></script>
+
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+</body>
+</html>
+

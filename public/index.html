@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TECH CITY - Your trusted destination for premium laptops, smartphones, and tech accessories">
+    <title>TECH CITY - Premium Tech & Accessories</title>
+    <link rel="stylesheet" href="/styles/main.css?v=10">
+    <link rel="stylesheet" href="/styles/mobile.css?v=13" media="(max-width: 767px)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+
+   <!-- Header -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="/index.html" class="logo">
+                <img src="/images/techcity1.jpg" alt="Logo" class="logo-icon">
+            </a>
+            
+            <nav class="nav" id="mainNav">
+                <a href="/index.html" class="nav-link active">Home</a>
+                <a href="/shop/index.html" class="nav-link">Shop</a>
+                <a href="/about/about.html" class="nav-link">About</a>
+                <a href="/contact/contact.html" class="nav-link">Contact</a>
+                <div class="nav-auth-mobile">
+                    <a href="/login/index.html" class="nav-link">Login</a>
+                    <a href="/register/index.html" class="nav-link">Register</a>
+                </div>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="/login/index.html" class="nav-button">Login</a>
+                <a href="/register/index.html" class="nav-button">Register</a>
+                
+                <button class="icon-btn" id="searchBtn" aria-label="Search" onclick="if(window.openSearch)window.openSearch();else console.error('[Search] openSearch not defined')" style="cursor: pointer; position: relative; z-index: 1000;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                
+                <button class="icon-btn" id="cartBtn" aria-label="Shopping cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-badge" id="cartCount">0</span>
+                </button>
+                
+                <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="hero" id="hero">
+    <div class="slides">
+        <div class="slide active" style="background-image: url('images/bck 114.jpg');"></div>
+        <div class="slide" style="background-image: url('images/m 2.jpg');"></div>
+        <div class="slide" style="background-image: url('images/bck 10.jpg');"></div>
+        <div class="slide" style="background-image: url('images/im22.jpg');"></div>
+
+
+    </div>
+    <div class="hero-content">
+        <h1 class="hero-title" id="hero-title">Elevate Your Tech Experience</h1>
+        <p class="hero-subtitle" id="hero-subtitle">Discover premium laptops, smartphones, and accessories designed for the modern professional</p>
+        <div class="hero-actions">
+            <a href="/shop/index.html" class="btn-shop">Shop Now</a>
+            <a href="/about/about.html" class="btn-learn">Learn More</a>
+        </div>
+    </div>
+    <button class="hero-control prev" id="heroPrev" aria-label="Previous slide">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="hero-control next" id="heroNext" aria-label="Next slide">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="dots" id="dots"></div>
+</section>
+
+<script>
+    (function() {
+        console.log("[Hero Slider] Initializing...");
+        const slideElements = document.querySelectorAll('.hero .slide');
+        const heroTitle = document.getElementById('hero-title');
+        const heroSubtitle = document.getElementById('hero-subtitle');
+        const dotsContainer = document.getElementById('dots');
+        
+        const titles = [
+            'Elevate Your Tech Experience',
+            'Unleash Performance with Our Laptops',
+            'Accessories that Redefine Your Workflow',
+            'Stay Connected with the Latest Smartphones'
+        ];
+
+        const subtitles = [
+            'Discover premium laptops, smartphones, and accessories designed for the modern professional',
+            'Powerful devices designed for efficiency and productivity.',
+            'Experience innovation and speed with our cutting-edge technology.',
+            'Enhance your setup with accessories that make a difference.'
+        ];
+
+        let currentIdx = 0;
+        let slideInterval;
+
+        function createDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slideElements.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            if (!dotsContainer) return;
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index === currentIdx) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+
+        function goToSlide(index) {
+            console.log("[Hero Slider] Changing to slide", index);
+            if (index < 0) index = slideElements.length - 1;
+            if (index >= slideElements.length) index = 0;
+            
+            slideElements[currentIdx].style.opacity = '0';
+            slideElements[currentIdx].classList.remove('active');
+            
+            currentIdx = index;
+            
+            slideElements[currentIdx].style.opacity = '1';
+            slideElements[currentIdx].classList.add('active');
+            
+            if (heroTitle) heroTitle.textContent = titles[currentIdx] || '';
+            if (heroSubtitle) heroSubtitle.textContent = subtitles[currentIdx] || '';
+            
+            updateDots();
+            resetInterval();
+        }
+
+        function next() { goToSlide(currentIdx + 1); }
+        function prev() { goToSlide(currentIdx - 1); }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(next, 5000);
+        }
+
+        const prevBtn = document.getElementById('heroPrev');
+        const nextBtn = document.getElementById('heroNext');
+        if (prevBtn) prevBtn.onclick = prev;
+        if (nextBtn) nextBtn.onclick = next;
+
+        // Initialize
+        createDots();
+        resetInterval();
+        
+        // Force the first slide to be visible just in case CSS fails
+        slideElements.forEach((el, i) => {
+            el.style.transition = 'opacity 1s ease-in-out';
+            if(i === 0) el.style.opacity = '1';
+            else el.style.opacity = '0';
+        });
+        console.log("[Hero Slider] Initialized successfully. Total slides:", slideElements.length);
+    })();
+</script>
+
+    <!-- Categories Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="category-grid">
+                <a href="/Laptops/index.html" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3>Laptops</h3>
+                    <p>High-performance computing</p>
+                </a>
+                
+                <a href="/smartphones/index.html" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3>Smartphones</h3>
+                    <p>Stay connected anywhere</p>
+                </a>
+                
+                <a href="/accessories/index.html" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </div>
+                    <h3>Accessories</h3>
+                    <p>Essential tech gear</p>
+                </a>
+                
+                <a href="/bags/bags.html" class="category-card">
+                    <div class="category-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                    </div>
+                    <h3>Bags & Satchels</h3>
+                    <p>Carry in style</p>
+                </a>
+                <a href="/printers/index.html" class="category-card">
+    <div class="category-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 10v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-2 0h-8M6 6h12"></path>
+            <path d="M6 10h12v2H6v-2z"></path>
+        </svg>
+    </div>
+    <h3>Printers</h3>
+    <p>Print your memories</p>
+</a>
+            </div>
+        </div>
+    </section>
+
+<!-- Featured Products Section -->
+<section class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="featured-slider-wrapper">
+            <button class="slider-control prev" id="featuredPrev" aria-label="Previous products">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="featured-slider-container" id="featuredProductsContainer">
+                <div class="featured-slider-track" id="featuredTrack">
+                    <!-- Products will be loaded by JavaScript -->
+                </div>
+            </div>
+            <button class="slider-control next" id="featuredNext" aria-label="Next products">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+ <!-- Map Section -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">GOT LOST? CHECK OUR LOCATION</h2>
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3798.150833748524!2d31.048228474660352!3d-17.83156278313333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1931a5f6ab534a5b%3A0xe7d37fc5fc41ae9d!2sTech%20City!5e0!3m2!1sen!2szw!4v1763940040194!5m2!1sen!2szw"
+                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>
+
+
+<!-- Sponsors Section -->
+
+
+<!-- WhatsApp Button -->
+
+
+
+ <!-- Footer -->
+<!-- Sponsors Section -->
+<section class="product-sponsors">
+    <div class="container sponsor-logos">
+         <a href="https://www.hp.com" target="_blank" title="HP">
+            <img src="/images/hp.png" alt="HP Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.dell.com" target="_blank" title="Dell">
+            <img src="/images/dell.png" alt="Dell Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.lenovo.com" target="_blank" title="Lenovo">
+            <img src="/images/lenovo.png" alt="Lenovo Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.acer.com" target="_blank" title="Acer">
+            <img src="/images/acer.png" alt="Acer Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.epson.com" target="_blank" title="Epson">
+            <img src="/images/epson.png" alt="Epson Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.tp-link.com" target="_blank" title="TP Link">
+            <img src="/images/tp link.png" alt="TP Link Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.oraimo.com" target="_blank" title="Oraimo">
+            <img src="/images/oraimo.png" alt="Oraimo Logo" class="sponsor-logo">
+        </a>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="header-content">
+                    <a href="/index.html" class="logo">
+                        <img src="/images/techcity1.jpg" alt="Logo" class="logo-icon">
+                    </a>
+                </div>
+                <p class="footer-description">Your trusted destination for premium tech products and accessories.</p>
+
+                <div class="social-icons">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+            </div>
+
+            
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/shop/index.html">Shop</a></li>
+                    <li><a href="/about/about.html">About</a></li>
+                    <li><a href="/contact/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="/Laptops/index.html">Laptops</a></li>
+                    <li><a href="/smartphones/index.html">Smartphones</a></li>
+                    <li><a href="/accessories/index.html">Accessories</a></li>
+                    <li><a href="/bags/bags.html">Bags & Satchels</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li>Email: info@techcity.com</li>
+                    <li>Phone: +263......</li>
+                    <li>Address: 63 Speke Ave, Harare, Zimbabwe</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 TECH CITY. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- Shopping Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-backdrop"></div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="icon-btn" id="closeCartBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer" id="cartFooter"></div>
+        </div>
+    </div>
+
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/auth.js?v=8"></script>
+    <script src="/scripts/products.js?v=8"></script>
+    <script src="/scripts/bot.js?v=8"></script>
+    <script src="/scripts/cart.js?v=8"></script>
+    <script src="/scripts/search.js?v=8"></script>
+    <script src="/scripts/main.js?v=10"></script>
+    <script src="/scripts/store-mobile.js?v=1"></script>
+
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

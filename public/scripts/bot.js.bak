@@ -1,0 +1,1053 @@
+// ============================================================
+//  TechCity Premium Chatbot — Professional Edition
+//  Version 3.0 | © 2025 TechCity
+// ============================================================
+
+// ── Store Config ─────────────────────────────────────────────
+const STORE = {
+    name:     'TechCity',
+    phone:    '+263 771 488 456',
+    whatsapp: 'https://wa.me/263771488456',
+    email:    'info@techcity.com',
+    address:  '65 Speke Ave, Harare — opposite Finance House',
+    hours:    'Mon – Sat  |  7:30 AM – 6:00 PM',
+    closed:   'We are closed on Sundays.',
+};
+
+// ── Session state ─────────────────────────────────────────────
+const SESSION = {
+    step:           null,   // current guided flow step
+    pendingCategory:null,
+    pendingBudget:  null,
+    pendingUseCase: null,
+    lastProducts:   [],
+    chatHistory:    [],
+};
+
+// ── Inject Chatbot HTML ─────────────────────────────────────────────
+(function() {
+    if (document.getElementById('chatbox')) return;
+    if (!document.body) return; // Safety check
+    const html = `
+<!-- Chatbot Button -->
+<a href="javascript:void(0);" class="chatbot-button" id="chatbotButton" aria-label="Chat with our chatbot">
+    <i class="fas fa-robot"></i> <!-- Robot icon -->
+</a>
+<!-- Chatbox Section -->
+<div class="chatbox" id="chatbox">
+    <!-- Chat Header -->
+    <div class="chatbox-header">
+        <div class="chatbox-header-main">
+            <img src="/images/techcity.jpg" alt="Chat Icon" class="chat-icon" />
+        </div>
+        <div class="chatbox-header-actions" style="position: relative;">
+            <button class="header-btn" title="Search">🔍</button>
+            <button id="optionsBtn" class="header-btn" title="More options">⋮</button>
+            <div id="optionsMenu" style="display: none; position: absolute; top: 36px; right: 0; background: #fff; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); min-width: 140px; z-index: 1000;">
+                <div class="option-item" data-action="clear-chat" style="padding:10px; cursor:pointer; border-bottom:1px solid #eee;">🧹 Clear Chat</div>
+                <div class="option-item" data-action="toggle-sound" style="padding:10px; cursor:pointer;" id="soundOptionBtn">🔊 Sound: ON</div>
+            </div>
+            <button id="toggleDarkMode" class="header-btn" title="Toggle Dark Mode">🌙</button>
+            <button id="closeChat" class="header-btn close-chat" title="Close Chat" aria-label="Close chat">✕</button>
+        </div>
+    </div>
+    <!-- Chat Body -->
+    <div class="chatbox-body" id="chatboxBody">
+        <div class="chat-date">Today</div>
+        <div class="bot-message">
+            <p>Hello 👋 How can we help you today?</p>
+            <span class="message-time">12:01 PM</span>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+    <!-- Quick Replies -->
+    <div class="quick-replies">
+        <button class="quick-reply">🛒 Products</button>
+        <button class="quick-reply">💳 Payments</button>
+        <button class="quick-reply">🚚 Delivery</button>
+        <button class="quick-reply">📞 Talk to agent</button>
+    </div>
+    <div class="chatbox-footer">
+        <div class="footer-actions">
+            <button class="footer-btn toggle-actions" title="More">+</button>
+            <div class="action-group">
+                <button class="footer-btn" title="Emoji">😊</button>
+                <button class="footer-btn" title="Attach file">📎</button>
+                <button class="footer-btn" title="Voice message">🎤</button>
+            </div>
+        </div>
+        <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off" />
+        <button id="sendButton" aria-label="Send message">➤</button>
+    </div>
+    <div class="chatbox-status"></div>
+</div>
+<div id="waveform" class="waveform hidden">
+    <span></span><span></span><span></span><span></span><span></span>
+</div>`;
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    while (container.firstChild) {
+        document.body.appendChild(container.firstChild);
+    }
+})();
+
+// ── DOM refs (guarded) ────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const chatbox        = $('chatbox');
+const chatboxBody    = $('chatboxBody');
+const typingEl       = $('typingIndicator');
+const chatbotButton  = $('chatbotButton');
+const closeChatBtn   = $('closeChat');
+const sendBtn        = $('sendButton');
+const userInputEl    = $('userInput');
+const darkModeBtn    = $('toggleDarkMode');
+const voiceBtn       = document.querySelector('.footer-btn[title="Voice message"]');
+const waveform       = $('waveform');
+const optionsBtn     = $('optionsBtn');
+const optionsMenu    = $('optionsMenu');
+const toggleActions  = document.querySelector('.toggle-actions');
+const footerActions  = document.querySelector('.footer-actions');
+const emojiBtn       = document.querySelector('.footer-btn[title="Emoji"]');
+const attachBtn      = document.querySelector('.footer-btn[title="Attach file"]');
+
+// ── Init ──────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+    if (chatbox) chatbox.style.display = 'none';
+    if (!localStorage.getItem('cart')) localStorage.setItem('cart', JSON.stringify([]));
+    restoreChatHistory();
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  SOUND SYNTHESIS (PREMIUM FEATURE)
+// ═══════════════════════════════════════════════════════════════
+
+function playSound(type) {
+    if (SESSION.soundEnabled === false) return;
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!window.chatAudioCtx) window.chatAudioCtx = new AudioCtx();
+        if (window.chatAudioCtx.state === 'suspended') window.chatAudioCtx.resume();
+        const t = window.chatAudioCtx.currentTime;
+        const osc = window.chatAudioCtx.createOscillator();
+        const gain = window.chatAudioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(window.chatAudioCtx.destination);
+        if (type === 'send') {
+            osc.frequency.setValueAtTime(400, t);
+            osc.frequency.exponentialRampToValueAtTime(600, t + 0.1);
+            gain.gain.setValueAtTime(0.05, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+            osc.start(t);
+            osc.stop(t + 0.1);
+        } else {
+            osc.frequency.setValueAtTime(600, t);
+            osc.frequency.exponentialRampToValueAtTime(800, t + 0.15);
+            gain.gain.setValueAtTime(0.05, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+            osc.start(t);
+            osc.stop(t + 0.15);
+        }
+    } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  DISPLAY HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+function showTyping(textLengthOrDelay) {
+    let ms = typeof textLengthOrDelay === 'number' ? textLengthOrDelay : 
+             (textLengthOrDelay ? Math.min(1500, 300 + textLengthOrDelay.length * 15) : 800);
+    if (typingEl) typingEl.style.display = 'flex';
+    scroll();
+    return new Promise(r => setTimeout(() => {
+        if (typingEl) typingEl.style.display = 'none';
+        r();
+    }, ms));
+}
+
+function scroll() {
+    if (chatboxBody) chatboxBody.scrollTop = chatboxBody.scrollHeight;
+}
+
+/** Append a plain text message bubble */
+function appendMsg(html, cls = 'bot-message') {
+    const div = document.createElement('div');
+    div.className = cls;
+    div.innerHTML = html;
+    // Premium staggered animation
+    div.style.opacity = '0';
+    div.style.transform = 'translateY(10px)';
+    div.style.transition = 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+    chatboxBody.appendChild(div);
+    
+    // Trigger reflow & animate in
+    requestAnimationFrame(() => {
+        div.style.opacity = '1';
+        div.style.transform = 'translateY(0)';
+    });
+    
+    scroll();
+    return div;
+}
+
+/** Show a user bubble immediately */
+function showUserMsg(text) {
+    playSound('send');
+    appendMsg(escHtml(text), 'user-message');
+    SESSION.chatHistory.push({ role: 'user', text });
+    saveHistory();
+}
+
+/** Queue a bot reply with smart typing delay */
+function botReply(html, delayMs = 0) {
+    // Strip HTML tags to estimate proper reading/typing time
+    let rawText = String(html).replace(/<[^>]*>?/gm, '');
+    return new Promise(resolve => {
+        setTimeout(async () => {
+            const typingTime = Math.min(1800, 400 + rawText.length * 12);
+            await showTyping(typingTime);
+            playSound('receive');
+            const div = appendMsg(html, 'bot-message');
+            SESSION.chatHistory.push({ role: 'bot', html });
+            saveHistory();
+            resolve(div);
+        }, delayMs);
+    });
+}
+
+/** Chain multiple bot replies (staggered) */
+async function botReplies(...msgs) {
+    for (let i = 0; i < msgs.length; i++) {
+        await botReply(msgs[i], i === 0 ? 0 : 200);
+    }
+}
+
+/** Render a set of quick‑reply chips below the last message */
+function showChips(labels, onClickFn) {
+    const wrap = document.createElement('div');
+    wrap.className = 'chip-row';
+    wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px;';
+    labels.forEach(label => {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        btn.style.cssText = `
+            padding:5px 12px; border-radius:20px; border:1.5px solid #1557b1;
+            background:#fff; color:#1557b1; font-size:0.8rem; cursor:pointer;
+            transition:all .2s ease; font-weight:500;`;
+        btn.onmouseenter = () => { btn.style.background = '#1557b1'; btn.style.color = '#fff'; };
+        btn.onmouseleave = () => { btn.style.background = '#fff'; btn.style.color = '#1557b1'; };
+        btn.onclick = () => {
+            wrap.remove();
+            showUserMsg(label);
+            onClickFn(label);
+        };
+        wrap.appendChild(btn);
+    });
+    chatboxBody.appendChild(wrap);
+    scroll();
+}
+
+/** Escape HTML to avoid XSS in user text */
+function escHtml(t) {
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PRODUCT CARD RENDERER
+// ═══════════════════════════════════════════════════════════════
+
+function getImg(p) {
+    if (p.images && p.images.length) return p.images[0];
+    if (p.image) return p.image;
+    return '';
+}
+
+function starRating(r = 0) {
+    let s = '';
+    for (let i = 1; i <= 5; i++) {
+        s += `<span style="color:${i<=r?'#f5a623':'#ccc'}">★</span>`;
+    }
+    return s;
+}
+
+function productCard(p) {
+    const img = getImg(p);
+    const specsHtml = (p.specs || []).slice(0,4).map(s =>
+        `<li style="font-size:.8rem;color:#555;padding:2px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="color:#1557b1">›</span> ${escHtml(s)}
+         </li>`
+    ).join('');
+    const badge = p.badge
+        ? `<span style="position:absolute;top:10px;left:10px;background:#e63946;color:#fff;
+               font-size:.7rem;font-weight:700;padding:3px 8px;border-radius:12px;
+               text-transform:uppercase;letter-spacing:.5px;">${escHtml(p.badge)}</span>`
+        : '';
+
+    return `
+    <div style="
+        border-radius:16px; border:1px solid #e8eaf0; background:#fff;
+        box-shadow:0 4px 20px rgba(0,0,0,.07); overflow:hidden;
+        max-width:280px; margin:8px 0; position:relative;
+        font-family:'Segoe UI',sans-serif; transition:transform .2s;
+    " onmouseenter="this.style.transform='translateY(-3px)'" onmouseleave="this.style.transform='translateY(0)'">
+        ${badge}
+        ${img ? `<div style="background:#f5f7ff;text-align:center;padding:12px;">
+            <img src="${img}" alt="${escHtml(p.name)}"
+                 style="width:120px;height:100px;object-fit:contain;" />
+        </div>` : ''}
+        <div style="padding:14px;">
+            <div style="font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:2px;">${escHtml(p.name)}</div>
+            <div style="font-size:.75rem;color:#888;text-transform:capitalize;margin-bottom:6px;">${escHtml(p.category)}</div>
+            <div style="margin-bottom:6px;">${starRating(p.rating)}</div>
+            <div style="font-size:1.15rem;font-weight:700;color:#1557b1;margin-bottom:10px;">
+                $${Number(p.price).toFixed(2)}
+            </div>
+            ${specsHtml ? `<ul style="margin:0 0 12px;padding:0;list-style:none;">${specsHtml}</ul>` : ''}
+            <div style="display:flex;gap:8px;">
+                <button onclick="tcBotAddToCart('${p.id}')"
+                    style="flex:1;padding:8px;border:none;border-radius:8px;
+                           background:linear-gradient(135deg,#1557b1,#0d3f7a);
+                           color:#fff;font-weight:600;font-size:.8rem;cursor:pointer;
+                           transition:opacity .2s;"
+                    onmouseenter="this.style.opacity='.85'" onmouseleave="this.style.opacity='1'">
+                    🛒 Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>`;
+}
+
+/** Display one or more product cards */
+async function showProducts(list, intro = null) {
+    SESSION.lastProducts = list;
+    if (intro) await botReply(intro);
+    for (const p of list.slice(0, 4)) {
+        await botReply(productCard(p), 150);
+    }
+    if (list.length > 4) {
+        await botReply(`<em style="color:#888">…and ${list.length - 4} more result(s). Narrow down by brand or budget?</em>`);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CART
+// ═══════════════════════════════════════════════════════════════
+
+window.tcBotAddToCart = function(id) {
+    if (typeof products === 'undefined') {
+        botReply('⚠️ Cart unavailable on this page. Please visit the product page to add items.');
+        return;
+    }
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find(x => x.id === id);
+    if (existing) existing.quantity = (existing.quantity || 1) + 1;
+    else cart.push({ ...p, quantity: 1 });
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    botReply(`✅ <strong>${escHtml(p.name)}</strong> has been added to your cart!`).then(() => {
+        const related = products.filter(x => x.category === p.category && x.id !== id).slice(0,2);
+        if (related.length) {
+            setTimeout(() => {
+                botReply('You might also like these:');
+                related.forEach(r => botReply(productCard(r), 150));
+            }, 600);
+        }
+    });
+};
+
+function cartSummaryText() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!cart.length) return "Your cart is currently empty.";
+    let total = 0;
+    let lines = cart.map((item, i) => {
+        const sub = (item.price || 0) * (item.quantity || 1);
+        total += sub;
+        return `${i+1}. <strong>${escHtml(item.name)}</strong> × ${item.quantity || 1} — <strong>$${sub.toFixed(2)}</strong>`;
+    }).join('<br>');
+    return `🛒 <strong>Your Cart:</strong><br>${lines}<br><hr style="border:none;border-top:1px solid #eee;margin:8px 0">
+            <strong>Total: $${total.toFixed(2)}</strong>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PRODUCT SEARCH
+// ═══════════════════════════════════════════════════════════════
+
+function searchProducts(query) {
+    if (typeof products === 'undefined') return [];
+    const kw = query.toLowerCase().trim();
+    return products.filter(p =>
+        p.name.toLowerCase().includes(kw)  ||
+        p.category.toLowerCase().includes(kw) ||
+        (p.specs || []).some(s => s.toLowerCase().includes(kw))
+    );
+}
+
+function filterByBudget(list, max) {
+    return list.filter(p => p.price <= max);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  AGENT STATUS
+// ═══════════════════════════════════════════════════════════════
+
+function isAgentOnline() {
+    const now = new Date();
+    return now.getDay() !== 0 && now.getHours() >= 8 && now.getHours() < 18;
+}
+
+async function showAgentCard() {
+    const online = isAgentOnline();
+    const statusColor = online ? '#28a745' : '#dc3545';
+    const bg = online ? '#edfdf3' : '#fff0f0';
+    const html = `
+    <div style="padding:16px;background:${bg};border-radius:14px;border:1.5px solid ${statusColor};max-width:280px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+            <img src="/scripts/images/im1.jpg" alt="Agent"
+                 style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2.5px solid ${statusColor};">
+            <div>
+                <div style="font-weight:700;font-size:.95rem;">TechCity Support</div>
+                <div style="font-size:.78rem;color:${statusColor};font-weight:600;">
+                    ${online ? '🟢 Online — Ready to help' : '🔴 Offline'}
+                </div>
+            </div>
+        </div>
+        <div style="font-size:.83rem;color:#444;line-height:1.6;">
+            ${online
+                ? `I'm available right now! Click below to start a live chat.`
+                : `Our agents are offline. Business hours:<br><strong>${STORE.hours}</strong><br>Leave a WhatsApp message and we'll reply first thing.`
+            }
+        </div>
+        <a href="${STORE.whatsapp}" target="_blank"
+           style="display:block;margin-top:12px;padding:9px;background:#25D366;
+                  color:#fff;font-weight:700;text-align:center;border-radius:8px;
+                  text-decoration:none;font-size:.85rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            ${online ? 'Chat with an Agent' : 'Leave a Message'}
+        </a>
+    </div>`;
+    await botReply(html);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  GUIDED FLOWS
+// ═══════════════════════════════════════════════════════════════
+
+async function startPurchaseAdvisor(category) {
+    SESSION.pendingCategory = category;
+    SESSION.step = 'use_case';
+    const label = category === 'laptops' ? 'laptop' : category === 'smartphones' ? 'phone' : category;
+    await botReply(`Great! I'll help you find the perfect <strong>${label}</strong>. 💡<br>
+        <em>What will you primarily use it for?</em>`);
+    showChips(
+        category === 'laptops'
+            ? ['🎓 School / Studies', '💼 Business / Work', '🎮 Gaming', '🎨 Creative Work', '🌐 General Use']
+            : ['📸 Camera Quality', '🔋 Battery Life', '📱 Social Media', '💰 Best Value', '🚀 Performance'],
+        txt => handleUseCase(txt)
+    );
+}
+
+async function handleUseCase(txt) {
+    SESSION.pendingUseCase = txt;
+    SESSION.step = 'budget';
+    await botReply(`Got it — <strong>${txt}</strong>. 🎯<br>
+        What is your <strong>budget range</strong>?`);
+    showChips(
+        ['Under $300', '$300 – $500', '$500 – $800', '$800 – $1200', 'No limit'],
+        txt => handleBudget(txt)
+    );
+}
+
+async function handleBudget(budgetTxt) {
+    SESSION.step = null;
+    let maxBudget = Infinity;
+    if (budgetTxt.includes('300') && budgetTxt.includes('Under')) maxBudget = 300;
+    else if (budgetTxt.includes('300')) maxBudget = 500;
+    else if (budgetTxt.includes('500')) maxBudget = 800;
+    else if (budgetTxt.includes('800')) maxBudget = 1200;
+
+    SESSION.pendingBudget = maxBudget;
+
+    if (typeof products === 'undefined') {
+        await botReply(`I found great options in your budget! 🛍️<br>
+            Visit our <a href="/shop/index.html" style="color:#1557b1;font-weight:600;">Shop</a> or
+            <a href="/${SESSION.pendingCategory}/index.html" style="color:#1557b1;font-weight:600;">
+            ${SESSION.pendingCategory} page</a> to browse and filter.`);
+        return;
+    }
+
+    let results = searchProducts(SESSION.pendingCategory);
+    if (maxBudget < Infinity) results = filterByBudget(results, maxBudget);
+
+    if (!results.length) {
+        await botReply(`Hmm, nothing matches that exact budget for <strong>${SESSION.pendingCategory}</strong> right now.<br>
+            I can show you the closest options, or you can <a href="${STORE.whatsapp}" target="_blank"
+            style="color:#1557b1;font-weight:600;">WhatsApp us</a> for custom deals.`);
+    } else {
+        await showProducts(results,
+            `✨ Here are the best <strong>${SESSION.pendingCategory}</strong> picks for <strong>${budgetTxt}</strong>:`);
+        showChips(['🛒 View Cart', '🔍 Search Again', '🤝 Talk to Agent'], handleChip);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  KEYWORD / INTENT ENGINE
+// ═══════════════════════════════════════════════════════════════
+
+const INTENTS = [
+    // Greetings
+    { match: /\b(hello|hi+|hey|howdy|greetings|good (morning|afternoon|evening))\b/i,
+      reply: async () => {
+          const hour = new Date().getHours();
+          const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+          await botReplies(
+              `${greet}! 👋 Welcome to <strong>TechCity</strong> — your premium tech destination.`,
+              `I'm <strong>Aria</strong>, your personal tech assistant. I can help you find products, check prices, arrange delivery, and more.`
+          );
+          showChips(['🛍 Browse Products', '💼 Get a Recommendation', '📞 Contact Us', '🛒 My Cart'], handleChip);
+      }},
+
+    // Products / Browse
+    { match: /\b(products?|catalog|browse|what do you sell|items?)\b/i,
+      reply: async () => {
+          await botReply(`Here's what we carry at <strong>TechCity</strong>:`);
+          await botReply(categoriesCard());
+      }},
+
+    // Laptops
+    { match: /\b(laptop|laptops?|notebook|macbook|chromebook)\b/i,
+      reply: () => startPurchaseAdvisor('laptops') },
+
+    // Smartphones
+    { match: /\b(phone|smartphone|mobile|iphone|samsung|tecno|infinix|redmi|xiaomi)\b/i,
+      reply: () => startPurchaseAdvisor('smartphones') },
+
+    // Accessories
+    { match: /\b(accessor(y|ies)|charger|earphone|headphone|keyboard|mouse|power ?bank|cable|case)\b/i,
+      reply: () => startPurchaseAdvisor('accessories') },
+
+    // Printers
+    { match: /\b(printer|printing|scanner|ink)\b/i,
+      reply: () => startPurchaseAdvisor('printers') },
+
+    // Bags
+    { match: /\b(bag|satchel|backpack|laptop bag)\b/i,
+      reply: async () => {
+          await botReply(`🎒 We carry quality laptop bags and satchels.<br>
+              <a href="/bags/bags.html" style="color:#1557b1;font-weight:600;">Browse Bags →</a>`);
+      }},
+
+    // Price / Budget
+    { match: /\b(price|cost|how much|budget|afford|cheap|expensive)\b/i,
+      reply: async () => {
+          await botReply(`💲 Prices vary by product. Here's a rough guide:<br>
+              <ul style="margin:8px 0 0;padding-left:16px;font-size:.88rem;">
+                  <li>💻 Laptops — from <strong>$250</strong></li>
+                  <li>📱 Smartphones — from <strong>$100</strong></li>
+                  <li>🎧 Accessories — from <strong>$5</strong></li>
+                  <li>🖨️ Printers — from <strong>$80</strong></li>
+              </ul><br>
+              Which category would you like to explore?`);
+          showChips(['💻 Laptops', '📱 Smartphones', '🎧 Accessories', '🖨️ Printers'], handleChip);
+      }},
+
+    // Cart
+    { match: /\b(my cart|cart|checkout|basket|order summary)\b/i,
+      reply: async () => {
+          await botReply(cartSummaryText());
+          showChips(['🗑 Clear Cart', '🛍 Keep Shopping', '✅ Checkout'], handleChip);
+      }},
+
+    // Delivery
+    { match: /\b(deliver(y|ed)?|shipping|ship|dispatch|send)\b/i,
+      reply: async () => {
+          await botReply(deliveryCard());
+      }},
+
+    // Payment
+    { match: /\b(pay(ment)?|how (can i )?pay|accept|cash|ecocash|bank)\b/i,
+      reply: async () => {
+          await botReply(paymentCard());
+      }},
+
+    // Warranty / Returns
+    { match: /\b(warrant(y|ies?)|guarant(ee|y)|return|refund|exchange|swap)\b/i,
+      reply: async () => {
+          await botReply(`🛡️ <strong>Warranty & Returns</strong><br>
+              <ul style="margin:8px 0;padding-left:18px;font-size:.88rem;line-height:1.8;">
+                  <li>All products include a <strong>manufacturer warranty</strong></li>
+                  <li>Returns accepted within <strong>7 days</strong> (unused, original packaging)</li>
+                  <li>Exchanges available based on product condition</li>
+                  <li>Bring your <strong>receipt</strong> for all claims</li>
+              </ul>`);
+      }},
+
+    // Repair / Service
+    { match: /\b(repair|fix|broken|screen|battery|virus|slow|hang|lag|format|install|window)\b/i,
+      reply: async () => {
+          await botReply(`🛠️ <strong>TechCity Repair Services</strong><br>
+              <ul style="margin:8px 0;padding-left:18px;font-size:.88rem;line-height:1.8;">
+                  <li>📱 Phone & Laptop <strong>Screen Replacement</strong></li>
+                  <li>🔋 <strong>Battery Replacement</strong></li>
+                  <li>🦠 <strong>Virus Removal</strong> & System Cleanup</li>
+                  <li>💿 <strong>Windows Installation</strong> & Driver Updates</li>
+                  <li>💾 <strong>Data Recovery</strong> (conditions apply)</li>
+              </ul>
+              Bring it in or <a href="${STORE.whatsapp}" target="_blank" style="color:#1557b1;font-weight:600;">
+              WhatsApp us</a> to book.`);
+      }},
+
+    // Location
+    { match: /\b(location|where (are you|r u)|address|find you|direc)\b/i,
+      reply: async () => {
+          await botReply(`📍 <strong>Find Us</strong><br>
+              <span style="font-size:.9rem;">${STORE.address}</span><br><br>
+              🕐 <strong>Hours:</strong> ${STORE.hours}<br>
+              ❌ <strong>Sunday:</strong> Closed`);
+      }},
+
+    // Contact
+    { match: /\b(contact|call|phone number|\+263|whatsapp|email|reach)\b/i,
+      reply: async () => {
+          await botReply(contactCard());
+      }},
+
+    // Hours
+    { match: /\b(hours?|open|close|when|what time|working hours?)\b/i,
+      reply: async () => {
+          await botReply(`⏰ <strong>Business Hours</strong><br>
+              ${STORE.hours}<br>
+              ❌ Closed on Sundays.`);
+      }},
+
+    // About
+    { match: /\b(about|company|who are you|what is techcity)\b/i,
+      reply: async () => {
+          await botReply(`🏢 <strong>About TechCity</strong><br>
+              TechCity is Harare's leading technology store, offering premium laptops, smartphones, accessories, printers,
+              and professional tech support services. We've been trusted by thousands of customers across Zimbabwe.`);
+          showChips(['🛍 Browse Products', '📞 Contact Us', '📍 Our Location'], handleChip);
+      }},
+
+    // Promotions
+    { match: /\b(promo|sale|discount|deal|offer|special)\b/i,
+      reply: async () => {
+          await botReply(`🔥 <strong>Current Promotions</strong><br>
+              <ul style="margin:8px 0;padding-left:18px;font-size:.88rem;line-height:1.8;">
+                  <li>🎧 <strong>Buy 1 Get 1 Free</strong> on selected accessories</li>
+                  <li>💻 Up to <strong>15% off</strong> refurbished laptops</li>
+                  <li>🚀 <strong>Free same-day delivery</strong> on orders over $50 in Harare</li>
+              </ul>
+              <a href="${STORE.whatsapp}" target="_blank" style="color:#1557b1;font-weight:600;">
+              WhatsApp us for exclusive deals →</a>`);
+      }},
+
+    // Agent / Human
+    { match: /\b(agent|human|person|staff|support|help me|assist)\b/i,
+      reply: showAgentCard },
+
+    // Thank you
+    { match: /\b(thank(s| you)|thx|ty|appreciate)\b/i,
+      reply: async () => {
+          await botReply(`You're very welcome! 😊 Is there anything else I can help you with?`);
+          showChips(['🛍 Browse Products', '📞 Contact Us', '🛒 My Cart'], handleChip);
+      }},
+
+    // Bye
+    { match: /\b(bye|goodbye|see you|later|cya)\b/i,
+      reply: async () => {
+          await botReply(`👋 Thank you for visiting <strong>TechCity</strong>! Have a great day. Come back anytime! 😊`);
+      }},
+
+    // Track order
+    { match: /\b(track|order status|where is my order)\b/i,
+      reply: async () => {
+          await botReply(`📦 To track your order, please <a href="${STORE.whatsapp}" target="_blank"
+              style="color:#1557b1;font-weight:600;">WhatsApp us</a> with your <strong>order number</strong>
+              and we'll give you a real-time update.`);
+      }},
+
+    // Time / Date
+    { match: /\b(time|date|today|day)\b/i,
+      reply: async () => {
+          await botReply(`🗓️ ${new Date().toLocaleString('en-GB', {
+              weekday:'long', year:'numeric', month:'long', day:'numeric',
+              hour:'2-digit', minute:'2-digit'
+          })}`);
+      }},
+];
+
+// ── Rich card builders ────────────────────────────────────────
+
+function categoriesCard() {
+    const cats = [
+        { icon:'💻', label:'Laptops', href:'/Laptops/index.html' },
+        { icon:'📱', label:'Smartphones', href:'/smartphones/index.html' },
+        { icon:'🎧', label:'Accessories', href:'/accessories/index.html' },
+        { icon:'🖨️', label:'Printers', href:'/printers/index.html' },
+        { icon:'🎒', label:'Bags', href:'/bags/bags.html' },
+        { icon:'🛍️', label:'All Products', href:'/shop/index.html' },
+    ];
+    const btns = cats.map(c => `
+        <a href="${c.href}" style="
+            display:flex;align-items:center;gap:6px;padding:9px 12px;
+            background:#f0f4ff;border-radius:10px;text-decoration:none;
+            color:#1557b1;font-size:.82rem;font-weight:600;
+            border:1px solid #d0dcf5;transition:background .2s;"
+           onmouseenter="this.style.background='#d0dcf5'"
+           onmouseleave="this.style.background='#f0f4ff'">
+            ${c.icon} ${c.label}
+        </a>`).join('');
+    return `<strong>🛍 Our Categories</strong>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">${btns}</div>`;
+}
+
+function paymentCard() {
+    return `💳 <strong>Accepted Payment Methods</strong><br>
+        <div style="margin:10px 0;display:flex;flex-direction:column;gap:8px;font-size:.88rem;">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f5fff8;border-radius:8px;">💵 <strong>Cash</strong> — at the store</div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f5fff8;border-radius:8px;">📱 <strong>EcoCash</strong> — mobile money</div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f5fff8;border-radius:8px;">🏦 <strong>Bank Transfer</strong> — wire / RTGS</div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f5fff8;border-radius:8px;">🅿️ <strong>PayPal</strong> — for international orders</div>
+        </div>
+        <em style="font-size:.8rem;color:#888">💬 Contact us for payment arrangements.</em>`;
+}
+
+function deliveryCard() {
+    return `🚚 <strong>Delivery Options</strong><br>
+        <div style="margin:10px 0;display:flex;flex-direction:column;gap:8px;font-size:.88rem;">
+            <div style="padding:10px;background:#fff8f0;border-radius:8px;border-left:3px solid #fd7e14;">
+                <strong>⚡ Same-Day Delivery</strong><br>
+                <span style="color:#555">Within Harare. Order before 1 PM.</span>
+            </div>
+            <div style="padding:10px;background:#fff8f0;border-radius:8px;border-left:3px solid #fd7e14;">
+                <strong>🚚 Countrywide Courier</strong><br>
+                <span style="color:#555">2–4 business days. Courier cost applies.</span>
+            </div>
+            <div style="padding:10px;background:#fff8f0;border-radius:8px;border-left:3px solid #fd7e14;">
+                <strong>🏪 In-Store Pickup</strong><br>
+                <span style="color:#555">Free! Collect at 65 Speke Ave, Harare.</span>
+            </div>
+        </div>
+        <a href="${STORE.whatsapp}" target="_blank" style="color:#1557b1;font-weight:600;font-size:.85rem;">
+        📲 WhatsApp to confirm your delivery →</a>`;
+}
+
+function contactCard() {
+    return `📞 <strong>Contact TechCity</strong><br>
+        <div style="margin:10px 0;font-size:.88rem;display:flex;flex-direction:column;gap:8px;">
+            <div>📞 <a href="tel:${STORE.phone}" style="color:#1557b1;font-weight:600;">${STORE.phone}</a></div>
+            <div>💬 <a href="${STORE.whatsapp}" target="_blank" style="color:#25D366;font-weight:600;">WhatsApp Us</a></div>
+            <div>📧 <a href="mailto:${STORE.email}" style="color:#1557b1;font-weight:600;">${STORE.email}</a></div>
+            <div>📍 ${STORE.address}</div>
+            <div>⏰ ${STORE.hours}</div>
+        </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  MAIN RESPONSE HANDLER
+// ═══════════════════════════════════════════════════════════════
+
+async function getBotResponse(raw) {
+    const text = raw.trim();
+
+    // Guided flow continuation
+    if (SESSION.step === 'use_case') { await handleUseCase(text); return; }
+    if (SESSION.step === 'budget')   { await handleBudget(text); return; }
+
+    // Cart commands
+    if (/^clear cart$/i.test(text)) {
+        localStorage.setItem('cart', JSON.stringify([]));
+        await botReply('🗑️ Your cart has been cleared.');
+        return;
+    }
+    if (/^checkout$/i.test(text)) {
+        await botReply("✅ Proceeding to checkout! If you're ready, <a href='/shop/index.html' style='color:#1557b1;font-weight:600;'>click here</a> or <a href='" + STORE.whatsapp + "' target='_blank' style='color:#1557b1;font-weight:600;'>WhatsApp us</a> to confirm your order.");
+        return;
+    }
+
+    // Budget shorthand: "under $500", "$300 budget", etc.
+    const budgetMatch = text.match(/\$?\s*(\d+)/);
+    if (budgetMatch && SESSION.pendingCategory) {
+        await handleBudget(`Under $${budgetMatch[1]}`);
+        return;
+    }
+
+    // Intent matching
+    for (const intent of INTENTS) {
+        if (intent.match.test(text)) {
+            await intent.reply();
+            return;
+        }
+    }
+
+    // Fallback: product search
+    const found = searchProducts(text);
+    if (found.length) {
+        await showProducts(found, `🔍 Here's what I found for "<strong>${escHtml(text)}</strong>":`);
+        showChips(['🛒 My Cart', '💼 Get a Recommendation', '🤝 Talk to Agent'], handleChip);
+        return;
+    }
+
+    // Smart fallback
+    await botReply(`🤔 I'm not sure I understood that. Here's how I can help:`);
+    showChips(['🛍 Browse Products', '💰 Check Prices', '📞 Contact Us', '🛒 My Cart', '🤝 Talk to Agent'], handleChip);
+}
+
+// ── Chip handler ──────────────────────────────────────────────
+function handleChip(label) {
+    getBotResponse(label);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SEND + INPUT
+// ═══════════════════════════════════════════════════════════════
+
+async function sendMessage() {
+    if (!userInputEl) return;
+    const text = userInputEl.value.trim();
+    if (!text) return;
+    userInputEl.value = '';
+    showUserMsg(text);
+    await getBotResponse(text);
+}
+
+if (sendBtn)      sendBtn.addEventListener('click', sendMessage);
+if (userInputEl)  userInputEl.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+
+// ── Quick reply buttons (static HTML in chatbox) ──────────────
+document.addEventListener('click', e => {
+    if (e.target.classList.contains('quick-reply')) {
+        const text = e.target.textContent.trim();
+        showUserMsg(text);
+        getBotResponse(text);
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  CHAT TOGGLE
+// ═══════════════════════════════════════════════════════════════
+
+const GREETING_KEY = 'tc_greeted';
+
+if (chatbotButton) {
+    chatbotButton.addEventListener('click', async () => {
+        if (!chatbox) return;
+        const isOpen = chatbox.style.display === 'flex';
+        chatbox.style.display = isOpen ? 'none' : 'flex';
+        chatbotButton.classList.remove('attention');
+
+        if (!isOpen && !sessionStorage.getItem(GREETING_KEY)) {
+            sessionStorage.setItem(GREETING_KEY, '1');
+            const path = window.location.pathname.toLowerCase();
+            let greeting = `I'm <strong>Aria</strong>, your personal assistant. How can I help you today?`;
+            
+            if (path.includes('laptops')) {
+                greeting = `I'm <strong>Aria</strong>! Looking for a sleek new laptop for work or studies? 💻`;
+            } else if (path.includes('smartphones')) {
+                greeting = `I'm <strong>Aria</strong>! Browsing for a new phone? Let me know if you need any recommendations. 📱`;
+            } else if (path.includes('printers')) {
+                greeting = `I'm <strong>Aria</strong>. Running out of ink or need a reliable printer for the office? 🖨️`;
+            } else if (path.includes('cart') || path.includes('checkout')) {
+                greeting = `I'm <strong>Aria</strong>. Need help finishing up your checkout today? 🛒`;
+            }
+            // Auto-greet
+            await botReplies(
+                `👋 Hello! Welcome to <strong>TechCity</strong> — Zimbabwe's premier tech store.`,
+                greeting
+            );
+            showChips(['🛍 Browse Products', '💼 Get a Recommendation', '📞 Contact Us', '🛒 My Cart'], handleChip);
+        }
+    });
+
+    // Attention bounce after 3s
+    setTimeout(() => chatbotButton.classList.add('attention'), 3000);
+}
+
+if (closeChatBtn) closeChatBtn.addEventListener('click', () => { if (chatbox) chatbox.style.display = 'none'; });
+
+// ═══════════════════════════════════════════════════════════════
+//  DARK MODE
+// ═══════════════════════════════════════════════════════════════
+
+if (darkModeBtn) {
+    darkModeBtn.addEventListener('click', function () {
+        chatbox.classList.toggle('dark-mode');
+        this.textContent = chatbox.classList.contains('dark-mode') ? '☀️' : '🌙';
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  VOICE INPUT
+// ═══════════════════════════════════════════════════════════════
+
+let recognition, listening = false, silenceTimer;
+const SILENCE_MS = 2500;
+
+function startVoice() {
+    if (!('webkitSpeechRecognition' in window)) { alert('Voice recognition is only supported in Chrome.'); return; }
+    recognition = new webkitSpeechRecognition();
+    recognition.lang = 'en-US'; recognition.continuous = true; recognition.interimResults = true;
+    listening = true;
+    if (userInputEl) userInputEl.value = '';
+    if (voiceBtn) { voiceBtn.textContent = '⏹️'; voiceBtn.classList.add('recording'); }
+    if (waveform) waveform.classList.remove('hidden');
+
+    recognition.onresult = e => {
+        clearTimeout(silenceTimer);
+        silenceTimer = setTimeout(stopVoice, SILENCE_MS);
+        let t = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript;
+        if (userInputEl) userInputEl.value = t.trim();
+    };
+    recognition.onerror = stopVoice;
+    recognition.start();
+}
+
+function stopVoice() {
+    if (!listening) return;
+    listening = false;
+    clearTimeout(silenceTimer);
+    recognition.stop();
+    if (voiceBtn) { voiceBtn.textContent = '🎤'; voiceBtn.classList.remove('recording'); }
+    if (waveform) waveform.classList.add('hidden');
+    const spoken = userInputEl ? userInputEl.value.trim() : '';
+    if (spoken) { showUserMsg(spoken); if (userInputEl) userInputEl.value = ''; getBotResponse(spoken); }
+}
+
+if (voiceBtn) voiceBtn.addEventListener('click', () => listening ? stopVoice() : startVoice());
+
+// ═══════════════════════════════════════════════════════════════
+//  OPTIONS MENU
+// ═══════════════════════════════════════════════════════════════
+
+if (optionsBtn && optionsMenu) {
+    optionsBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
+    });
+    document.addEventListener('click', () => { optionsMenu.style.display = 'none'; });
+    optionsMenu.addEventListener('click', e => {
+        const action = e.target.getAttribute('data-action');
+        if (action === 'clear-chat') {
+            chatboxBody.innerHTML = '';
+            localStorage.removeItem('tc_chatHistory');
+            sessionStorage.removeItem(GREETING_KEY);
+            botReply('🗑️ Chat cleared. How can I help you?');
+        } else if (action === 'toggle-sound') {
+            SESSION.soundEnabled = SESSION.soundEnabled === false ? true : false;
+            e.target.innerHTML = SESSION.soundEnabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
+            if (SESSION.soundEnabled) playSound('receive');
+            return; // don't close menu immediately
+        }
+        optionsMenu.style.display = 'none';
+    });
+}
+
+// ── Toggle Footer Actions ─────────────────────────────────────
+if (toggleActions && footerActions) {
+    toggleActions.addEventListener('click', () => footerActions.classList.toggle('active'));
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FILE ATTACHMENT
+// ═══════════════════════════════════════════════════════════════
+
+if (attachBtn) {
+    const fileInput = Object.assign(document.createElement('input'), { type:'file', style:'display:none' });
+    document.body.appendChild(fileInput);
+    attachBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'user-message';
+        if (file.type.startsWith('image/')) {
+            const img = Object.assign(document.createElement('img'), {
+                src: URL.createObjectURL(file),
+                className: 'chat-file-preview',
+            });
+            img.style.cssText = 'max-width:150px;border-radius:8px;cursor:pointer;';
+            img.onclick = () => {
+                const ov = Object.assign(document.createElement('div'), {
+                    className: 'media-overlay',
+                    innerHTML: `<img src="${img.src}" style="max-width:90%;max-height:90%;border-radius:12px;">`
+                });
+                ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9999;cursor:pointer;';
+                ov.onclick = () => ov.remove();
+                document.body.appendChild(ov);
+            };
+            msgDiv.appendChild(img);
+        } else {
+            msgDiv.innerHTML = `📄 <a href="${URL.createObjectURL(file)}" target="_blank"
+                style="color:#1557b1;">${escHtml(file.name)}</a>`;
+        }
+        chatboxBody.appendChild(msgDiv);
+        scroll();
+        fileInput.value = '';
+        setTimeout(() => botReply('📎 Got it! If you need help with this file, just ask.'), 400);
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EMOJI PICKER
+// ═══════════════════════════════════════════════════════════════
+
+if (emojiBtn && userInputEl) {
+    const EMOJIS = ['😀','😂','😊','😍','😎','🤔','👍','🙏','🎉','💻','📱','💡','🔥','✅','❓','🛒'];
+    const picker = document.createElement('div');
+    picker.style.cssText = `position:fixed;background:#fff;border:1px solid #ddd;border-radius:12px;
+        padding:10px;display:none;flex-wrap:wrap;gap:8px;width:220px;
+        box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:9999;`;
+    EMOJIS.forEach(em => {
+        const sp = Object.assign(document.createElement('span'), { textContent: em });
+        sp.style.cssText = 'font-size:1.3rem;cursor:pointer;transition:transform .1s;';
+        sp.onmouseenter = () => sp.style.transform = 'scale(1.3)';
+        sp.onmouseleave = () => sp.style.transform = 'scale(1)';
+        sp.onclick = () => { userInputEl.value += em; userInputEl.focus(); picker.style.display = 'none'; };
+        picker.appendChild(sp);
+    });
+    document.body.appendChild(picker);
+
+    emojiBtn.addEventListener('click', e => {
+        const rect = emojiBtn.getBoundingClientRect();
+        picker.style.top  = (rect.top - 170) + 'px';
+        picker.style.left = rect.left + 'px';
+        picker.style.display = picker.style.display === 'flex' ? 'none' : 'flex';
+    });
+    document.addEventListener('click', e => {
+        if (!picker.contains(e.target) && e.target !== emojiBtn) picker.style.display = 'none';
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CHAT HISTORY (localStorage)
+// ═══════════════════════════════════════════════════════════════
+
+function saveHistory() {
+    try {
+        // Keep last 30 messages to avoid bloat
+        const slice = SESSION.chatHistory.slice(-30);
+        localStorage.setItem('tc_chatHistory', JSON.stringify(slice));
+    } catch(e) {}
+}
+
+function restoreChatHistory() {
+    if (!chatboxBody) return;
+    try {
+        const hist = JSON.parse(localStorage.getItem('tc_chatHistory') || '[]');
+        if (!hist.length) return;
+        hist.forEach(m => {
+            const div = document.createElement('div');
+            div.className = m.role === 'user' ? 'user-message' : 'bot-message';
+            div.innerHTML = m.role === 'user' ? escHtml(m.text || '') : (m.html || '');
+            chatboxBody.appendChild(div);
+        });
+        SESSION.chatHistory = hist;
+        scroll();
+    } catch(e) {}
+}

@@ -1,0 +1,2178 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --border: #e2e8f0;
+    --card: #ffffff;
+    --card-border: #e2e8f0;
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --radius: 0.5rem;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'Plus Jakarta Sans', Georgia, serif;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--foreground);
+    background: var(--background);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Header */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: opacity 0.2s;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+}
+
+.logo svg {
+    color: var(--primary);
+}
+
+/* Navbar Container */
+.nav {
+    display: none; /* Hidden by default */
+    gap: 1.5rem;   /* Spacing between items */
+}
+
+@media (min-width: 768px) {
+    .nav {
+        display: flex; /* Show flex items on larger screens */
+    }
+}
+
+/* Navigation Link Styles */
+.nav-link {
+    font-size: 0.875rem; /* Base font size */
+    font-weight: 500;    /* Medium font weight */
+    color: var(--foreground); /* Default text color */
+    text-decoration: none;    /* Remove underline */
+    transition: color 0.2s, background-color 0.3s, padding 0.3s; /* Smooth transitions */
+    position: relative; /* Positioning for pseudo-element */
+    padding: 8px 12px; /* Added padding for clickable area */
+    border-radius: var(--radius); /* Rounded corners for a modern look */
+}
+
+/* Hover and Active States */
+.nav-link:hover,
+.nav-link.active {
+    color: white; /* Change text color on hover */
+    background-color: var(--primary); /* Background color on hover */
+}
+
+/* Underline Effect on Hover */
+.nav-link::after {
+    content: ""; /* Empty content for pseudo-element */
+    position: absolute; /* Position relative to the link */
+    left: 50%; /* Start from middle */
+    bottom: -4px; /* Position it below the text */
+    width: 0; /* Initial width */
+    height: 2px; /* Thickness */
+    background-color: var(--primary); /* Color of the underline */
+    transition: width 0.4s, left 0.4s; /* Transition effect */
+}
+
+/* Expand Underline on Hover */
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%; /* Full width on hover */
+    left: 0; /* Align to the left */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-link {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+        padding: 10px 15px; /* Larger padding for touch devices */
+    }
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.icon-btn:hover {
+    background: var(--muted);
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background: var(--primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    min-width: 1.25rem;
+    text-align: center;
+}
+
+.mobile-menu-btn {
+    display: flex;
+}
+
+@media (min-width: 768px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    background: linear-gradient(to bottom, var(--muted), var(--background));
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-decoration {
+    position: absolute;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 9999px;
+    background: var(--primary);
+    opacity: 0.05;
+    filter: blur(80px);
+}
+
+.hero-decoration-left {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.hero-decoration-right {
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 140px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--muted);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+
+
+
+/* Sections */
+.section {
+    padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 6rem 0;
+    }
+}
+
+.section-alt {
+    background: var(--muted);
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+}
+
+
+
+/* Category Cards */
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem; /* Further reduced gap size */
+}
+
+@media (min-width: 640px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .category-grid {
+        grid-template-columns: repeat(5, 1fr); /* Changed to 5 columns */
+    }
+}
+
+.category-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 0.5rem; /* Further reduced padding */
+    text-align: center;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: all 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.category-icon {
+    display: inline-flex;
+    padding: 0.5rem; /* Further reduced padding */
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.1);
+    margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+.category-icon svg {
+    color: var(--primary);
+}
+
+.category-card h3 {
+    font-size: 0.875rem; /* Reduced font size */
+    font-weight: 600;
+    font-family: var(--font-serif);
+    margin-bottom: 0.25rem; /* Reduced margin */
+}
+
+.category-card p {
+    font-size: 0.75rem; /* Kept as is */
+    color: var(--muted-foreground);
+}
+
+.sidebar-title {
+    text-align: center;
+}
+
+
+/* Lift the headings and their lists */
+.sidebar-section {
+    margin-top: -1.8rem; /* move section up slightly */
+}
+
+/* Optional: reduce space between heading and items */
+.sidebar-section .sidebar-title {
+    margin-bottom: 0.25rem; /* smaller gap under heading */
+}
+
+.sidebar-section .filter-list {
+    margin-top: 0; /* remove extra space */
+}
+
+
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem; /* Further reduced gap size */
+}
+
+@media (min-width: 640px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(5, 1fr); /* Changed to 5 columns */
+    }
+}
+
+.product-card {
+    background: var(--card);
+    border: none; /* remove the border line */
+    border-radius: var(--radius);
+    padding: 0.5rem; /* keep padding if you want space around image */
+    position: relative;
+    transition: all 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.product-image-wrapper {
+    position: relative;
+    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--muted);
+    margin-bottom: 0.5rem; /* Adjusted margin */
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Scale the image to cover the container */
+    transition: transform 0.3s;
+}
+
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 0.75rem; /* Adjusted position */
+    right: 0.75rem; /* Adjusted position */
+    width: 1.5rem; /* Further reduced width */
+    height: 1.5rem; /* Further reduced height */
+    border: none;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.wishlist-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.wishlist-btn.active svg {
+    fill: #ef4444;
+    color: #ef4444;
+}
+
+.product-badge {
+    position: absolute;
+    top: 0.5rem; /* Adjusted position */
+    left: 0.5rem; /* Adjusted position */
+    background: var(--primary);
+    color: white;
+    font-size: 0.5rem; /* Reduced font size */
+    font-weight: 600;
+    padding: 0.1rem 0.3rem; /* Further reduced padding */
+    border-radius: var(--radius);
+}
+
+.product-title {
+    font-size: 0.625rem; /* Further reduced font size */
+    font-weight: 500;
+    margin-bottom: 0.25rem; /* Less margin */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-rating {
+    display: flex;
+    gap: 0.1rem; /* Reduced gap */
+    margin-bottom: 0.25rem; /* Reduced margin */
+    font-size: 0.625rem; /* Reduced font size */
+}
+
+.star-filled {
+    color: #fbbf24;
+}
+
+.star-empty {
+    color: var(--muted);
+}
+
+.product-price {
+    font-size: 0.75rem; /* Reduced font size */
+    font-weight: 700;
+    margin-bottom: 0.5rem; /* Adjusted margin */
+}
+
+
+
+
+/* Shopping Cart Drawer */
+/* --- PREMIUM SHOPPING CART DRAWER ------------------------------ */
+.cart-drawer {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 10000 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    transition: visibility 0.4s !important;
+}
+
+.cart-drawer.active {
+    pointer-events: auto !important;
+    visibility: visible !important;
+}
+
+.cart-backdrop {
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(15, 23, 42, 0.4) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    opacity: 0 !important;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.cart-drawer.active .cart-backdrop {
+    opacity: 1 !important;
+}
+
+.cart-content {
+    position: absolute !important;
+    right: 20px !important;
+    top: 20px !important;
+    height: calc(100% - 40px) !important;
+    width: calc(100% - 40px) !important;
+    max-width: 480px !important; 
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transform: translateX(120%) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    color: #0f172a !important;
+    overflow: hidden !important;
+    pointer-events: auto !important;
+}
+
+.cart-drawer.active .cart-content {
+    transform: translateX(0) !important;
+}
+
+.cart-header {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    gap: 0.5rem;
+}
+
+.cart-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cart-header h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+}
+
+.cart-header-subtitle {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Shipping Progress Bar */
+.shipping-progress-container {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.shipping-progress-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shipping-progress-track {
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.shipping-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+    width: 0%;
+    transition: width 0.5s ease-out;
+    border-radius: 3px;
+}
+
+.shipping-progress-bar.complete {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--muted-foreground);
+}
+
+.cart-empty svg {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+}
+
+.cart-item {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cart-item-content {
+    display: flex;
+    gap: 1rem;
+}
+
+.cart-item-image {
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.cart-item-price {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qty-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--border);
+    background: var(--background);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.qty-btn:hover {
+    background: var(--muted);
+}
+
+.cart-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem;
+}
+
+.cart-summary {
+    margin-bottom: 1rem;
+}
+
+.cart-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.cart-summary-row.total {
+    font-weight: 700;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+
+ .pop-message {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border-radius: 6px;
+    opacity: 0;
+    transform: scale(0.7);
+    pointer-events: none;
+    transition: opacity .4s ease, transform .4s ease;
+}
+
+/* Color states */
+.pop-yellow { background: #f7b500; }   /* stock 4–3 */
+.pop-orange { background: #ff7a00; }   /* stock 2 */
+.pop-red    { background: #ff2e2e; }   /* stock 1 */
+
+/* show on hover */
+.product-card:hover .pop-message {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+
+/* QUICK VIEW MODAL STYLES */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Close button */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.8rem;        /* slightly larger for easier hover */
+    cursor: pointer;
+    color: #333;
+    z-index: 1001;             /* ensure it's above everything */
+    padding: 5px 8px;          /* increase clickable area */
+    border-radius: 50%;         /* optional, makes it easier to click */
+    transition: all 0.2s ease; /* smooth hover effect */
+    background: rgba(255,255,255,0.8); /* subtle background for visibility */
+}
+
+/* Hover effect to make it obvious */
+.close-button:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.2);
+    color: #ff4c4c; /* optional hover color */
+}
+
+/* Modal Images Container */
+#modalProductImageContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Individual Slides */
+.modal-slide {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.modal-slide.active {
+    display: block;
+}
+
+
+/* Slide Buttons */
+.prev-slide,
+.next-slide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,123,255,0.8);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.prev-slide { left: 10px; }
+.next-slide { right: 10px; }
+
+.prev-slide:hover,
+.next-slide:hover {
+    background: rgba(0,123,255,1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Product Details Section */
+#modalProductDetails {
+    width: 100%;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
+#modalProductDetails ul {
+    list-style: disc;
+    padding-left: 1.2rem;
+}
+
+#modalProductDetails li {
+    margin-bottom: 0.4rem;
+}
+
+/* Add to Cart Button */
+#quickViewModal .btn {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(0,123,255,0.8);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#quickViewModal .btn:hover {
+    background: rgba(0,123,255,1);
+    transform: translateY(-2px);
+}
+
+/* ZOOM OVERLAY FOR FULL IMAGE ON HOVER */
+#imageZoomOverlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index: 9999;
+}
+
+#zoomedImage {
+    max-width:90%;
+    max-height:90%;
+    border-radius:8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    cursor: zoom-out;
+    transition: transform 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .modal-content {
+        max-width: 90%;
+        padding: 1rem;
+    }
+
+    .modal-slide {
+        max-width: 100%;
+    }
+}
+/* Product card container */
+.product-card {
+    position: relative;       /* Needed for absolute positioning of badge */
+    overflow: hidden;         /* Keep badge inside the card boundaries */
+}
+
+/* Featured badge */
+.product-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff4c4c;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 5px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 10;
+
+    /* Smooth transform */
+    transform-origin: left top;  /* Scale from top-left corner */
+    transition: transform 0.3s ease;
+}
+
+/* Optional hover effect, now contained */
+.product-card:hover .product-badge {
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+/* Footer */
+.footer {
+    background: rgba(241, 245, 249, 0.9); /* Maintain the background */
+    border-top: 1px solid var(--border);
+    padding: 3rem 0 1.5rem; 
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+}
+
+/* Content Grid */
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem; 
+    margin-bottom: 2rem; 
+}
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr); 
+    }
+}
+
+
+
+
+
+/*PAGENATION*/
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+
+
+
+/* Footer Section Styles */
+.footer-section {
+    padding: 2rem; /* Increased padding */
+    background: rgba(255, 255, 255, 0.1); /* Light background for sections */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: transform 0.3s; /* Lift effect on hover */
+}
+
+.footer-section:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+.footer-section h4 {
+    font-weight: bold;
+    font-size: 1.25rem; /* Increased heading size */
+    margin-bottom: 1rem; 
+    padding-bottom: 0.5rem; 
+    border-bottom: 1px solid var(--border); /* Subtle underline */
+    color: #333; /* Maintain contrast */
+}
+
+.footer-description {
+    font-size: 0.875rem; 
+    color: var(--muted-foreground);
+    margin-top: 1rem; 
+    line-height: 1.5; /* Enhanced readability */
+}
+
+/* Footer Links */
+.footer-links {
+    list-style: none; 
+    padding: 0; 
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem; 
+}
+
+.footer-links a {
+    font-size: 0.875rem; 
+    color: var(--muted-foreground);
+    text-decoration: none; 
+    position: relative; /* For underline effect */
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--foreground);
+}
+
+.footer-links a:hover::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--foreground);
+    position: absolute;
+    bottom: -3px; /* Position the underline below the text */
+    left: 0;
+    right: 0;
+}
+
+/* Bottom Section */
+
+.footer-bottom {
+    background: linear-gradient(135deg, #0056b3, #007BFF); /* Gradient background */
+    color: #ffffff; /* White text color */
+    text-align: center; /* Center the text */
+    padding: 10px; /* Reduced padding for a lower height */
+    border-top-left-radius: 15px; /* Rounded corners */
+    border-top-right-radius: 15px; /* Rounded corners */
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+    font-family: 'Arial', sans-serif; /* Change font for better appearance */
+    font-size: 14px; /* Adjust font size if necessary */
+}
+
+.footer-bottom p {
+    margin: 0; /* Remove default margin from paragraph */
+}
+ 
+
+/* Social Icons Styles */
+.footer-section.social-icons {
+    margin-top: 1rem; /* Space above the Follow Us section */
+}
+
+.footer-section.social-icons ul {
+    list-style: none; 
+    padding: 0; 
+}
+
+.footer-section.social-icons ul li {
+    display: inline-block; 
+    margin-right: 20px; 
+}
+
+.footer-section.social-icons ul li:last-child {
+    margin-right: 0; /* Remove margin on the last icon */
+}
+
+.footer-section.social-icons ul li a {
+    color: #000; 
+    text-decoration: none; 
+    font-size: 24px; 
+    transition: color 0.3s, transform 0.3s; 
+}
+
+.footer-section.social-icons ul li a:hover {
+    color: #007BFF; /* Change color on hover */
+    transform: scale(1.2); /* Enlarge on hover */
+}
+
+
+ 
+
+/* SOCIAL ICONS */
+.footer-section.social-icons ul {
+    list-style: none; 
+    padding: 0; 
+}
+
+.footer-section.social-icons ul li {
+    display: inline-block; 
+    margin-right: 20px; 
+}
+
+.footer-section.social-icons ul li:last-child {
+    margin-right: 0; /* Remove margin on the last icon */
+}
+
+.footer-section.social-icons ul li a {
+    color: #000; 
+    text-decoration: none; 
+    font-size: 24px; 
+    transition: color 0.3s, transform 0.3s; 
+}
+
+.footer-section.social-icons ul li a:hover {
+    color: #007BFF; /* Change color on hover */
+    transform: scale(1.2); /* Enlarge on hover */
+}
+
+
+
+
+
+/*LOGO ICON*/
+
+header {
+    background-color: #ffffff; /* Background color for the header */
+    padding: 10px; /* Padding around the header */
+}
+
+.logo {
+    display: flex; /* Make logo a flex container */
+    align-items: center; /* Center items vertically */
+}
+
+.logo-icon {
+    width: 150px; /* Balanced width */
+    height: 60px; /* Increased height for proportion */
+    border-radius: 30px; /* Curved corners */
+    border: none; /* Remove the border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animation effects */
+}
+
+.logo-icon:hover {
+    transform: scale(1.05); /* Slightly scale up the icon on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+
+
+
+
+/*SPONSERS ICONS*/
+.product-sponsors {
+    text-align: center; /* Center the section content */
+    padding: 20px; /* Add padding around the section */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+.product-sponsors h2 {
+    font-size: 24px; /* Adjust title font size */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.sponsor-logos {
+    display: flex;
+    justify-content: center; /* Center the logos in the flex container */
+    flex-wrap: wrap; /* Allow logos to wrap onto the next line if needed */
+}
+
+.sponsor-logo {
+    max-width: 100px; /* Set a maximum width for logos */
+    margin: 0 15px; /* Space between logos */
+    transition: transform 0.3s; /* Smooth effect on hover */
+}
+
+.sponsor-logo:hover {
+    transform: scale(1.1); /* Slightly enlarge logo on hover */
+}
+
+
+
+
+
+
+
+
+
+/* WhatsApp Button Styles */
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px; /* Position from the bottom */
+    right: 20px; /* Position from the right */
+    background-color: #25D366; /* WhatsApp Green */
+    color: white; /* Icon color */
+    border-radius: 50%; /* Circle shape */
+    width: 50px; /* Reduced button size */
+    height: 50px; /* Reduced button size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: box-shadow 0.3s ease; /* Transition for hover effect */
+    text-decoration: none; /* No underline */
+    z-index: 1000; /* Ensure it's on top */
+    font-size: 30px; /* Icon size */
+}
+
+.whatsapp-button:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+/* =========================
+   CHATBOT FLOATING BUTTON
+========================= */
+.chatbot-button {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 12px 28px rgba(0,0,0,.3), 0 0 6px rgba(0,123,255,0.4);
+    transition: transform .25s ease, box-shadow .25s ease;
+    z-index: 1000;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Hover (unchanged behavior) */
+.chatbot-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 18px 34px rgba(0,0,0,.35), 0 0 14px rgba(0,123,255,0.6);
+}
+
+/* Unread Badge */
+.chatbot-button::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 12px;
+    height: 12px;
+    background: #dc3545;
+    border-radius: 50%;
+    display: none; /* show via JS */
+}
+
+/* =========================
+   NON-INTRUSIVE ENHANCEMENTS
+   (NO visual or layout change)
+========================= */
+
+/* Smoother rendering & performance */
+.chatbot-button {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform, box-shadow;
+    transform: translateZ(0); /* GPU acceleration */
+    user-select: none;
+    touch-action: manipulation;
+}
+
+/* Accessibility: clean focus handling */
+.chatbot-button:focus-visible {
+    outline: none;
+}
+
+/* Badge rendering polish (no visible change) */
+.chatbot-button::after {
+    image-rendering: auto;
+}
+
+/* High-DPI display stability */
+@media (min-resolution: 2dppx) {
+    .chatbot-button {
+        box-shadow:
+            0 12px 28px rgba(0,0,0,.3),
+            0 0 6px rgba(0,123,255,0.4);
+    }
+}
+
+
+
+/* =========================
+   ATTENTION ANIMATION WITH COLOR CHANGE
+========================= */
+
+/* Only active when .attention class is applied */
+.chatbot-button.attention {
+    animation: attractPulseColor 2.8s ease-in-out infinite;
+}
+
+/* Glow ripple with dynamic color */
+.chatbot-button.attention::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(0,123,255,0.45);
+    animation: glowRippleColor 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* =========================
+   KEYFRAMES
+========================= */
+
+/* Slight scale + subtle color tint */
+@keyframes attractPulseColor {
+    0% {
+        transform: translateZ(0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        transform: translateZ(0) scale(1.06);
+        filter: hue-rotate(15deg);
+    }
+    100% {
+        transform: translateZ(0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* Expanding glow ring with color shift */
+@keyframes glowRippleColor {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0,123,255,0.45);
+        opacity: 1;
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        box-shadow: 0 0 0 14px rgba(0,123,255,0.3);
+        opacity: 0.6;
+        filter: hue-rotate(25deg);
+    }
+    100% {
+        box-shadow: 0 0 0 14px rgba(0,123,255,0);
+        opacity: 0;
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* =========================
+   CHATBOX CONTAINER
+========================= */
+.chatbox {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 140px;
+    right: 20px;
+    width: 340px;
+    height: 520px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+    z-index: 999;
+    box-shadow: 0 28px 60px rgba(0,0,0,0.25), 0 12px 28px rgba(0,0,0,0.15);
+    transition: all 0.3s ease, transform 0.3s ease;
+}
+
+.chatbox:hover { transform: translateY(-2px); }
+
+/* =========================
+   HEADER
+========================= */
+.chatbox-header {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.chatbox-header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+}
+
+.chatbox-header-main { display: flex; align-items: center; justify-content: center; flex: 1; }
+
+/* =========================
+   CHAT ICON (UNCHANGED)
+========================= */
+.chatbox-header-main .chat-icon {
+    width: 110px;
+    height: 56px;
+    border-radius: 999px;
+    object-fit: cover;
+    background: #fff;
+    padding: 3px;
+    border: 2px solid rgba(255,255,255,0.45);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transition: all 0.25s ease;
+}
+
+.chatbox-header-main .chat-icon:hover { transform: scale(1.08); }
+
+.chatbox-header-actions { display: flex; align-items: center; gap: 8px; }
+.header-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.header-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+
+/* =========================
+   CHAT BODY
+========================= */
+.chatbox-body {
+    flex: 1;
+    min-height: 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    background: #f4f6fa;
+    background-image: radial-gradient(circle at top, rgba(255,255,255,0.7), transparent 60%);
+    scroll-behavior: smooth;
+}
+
+.chatbox-body::-webkit-scrollbar { width: 6px; }
+.chatbox-body::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
+
+/* =========================
+   MESSAGE BUBBLES
+========================= */
+.user-message,
+.bot-message {
+    padding: 12px 16px;
+    border-radius: 20px;
+    max-width: 75%;
+    line-height: 1.45;
+    word-wrap: break-word;
+    position: relative;
+    animation: softPop 0.25s ease-out;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.user-message {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 6px;
+}
+
+.user-message::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    transform: rotate(45deg);
+}
+
+.bot-message {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+}
+
+.bot-message::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    left: -6px;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    transform: rotate(45deg);
+}
+
+/* =========================
+   TYPING INDICATOR
+========================= */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+}
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    animation: bounce 0.6s infinite alternate;
+}
+
+/* =========================
+   QUICK REPLIES
+========================= */
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 12px;
+}
+.quick-reply {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.quick-reply:hover { background: #007BFF; color: #fff; }
+
+/* =========================
+   BOT PRODUCT CARD
+========================= */
+.bot-message ul { padding-left: 18px; margin: 8px 0 0 0; }
+.bot-message img {
+    border-radius: 12px;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.bot-message button {
+    margin-top: 8px;
+    padding: 7px 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.bot-message button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #0056b3, #007BFF);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.chatbox-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+    position: relative;
+}
+
+
+
+/* =========================
+   FOOTER ACTIONS + PLUS BUTTON
+========================= */
+.footer-actions {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.action-group {
+    display: flex;
+    gap: 6px;
+    position: absolute;
+    bottom: 82px;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-40px) scale(0.9);
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.footer-actions.active .action-group {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50px) scale(1);
+}
+
+/* =========================
+   PLUS BUTTON TOGGLE EFFECT
+========================= */
+.toggle-actions {
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.25s ease, background 0.2s ease;
+}
+
+/* Rotate + when active */
+.footer-actions.active .toggle-actions {
+    transform: rotate(45deg); /* + becomes × */
+    background: #ef4444;
+    color: #fff;
+}
+
+/* =========================
+   FOOTER BUTTONS
+========================= */
+.footer-btn {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+}
+
+.footer-btn:hover {
+    background: #4f8cff;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(79,140,255,0.35);
+}
+.footer-btn:active { transform: scale(0.95); }
+
+/* =========================
+   INPUT
+========================= */
+.chatbox-footer input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    outline: none;
+    font-size: 14px;
+    min-width: 0;
+    background: #ffffff;
+}
+
+.chatbox-footer input:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 10px rgba(79,140,255,0.35);
+}
+
+/* =========================
+   SEND BUTTON
+========================= */
+#sendButton {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 14px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    box-shadow: 0 6px 16px rgba(16,185,129,0.35);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+}
+
+#sendButton:hover { transform: scale(1.1); }
+#sendButton:active { transform: scale(0.95); }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+    .chatbox { width: 90%; height: 480px; bottom: 80px; right: 5%; }
+    .footer-btn, #sendButton { width: 30px; height: 30px; font-size: 14px; }
+    .chatbox-footer { gap: 6px; padding: 8px 10px; }
+    .action-group { transform: translateY(-40px) scale(0.9); }
+    .footer-actions.active .action-group { transform: translateY(-48px) scale(1); }
+}
+
+
+/* =========================
+   QUICK REPLIES
+========================= */
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 12px;
+}
+.quick-reply {
+    background: linear-gradient(135deg, #f8f9fa, #e5e7eb);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.quick-reply:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* =========================
+   BOT PRODUCT CARD
+========================= */
+.bot-message ul {
+    padding-left: 18px;
+    margin: 8px 0 0;
+}
+.bot-message img {
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+.bot-message button {
+    margin-top: 8px;
+    padding: 7px 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.bot-message button:hover { transform: scale(1.05); }
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes softPop {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes bounce {
+    from { transform: translateY(0); opacity: 0.4; }
+    to { transform: translateY(-6px); opacity: 1; }
+}
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 480px) {
+    .chatbox {
+        right: 10px;
+        bottom: 90px;
+        width: calc(100% - 20px);
+        height: 520px;
+    }
+}
+
+/* =========================
+   DARK MODE
+========================= */
+.chatbox.dark-mode {
+    background: rgba(30,30,30,0.92);
+}
+.chatbox.dark-mode .chatbox-body {
+    background: #121212;
+}
+.chatbox.dark-mode .chatbox-footer {
+    background: #1e1e1e;
+}
+.chatbox.dark-mode input {
+    background: #121212;
+    color: #fff;
+    border: 1px solid #444;
+}
+.chatbox.dark-mode .bot-message { background: linear-gradient(135deg, #218838, #28a745); }
+.chatbox.dark-mode .user-message { background: linear-gradient(135deg, #0062cc, #0056b3); }
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 480px) {
+    .chatbox {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        height: 85vh;
+    }
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes bounce {
+    from { transform: translateY(0); opacity: 0.4; }
+    to { transform: translateY(-6px); opacity: 1; }
+}
+@keyframes softPop {
+    from { transform: scale(0.96); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+
+
+
+.emoji-menu span {
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+.emoji-menu span:hover {
+    transform: scale(1.3);
+}
+
+
+
+/* =========================
+   VOICE BUTTON (RECORDING)
+========================= */
+.footer-btn.recording {
+    color: #ff3b3b;
+    animation: pulse 1.2s infinite;
+}
+
+/* Pulse effect when recording */
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* =========================
+   WAVEFORM ANIMATION
+========================= */
+.waveform {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 10px;
+}
+
+.waveform span {
+    width: 4px;
+    height: 10px;
+    background: linear-gradient(180deg, #4CAF50, #2e7d32);
+    border-radius: 6px;
+    animation: wave 1s infinite ease-in-out;
+}
+
+/* Stagger animation */
+.waveform span:nth-child(1) { animation-delay: 0s; }
+.waveform span:nth-child(2) { animation-delay: 0.1s; }
+.waveform span:nth-child(3) { animation-delay: 0.2s; }
+.waveform span:nth-child(4) { animation-delay: 0.3s; }
+.waveform span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0%, 100% { height: 8px; opacity: 0.6; }
+    50%      { height: 26px; opacity: 1; }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+.hidden {
+    display: none;
+}
+
+/* =========================
+   DARK MODE SUPPORT
+========================= */
+.chatbox.dark-mode .waveform span {
+    background: linear-gradient(180deg, #81c784, #388e3c);
+}
+
+.chatbox.dark-mode .footer-btn.recording {
+    color: #ff7676;
+}
+
+
+/*HIDE BOT AFTER REFRESH*/
+
+
+#bot {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+/*MY ADD TO CART AND QUICK VIEW BUTTONS*/
+
+/* ===============================
+   PRODUCT IMAGE WRAPPER
+================================ */
+.product-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+/* subtle overlay on hover */
+.product-image-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.35),
+        rgba(0,0,0,0.1),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+.product-image-wrapper:hover::after {
+    opacity: 1;
+}
+
+/* ===============================
+   SHARED BUTTON STYLES
+================================ */
+
+.quick-view,
+.add-to-cart-hover {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    padding: 8px 14px;          /* smaller padding */
+    font-size: 13px;             /* smaller font */
+    font-weight: 600;
+    border-radius: 30px;         /* pill shape */
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 20;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-rendering: optimizeLegibility;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ===============================
+   QUICK VIEW (SECONDARY)
+================================ */
+
+.quick-view {
+    bottom: 70px;                  /* position higher */
+    background: rgba(255, 255, 255, 0.85);
+    color: #111;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.quick-view:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+}
+
+/* ===============================
+   ADD TO CART (PRIMARY)
+================================ */
+
+.add-to-cart-hover {
+    bottom: 18px;                  /* lower than quick view */
+    background: #000;
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+.add-to-cart-hover:hover {
+    transform: translateX(-50%) translateY(-2px) scale(1.05);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* ===============================
+   SHOW ON HOVER
+================================ */
+
+.product-card:hover .quick-view,
+.product-card:hover .add-to-cart-hover {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ===============================
+   MOBILE SUPPORT
+================================ */
+
+@media (max-width: 768px) {
+    .quick-view,
+    .add-to-cart-hover {
+        opacity: 1;
+        transform: translateX(-50%);
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    .product-image-wrapper::after {
+        opacity: 1;
+    }
+}
+
+
+/* sparkle particles */
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.9;
+    animation: sparkle-fade 0.8s ease-out forwards;
+}
+
+@keyframes sparkle-fade {
+    0% { transform: scale(0.3); opacity: 1; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+
+/* Bottom-right icons (clean flat look) */
+.product-action-icons-corner {
+    position: absolute;
+    bottom: 5px;
+    right: 12px;
+    display: flex;
+    gap: 10px;
+    z-index: 15;
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hide icons when hovering product card */
+.product-card:hover .product-action-icons-corner {
+    opacity: 0;
+    transform: translateY(5px);
+    pointer-events: none;
+}
+
+/* Keep visible when hovering icons */
+.product-action-icons-corner:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* FLAT ICON STYLE (no circle, no border) */
+.product-action-icons-corner span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    height: auto;
+
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    font-size: 18px;
+    color: #000; /* black icons */
+    opacity: 0.85;
+
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.product-action-icons-corner span:last-child:hover svg {
+    stroke: #1a73e8;
+}
+
+/* Subtle hover effect */
+.product-action-icons-corner span:hover {
+    transform: scale(1.15);
+    opacity: 1;
+}

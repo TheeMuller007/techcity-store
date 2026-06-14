@@ -1,0 +1,423 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | TECH CITY</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../styles/dashboard.css">
+  <link rel="stylesheet" href="../../styles/dashboard-mobile.css?v=13" media="(max-width: 767px)">
+</head>
+<body>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+  <div class="dashboard-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header" style="justify-content: center; padding: 0;">
+        <a href="/" class="logo">
+            <img src="../../images/techcity1.jpg" alt="Logo" class="logo-icon">
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="profile"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="#" class="nav-item" data-section="orders"><i class="fas fa-box"></i> My Orders</a>
+        <a href="#" class="nav-item" data-section="wishlist"><i class="fas fa-heart"></i> Wishlist</a>
+        <a href="#" class="nav-item" data-section="wallet"><i class="fas fa-wallet"></i> Wallet</a>
+        <a href="#" class="nav-item" data-section="support"><i class="fas fa-headset"></i> Support</a>
+        <a href="#" class="nav-item" data-section="settings"><i class="fas fa-cog"></i> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/index.html" class="nav-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+          <div class="page-title">User Overview</div>
+        </div>
+        <div class="header-right">
+          <button class="theme-toggle-btn" id="themeToggle" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="user-profile">
+            <img src="../../images/techcity1.jpg" alt="User">
+            <span id="username-header">Customer</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        
+        <!-- Profile Section -->
+        <section id="profile-section" class="dashboard-section active">
+          <div class="welcome-banner">
+          <h1 id="welcome-name">Welcome back, Customer!</h1>
+          <p>Explore your recent orders and manage your profile.</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon primary"><i class="fas fa-box"></i></div>
+            <div class="stat-details">
+              <h3>Total Orders</h3>
+              <p id="total-orders-stat">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon warning"><i class="fas fa-truck"></i></div>
+            <div class="stat-details">
+              <h3>Pending Deliveries</h3>
+              <p id="pending-deliveries-stat">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon success"><i class="fas fa-wallet"></i></div>
+            <div class="stat-details">
+              <h3>Wallet Balance</h3>
+              <p id="wallet-balance-stat">$0.00</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon info"><i class="fas fa-shopping-cart"></i></div>
+            <div class="stat-details">
+              <h3>Cart Items</h3>
+              <p id="cart-count-stat">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon danger"><i class="fas fa-heart"></i></div>
+            <div class="stat-details">
+              <h3>Wishlist Items</h3>
+              <p id="wishlist-count-stat">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tables Section -->
+        <div class="table-container">
+          <div class="table-header">
+            <h3>Recent Orders</h3>
+            <a href="#" class="btn btn-primary">View History</a>
+          </div>
+          <div class="table-scroll table-scroll--stack">
+            <table class="mobile-stack-table" id="recent-orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Cart & Wishlist Section -->
+        <div class="dashboard-grid">
+          <div class="table-container">
+            <div class="table-header">
+              <h3>Current Cart</h3>
+              <a href="/shop/index.html" class="btn btn-primary">Go to Shop</a>
+            </div>
+            <div class="table-scroll table-scroll--stack">
+              <table id="cart-table" class="mobile-stack-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <div class="table-header">
+              <h3>Your Wishlist</h3>
+              <a href="/shop/index.html" class="btn btn-primary">Add More</a>
+            </div>
+            <div class="table-scroll table-scroll--stack">
+              <table id="wishlist-table" class="mobile-stack-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders-section" class="dashboard-section">
+          <div class="table-container">
+            <div class="table-header">
+              <h3>All My Orders</h3>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="all-orders-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wishlist Section -->
+        <section id="wishlist-section" class="dashboard-section">
+          <div class="table-container">
+            <div class="table-header">
+              <h3>My Wishlist</h3>
+              <a href="/shop/index.html" class="btn btn-primary">Add More</a>
+            </div>
+            <div class="table-scroll">
+              <table id="wishlist-table-full">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wallet Section -->
+        <section id="wallet-section" class="dashboard-section">
+          <div class="wallet-container">
+            <div class="wallet-card">
+              <div class="wallet-header">
+                <h3>Current Balance</h3>
+                <h1 id="wallet-balance-display">$0.00</h1>
+              </div>
+              <div class="wallet-actions">
+                <div class="topup-group">
+                  <input type="number" id="topup-amount" placeholder="Enter amount" min="1">
+                  <button class="btn btn-primary" id="topup-btn">Top Up Wallet</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="table-container" style="margin-top: 30px;">
+              <div class="table-header">
+                <h3>Transaction History</h3>
+              </div>
+              <div class="table-scroll">
+                <table id="transactions-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dynamically populated -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Support Section -->
+        <section id="support-section" class="dashboard-section">
+          <div class="dashboard-grid">
+            <div class="table-container">
+              <div class="table-header">
+                <h3>Contact Support</h3>
+              </div>
+              <div style="padding: 20px;">
+                <form id="support-form" class="dashboard-form">
+                  <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Subject</label>
+                    <input type="text" id="support-subject" placeholder="What do you need help with?" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-primary);">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Message</label>
+                    <textarea id="support-message" rows="4" placeholder="Describe your issue..." required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-primary); resize: none;"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="width: 100%;">Create Ticket</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <div class="table-header">
+                <h3>My Support Tickets</h3>
+              </div>
+              <div class="table-scroll">
+                <table id="tickets-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Subject</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dynamically populated -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="dashboard-section">
+          <div class="dashboard-grid">
+            <div class="table-container">
+              <div class="table-header">
+                <h3>Account Settings</h3>
+              </div>
+              <div style="padding: 20px;">
+                <div class="settings-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                  <div class="settings-info">
+                    <h4 style="margin-bottom: 5px;">Email Notifications</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Receive updates about your orders and wallet.</p>
+                  </div>
+                  <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                    <input type="checkbox" id="email-notif" checked style="opacity: 0; width: 0; height: 0;">
+                    <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                  </label>
+                </div>
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid var(--border-color);">
+                <div class="settings-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                  <div class="settings-info">
+                    <h4 style="margin-bottom: 5px;">Two-Factor Authentication</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Add an extra layer of security to your account.</p>
+                  </div>
+                  <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                    <input type="checkbox" id="2fa-toggle" style="opacity: 0; width: 0; height: 0;">
+                    <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                  </label>
+                </div>
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid var(--border-color);">
+                <button class="btn btn-primary" id="save-settings-btn">Save Changes</button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <div class="table-header">
+                <h3>Profile Information</h3>
+              </div>
+              <div style="padding: 20px;">
+                <div class="profile-preview">
+                  <input type="file" id="profile-upload" hidden accept="image/*">
+                  <div style="position: relative; display: inline-block;">
+                    <img id="profile-img-preview" src="../../images/techcity1.jpg" alt="User" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent-color); padding: 3px; margin-bottom: 15px; object-fit: cover; cursor: pointer;">
+                    <div id="upload-trigger" style="position: absolute; bottom: 15px; right: 0; background: var(--accent-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid var(--card-bg);">
+                      <i class="fas fa-camera" style="font-size: 0.8rem;"></i>
+                    </div>
+                  </div>
+                  <h3 id="profile-display-name">Customer</h3>
+                  <p id="profile-display-role" style="color: var(--text-secondary); margin-bottom: 20px;">Verified User</p>
+                </div>
+                <button class="btn btn-secondary" id="profile-upload-btn" style="width: 100%; border: 1px solid var(--border-color); background: var(--sidebar-bg); color: var(--text-primary);">Change Profile Photo</button>
+              </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="app-tab-bar" id="appTabBar" aria-label="Dashboard navigation">
+    <button type="button" class="tab-item active" data-section="profile" aria-label="Home">
+      <i class="fas fa-house"></i>
+      <span>Home</span>
+    </button>
+    <button type="button" class="tab-item" data-section="orders" aria-label="Orders">
+      <i class="fas fa-box"></i>
+      <span>Orders</span>
+    </button>
+    <button type="button" class="tab-item" data-section="wallet" aria-label="Wallet">
+      <i class="fas fa-wallet"></i>
+      <span>Wallet</span>
+    </button>
+    <button type="button" class="tab-item" data-section="wishlist" aria-label="Wishlist">
+      <i class="fas fa-heart"></i>
+      <span>Saved</span>
+    </button>
+    <button type="button" class="tab-item tab-item--menu" data-section="menu" aria-label="More">
+      <i class="fas fa-grip"></i>
+      <span>More</span>
+    </button>
+  </nav>
+
+  <script src="../../scripts/config.js"></script>
+  <script src="../../scripts/auth.js"></script>
+  <script src="../dashboard-mobile.js"></script>
+  <script src="./scripts/user.js"></script>
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+    <script src="/scripts/bot.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

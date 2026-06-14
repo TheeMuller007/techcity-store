@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Tech City - Harare's premium destination for elite technology solutions.">
+    <title>Contact Us - Tech City</title>
+    
+    <!-- Central Styles -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/mobile.css?v=13" media="(max-width: 767px)">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        :root {
+            --midnight: #0f172a;
+            --electric: #3b82f6;
+            --slate: #64748b;
+            --surface: #ffffff;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --glass: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            background: #f8fafc;
+            color: var(--midnight);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .contact-hero {
+            padding: 6rem 0 8rem;
+            background: var(--midnight);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact-hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1.5px;
+        }
+
+        .contact-hero p {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .premium-form-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .info-card {
+            background: var(--midnight);
+            color: white;
+            padding: 3rem;
+            border-radius: 2rem;
+            box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .info-card h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .contact-detail {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-icon {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            color: var(--electric);
+        }
+
+        .detail-content h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--electric);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-content p {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .form-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 3.5rem 2rem 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .notch-logo {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 50px;
+            border-radius: 0 0 25px 25px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(30, 58, 138, 0.25);
+            z-index: 10;
+        }
+
+        .notch-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border-radius: 0.6rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--electric);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15), 0 10px 20px -5px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 0.6rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .map-wrapper {
+            margin: 4rem auto;
+            max-width: 1100px;
+            padding: 0 1.5rem;
+        }
+
+        .map-frame {
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 1024px) {
+            .premium-form-wrapper { grid-template-columns: 1fr; }
+            .contact-hero { padding: 4rem 0 6rem; }
+            .contact-container { margin-top: -3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Consistent) -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/index.html" class="logo">
+                    <img src="/images/techcity1.jpg" alt="Logo" width="30" height="30" class="logo-icon">
+                </a>
+                <nav class="nav" id="mainNav">
+                    <a href="/index.html" class="nav-link">Home</a>
+                    <a href="/shop/index.html" class="nav-link">Shop</a>
+                    <a href="/about/about.html" class="nav-link">About</a>
+                    <a href="/contact/contact.html" class="nav-link active">Contact</a>
+                    <div class="nav-auth-mobile">
+                        <a href="/login/index.html" class="nav-link">Login</a>
+                        <a href="/register/index.html" class="nav-link">Register</a>
+                    </div>
+                </nav>
+                <div class="header-actions">
+                    <a href="/login/index.html" class="nav-button">Login</a>
+                    <a href="/register/index.html" class="nav-button">Register</a>
+                    <button class="icon-btn" id="searchBtn" aria-label="Search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                    </button>
+                    <button class="icon-btn" id="cartBtn" aria-label="Shopping cart">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </button>
+                    <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+        <div class="container">
+            <h1>Let's Connect</h1>
+            <p>Elevate your tech experience with expert guidance.</p>
+        </div>
+    </section>
+
+    <!-- Contact Container -->
+    <div class="contact-container">
+        <div class="premium-form-wrapper">
+            <!-- Info Card -->
+            <div class="info-card">
+                <div>
+                    <h2>Contact Information</h2>
+                    <div class="contact-detail">
+                        <div class="detail-icon"><i class="fas fa-map-pin"></i></div>
+                        <div class="detail-content">
+                            <h4>Showroom</h4>
+                            <p>63 Speke Ave, Harare, Zimbabwe</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="detail-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="detail-content">
+                            <h4>Direct Call</h4>
+                            <p>+263 783 187 312</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="detail-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="detail-content">
+                            <h4>Support Email</h4>
+                            <p>info@techcity.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-links" style="display: flex; gap: 1rem;">
+                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="form-card">
+                <div class="notch-logo">
+                    <img src="/images/techcity1.jpg" alt="Tech City">
+                </div>
+                <div class="form-header">
+                    <h3 style="font-size: 1.5rem; font-weight: 800;">Send a Message</h3>
+                </div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="3" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map-wrapper">
+        <div class="map-frame">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3798.150833748524!2d31.048228474660352!3d-17.83156278313333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1931a5f6ab534a5b%3A0xe7d37fc5fc41ae9d!2sTech%20City!5e0!3m2!1sen!2szw!4v1763940040194!5m2!1sen!2szw"
+                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- Sponsors Section -->
+<section class="product-sponsors">
+    <div class="container sponsor-logos">
+         <a href="https://www.hp.com" target="_blank" title="HP">
+            <img src="/images/hp.png" alt="HP Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.dell.com" target="_blank" title="Dell">
+            <img src="/images/dell.png" alt="Dell Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.lenovo.com" target="_blank" title="Lenovo">
+            <img src="/images/lenovo.png" alt="Lenovo Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.acer.com" target="_blank" title="Acer">
+            <img src="/images/acer.png" alt="Acer Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.epson.com" target="_blank" title="Epson">
+            <img src="/images/epson.png" alt="Epson Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.tp-link.com" target="_blank" title="TP Link">
+            <img src="/images/tp link.png" alt="TP Link Logo" class="sponsor-logo">
+        </a>
+         <a href="https://www.oraimo.com" target="_blank" title="Oraimo">
+            <img src="/images/oraimo.png" alt="Oraimo Logo" class="sponsor-logo">
+        </a>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="header-content">
+                    <a href="/index.html" class="logo">
+                        <img src="/images/techcity1.jpg" alt="Logo" class="logo-icon">
+                    </a>
+                </div>
+                <p class="footer-description">Your trusted destination for premium tech products and accessories.</p>
+
+                <div class="social-icons">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+            </div>
+
+            
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/shop/index.html">Shop</a></li>
+                    <li><a href="/about/about.html">About</a></li>
+                    <li><a href="/contact/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="/Laptops/index.html">Laptops</a></li>
+                    <li><a href="/smartphones/index.html">Smartphones</a></li>
+                    <li><a href="/accessories/index.html">Accessories</a></li>
+                    <li><a href="/bags/bags.html">Bags & Satchels</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li>Email: info@techcity.com</li>
+                    <li>Phone: +263......</li>
+                    <li>Address: 63 Speke Ave, Harare, Zimbabwe</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 TECH CITY. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- WhatsApp Button -->
+    
+
+    <!-- Scripts -->
+    <script src="/scripts/config.js"></script>
+    <script src="/scripts/auth.js"></script>
+    <script src="/scripts/cart.js"></script>
+    <script src="/scripts/search.js"></script>
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/bot.js"></script>
+
+    <script>
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const span = btn.querySelector('span');
+            const icon = btn.querySelector('i');
+            
+            span.textContent = 'Sending...';
+            icon.className = 'fas fa-spinner fa-spin';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                span.textContent = 'Message Sent';
+                icon.className = 'fas fa-check';
+                btn.style.background = '#10b981';
+                this.reset();
+                
+                setTimeout(() => {
+                    span.textContent = 'Send Message';
+                    icon.className = 'fas fa-paper-plane';
+                    btn.disabled = false;
+                    btn.style.background = '';
+                }, 3000);
+            }, 1500);
+        });
+    </script>
+
+<a href="https://wa.me/263783187312" class="whatsapp-button" target="_blank" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+</body>
+</html>
+
+
+
+
+
+
+
+

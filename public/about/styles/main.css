@@ -1,0 +1,2530 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --border: #e2e8f0;
+    --card: #ffffff;
+    --card-border: #e2e8f0;
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --radius: 0.5rem;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'Plus Jakarta Sans', Georgia, serif;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--foreground);
+    background: var(--background);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Header */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: opacity 0.2s;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+}
+
+.logo svg {
+    color: var(--primary);
+}
+/* Navbar Container */
+.nav {
+    display: none; /* Hidden by default */
+    gap: 1.5rem;   /* Spacing between items */
+}
+
+@media (min-width: 768px) {
+    .nav {
+        display: flex; /* Show flex items on larger screens */
+    }
+}
+
+/* Navigation Link Styles */
+.nav-link {
+    font-size: 0.875rem; /* Base font size */
+    font-weight: 500;    /* Medium font weight */
+    color: var(--foreground); /* Default text color */
+    text-decoration: none;    /* Remove underline */
+    transition: color 0.2s, background-color 0.3s, padding 0.3s; /* Smooth transitions */
+    position: relative; /* Positioning for pseudo-element */
+    padding: 8px 12px; /* Added padding for clickable area */
+    border-radius: var(--radius); /* Rounded corners for a modern look */
+}
+
+/* Hover and Active States */
+.nav-link:hover,
+.nav-link.active {
+    color: white; /* Change text color on hover */
+    background-color: var(--primary); /* Background color on hover */
+}
+
+/* Underline Effect on Hover */
+.nav-link::after {
+    content: ""; /* Empty content for pseudo-element */
+    position: absolute; /* Position relative to the link */
+    left: 50%; /* Start from middle */
+    bottom: -4px; /* Position it below the text */
+    width: 0; /* Initial width */
+    height: 2px; /* Thickness */
+    background-color: var(--primary); /* Color of the underline */
+    transition: width 0.4s, left 0.4s; /* Transition effect */
+}
+
+/* Expand Underline on Hover */
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%; /* Full width on hover */
+    left: 0; /* Align to the left */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-link {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+        padding: 10px 15px; /* Larger padding for touch devices */
+    }
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.icon-btn:hover {
+    background: var(--muted);
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background: var(--primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    min-width: 1.25rem;
+    text-align: center;
+}
+
+.mobile-menu-btn {
+    display: flex;
+}
+
+@media (min-width: 768px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+}
+
+
+
+
+
+/* Hero Section Styles */
+.hero {
+    position: relative;
+    background: linear-gradient(to bottom, var(--muted), var(--background));
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    position: relative; /* Required for overlay */
+    background-image: url('../images/bck 3.png'); /* Path to your local image */
+    background-size: 100% auto; /* Scale width to 100% and maintain aspect ratio */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    padding: 6rem 0; /* Adjust padding as needed */
+    color: white; /* Change text color for better contrast */
+}
+ 
+
+.hero-content {
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-decoration {
+    position: absolute;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 9999px;
+    background: var(--primary);
+    opacity: 0.05;
+    filter: blur(80px);
+}
+
+.hero-decoration-left {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.hero-decoration-right {
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+}
+
+
+
+
+
+
+
+
+
+.hero {
+    position: relative; /* Ensure absolute elements are positioned correctly */
+    color: white;
+    padding: 100px 0;
+    overflow: hidden; /* Prevent overflow of decorations */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); /* Dark overlay */
+    z-index: 1; /* Place overlay above the background image */
+}
+
+.hero-content {
+    position: relative; /* Ensure content is above the overlay */
+    z-index: 2; /* Place content above the overlay */
+}
+
+.hero-decoration {
+    position: absolute;
+    width: 150px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    background-color: rgba(255, 255, 255, 0.2); /* Light semi-transparent decoration */
+    border-radius: 50%; /* Make decorations circular */
+    z-index: 0; /* Behind the content and overlay */
+}
+
+.hero-decoration-left {
+    top: 20px; /* Adjust position */
+    left: 20px; /* Adjust position */
+}
+
+.hero-decoration-right {
+    bottom: 20px; /* Adjust position */
+    right: 20px; /* Adjust position */
+}
+
+/* Optional: Add a subtle box shadow to the hero content for depth */
+.hero-content {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 20px; /* Add some padding for better spacing */
+    border-radius: 10px; /* Rounded corners for the content box */
+}
+
+
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 140px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--muted);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Sections */
+.section {
+    padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 6rem 0;
+    }
+}
+
+.section-alt {
+    background: var(--muted);
+}
+.section-title {
+    font-size: 2.5rem; /* Increased font size for more impact */
+    font-weight: 700;
+    font-family: var(--font-serif);
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333; /* Darker color for better contrast */
+    text-transform: uppercase; /* Uppercase for a strong effect */
+    letter-spacing: 1px; /* Adds space between letters for elegance */
+    line-height: 1.2; /* Improved line height for readability */
+    position: relative; /* For positioning the shadow effect */
+}
+
+/* Optional text shadow for depth */
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px; /* Position it slightly below */
+    height: 5px; /* Height of the shadow */
+    background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Gradient shadow */
+    z-index: -1; /* Place behind the text */
+    border-radius: 5px; /* Rounded corners for smoothness */
+}
+
+@media (min-width: 768px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+}
+/* Category Cards */
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.category-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: all 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.category-icon {
+    display: inline-flex;
+    padding: 1rem;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.1);
+    margin-bottom: 1rem;
+}
+
+.category-icon svg {
+    color: var(--primary);
+}
+
+.category-card h3 {
+    font-size: 1.25rem; /* Slightly larger title */
+    font-weight: 600;
+    font-family: var(--font-serif);
+    margin-bottom: 0.5rem;
+    color: #333; /* Darker title color */
+    text-transform: capitalize; /* Capitalize for a polished look */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.category-card:hover h3 {
+    color: var(--primary); /* Change color on hover */
+}
+
+.category-card p {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+
+
+
+
+
+
+
+/* OUR VALUES Sections */
+.section {
+    padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 6rem 0;
+    }
+}
+
+.section-alt {
+    background: var(--muted);
+} 
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+
+
+
+
+/* Category Cards */
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.category-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    color: var(--foreground);
+    transition: all 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.category-icon {
+    display: inline-flex;
+    padding: 1rem;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.1);
+    margin-bottom: 1rem;
+}
+
+.category-icon svg {
+    color: var(--primary);
+}
+
+
+/* Footer */
+.footer {
+    background: rgba(241, 245, 249, 0.9); /* Maintain the background */
+    border-top: 1px solid var(--border);
+    padding: 3rem 0 1.5rem; 
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+}
+
+/* Content Grid */
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem; 
+    margin-bottom: 2rem; 
+}
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr); 
+    }
+}
+
+/* Footer Section Styles */
+.footer-section {
+    padding: 2rem; /* Increased padding */
+    background: rgba(255, 255, 255, 0.1); /* Light background for sections */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: transform 0.3s; /* Lift effect on hover */
+}
+
+.footer-section:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+.footer-section h4 {
+    font-weight: bold;
+    font-size: 1.25rem; /* Increased heading size */
+    margin-bottom: 1rem; 
+    padding-bottom: 0.5rem; 
+    border-bottom: 1px solid var(--border); /* Subtle underline */
+    color: #333; /* Maintain contrast */
+}
+
+.footer-description {
+    font-size: 0.875rem; 
+    color: var(--muted-foreground);
+    margin-top: 1rem; 
+    line-height: 1.5; /* Enhanced readability */
+}
+
+/* Footer Links */
+.footer-links {
+    list-style: none; 
+    padding: 0; 
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem; 
+}
+
+.footer-links a {
+    font-size: 0.875rem; 
+    color: var(--muted-foreground);
+    text-decoration: none; 
+    position: relative; /* For underline effect */
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--foreground);
+}
+
+.footer-links a:hover::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--foreground);
+    position: absolute;
+    bottom: -3px; /* Position the underline below the text */
+    left: 0;
+    right: 0;
+}
+
+/* Bottom Section */
+
+.footer-bottom {
+    background: linear-gradient(135deg, #0056b3, #007BFF); /* Gradient background */
+    color: #ffffff; /* White text color */
+    text-align: center; /* Center the text */
+    padding: 10px; /* Reduced padding for a lower height */
+    border-top-left-radius: 15px; /* Rounded corners */
+    border-top-right-radius: 15px; /* Rounded corners */
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+    font-family: 'Arial', sans-serif; /* Change font for better appearance */
+    font-size: 14px; /* Adjust font size if necessary */
+}
+
+.footer-bottom p {
+    margin: 0; /* Remove default margin from paragraph */
+}
+ 
+
+/* Social Icons Styles */
+.footer-section.social-icons {
+    margin-top: 1rem; /* Space above the Follow Us section */
+}
+
+.footer-section.social-icons ul {
+    list-style: none; 
+    padding: 0; 
+}
+
+.footer-section.social-icons ul li {
+    display: inline-block; 
+    margin-right: 20px; 
+}
+
+.footer-section.social-icons ul li:last-child {
+    margin-right: 0; /* Remove margin on the last icon */
+}
+
+.footer-section.social-icons ul li a {
+    color: #000; 
+    text-decoration: none; 
+    font-size: 24px; 
+    transition: color 0.3s, transform 0.3s; 
+}
+
+.footer-section.social-icons ul li a:hover {
+    color: #007BFF; /* Change color on hover */
+    transform: scale(1.2); /* Enlarge on hover */
+}
+
+
+/* Shopping Cart Drawer */
+.cart-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.cart-drawer.active {
+    pointer-events: auto;
+}
+
+.cart-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.cart-drawer.active .cart-backdrop {
+    opacity: 1;
+}
+
+.cart-content {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    background: var(--background);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s;
+}
+
+.cart-drawer.active .cart-content {
+    transform: translateX(0);
+}
+
+.cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-serif);
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--muted-foreground);
+}
+
+.cart-empty svg {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+}
+
+.cart-item {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cart-item-content {
+    display: flex;
+    gap: 1rem;
+}
+
+.cart-item-image {
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.cart-item-price {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qty-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--border);
+    background: var(--background);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.qty-btn:hover {
+    background: var(--muted);
+}
+
+.cart-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem;
+}
+
+.cart-summary {
+    margin-bottom: 1rem;
+}
+
+.cart-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.cart-summary-row.total {
+    font-weight: 700;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+
+
+
+
+
+
+
+/*STATS GRID*/
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.stats-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stats-label {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+
+
+
+
+/* Story Section */
+.section {
+    padding: 4rem 0; /* Default padding */
+    background: var(--muted); /* Subtle background color */
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 6rem 0; /* Increased padding for larger screens */
+    }
+}
+
+.story-content {
+    background: white; /* White background for the content box */
+    border-radius: var(--radius); /* Rounded corners */
+    padding: 2rem; /* Padding inside the content box */
+    box-shadow: var(--shadow-lg); /* Soft shadow for depth */
+    transition: transform 0.3s; /* Transition for hover effect */
+}
+
+.story-content:hover {
+    transform: translateY(-4px); /* Lift effect on hover */
+}
+
+.story-title {
+    font-size: 2.5rem; /* Slightly larger title for impact */
+    font-weight: 700; /* Bold font */
+    font-family: var(--font-serif); /* Custom font */
+    margin-bottom: 1.5rem; /* Space below title */
+    color: var(--foreground); /* Title color */
+    text-align: center; /* Center align title */
+}
+
+.story-paragraph {
+    color: var(--muted-foreground); /* Text color */
+    margin-bottom: 1rem; /* Space below paragraphs */
+    line-height: 1.6; /* Improved line height for readability */
+    font-size: 1.125rem; /* Font size for paragraphs */
+}
+
+/* Enhancements for Mobile */
+@media (max-width: 640px) {
+    .story-title {
+        font-size: 2rem; /* Smaller title on mobile */
+    }
+
+    .story-paragraph {
+        font-size: 1rem; /* Smaller paragraph text on mobile */
+    }
+}
+
+
+
+/* Testimonials Section */
+.section-alt {
+    background: var(--muted); /* Soft background color for the section */
+    padding: 4rem 0; /* Vertical padding for the section */
+}
+
+/* Container for testimonials */
+.testimonial-container {
+    max-width: 800px; /* Max width for the container */
+    margin: 0 auto; /* Center the container */
+    text-align: center; /* Center align text */
+}
+
+/* Section Title */
+.testimonial-section-title {
+    font-size: 2.5rem; /* Increased font size for impact */
+    font-weight: 700; /* Bold text */
+    margin-bottom: 2rem; /* Space below title */
+    color: var(--foreground); /* Title color */
+}
+
+/* Title for the testimonial submission */
+.testimonial-title {
+    font-size: 1.75rem; /* Slightly larger font size */
+    font-weight: 600; /* Bold text */
+    margin-top: 2rem; /* Space above the title */
+    color: var(--foreground); /* Title color */
+}
+
+/* Textarea for testimonial input */
+.testimonial-message {
+    width: 100%; /* Full width */
+    padding: 1rem; /* Padding inside the textarea */
+    border: 1px solid var(--border); /* Border around textarea */
+    border-radius: var(--radius); /* Rounded corners */
+    margin-top: 1rem; /* Space above textarea */
+    resize: vertical; /* Allow vertical resizing */
+    font-size: 1rem; /* Font size for textarea */
+    color: var(--foreground); /* Text color */
+    background: white; /* White background for textarea */
+    box-shadow: var(--shadow); /* Subtle shadow for depth */
+    transition: border 0.3s; /* Smooth border transition */
+}
+
+.testimonial-message:focus {
+    border-color: var(--primary); /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Button Styles */
+.btn-submit-testimonial {
+    margin-top: 1.5rem; /* Space above button */
+    padding: 1rem 2rem; /* Button padding */
+    background: var(--primary); /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: var(--radius); /* Rounded corners */
+    font-size: 1rem; /* Font size for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background 0.3s, transform 0.3s; /* Smooth transitions */
+    display: inline-block; /* Center button */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+}
+
+.btn-submit-testimonial:hover {
+    background: var(--primary-dark); /* Darker shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.btn-submit-testimonial:active {
+    transform: translateY(1px); /* Press effect on click */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .testimonial-section-title {
+        font-size: 2rem; /* Adjust title size for smaller screens */
+    }
+    
+    .testimonial-title {
+        font-size: 1.5rem; /* Adjust title size for smaller screens */
+    }
+
+    .testimonial-message {
+        font-size: 0.95rem; /* Slightly smaller font for textarea */
+    }
+
+    .btn-submit-testimonial {
+        font-size: 0.95rem; /* Slightly smaller font for button */
+    }
+}
+
+
+
+
+
+/* Call to Action Section */
+.cta-section {
+    background: var(--primary); /* Primary background color for the CTA */
+    color: white; /* Text color */
+    padding: 4rem 0; /* Vertical padding for the section */
+    text-align: center; /* Center align text */
+    border-radius: var(--radius); /* Rounded corners */
+    box-shadow: var(--shadow-lg); /* Subtle shadow for depth */
+}
+
+/* Section Title */
+.cta-section .section-title {
+    font-size: 2.5rem; /* Font size for the title */
+    font-weight: 700; /* Bold text */
+    margin-bottom: 2rem; /* Space below title */
+}
+
+/* Button Styles */
+.cta-section .btn-primary {
+    padding: 1rem 2.5rem; /* Button padding */
+    background: white; /* White background for button */
+    color: var(--primary); /* Primary text color */
+    border: none; /* No border */
+    border-radius: var(--radius); /* Rounded corners */
+    font-size: 1.25rem; /* Font size for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background 0.3s, transform 0.3s; /* Smooth transitions */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block for better spacing */
+    margin-top: 1rem; /* Space above button */
+}
+
+.cta-section .btn-primary:hover {
+    background: var(--muted); /* Muted background on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.cta-section .btn-primary:active {
+    transform: translateY(1px); /* Press effect on click */
+}
+
+
+
+
+
+/* OUR STORY CARDS */
+
+.card-container {
+    display: flex;
+    justify-content: space-between; /* Space between cards */
+    flex-wrap: wrap; /* Allow cards to wrap to next line on smaller screens */
+    width: 90%; /* Adjust width of the container */
+    margin: 0 auto; /* Center the container */
+    padding: 20px 0; /* Vertical spacing */
+}
+
+.card {
+    background: white;
+    border-radius: 15px; /* Rounded corners for modern look */
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    padding: 15px; /* Reduced padding */
+    width: calc(30% - 20px); /* Width to fit three cards in a row */
+    margin-bottom: 20px; /* Space between rows */
+    margin-right: 10px; /* Space between cards */
+    display: flex; /* Use flex to align items vertically */
+    flex-direction: column; /* Column layout for card content */
+    height: 350px; /* Reduced fixed height for consistency */
+}
+
+/* Adjust last card in the row */
+.card:nth-child(3n) {
+    margin-right: 0; /* Remove right margin for the last card in a row */
+}
+
+/* Card Image Styles */
+.card img {
+    width: 100%; /* Full width for the image */
+    height: 150px; /* Reduced fixed height for images */
+    object-fit: cover; /* Maintain aspect ratio and cover area */
+    border-radius: 10px; /* Rounded corners for the image */
+}
+
+/* Card Title */
+.card h3 {
+    font-size: 1.25rem; /* Reduced font size for title */
+    color: #333; /* Text color */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+/* Card Text */
+.card p {
+    color: #666; /* Text color */
+    line-height: 1.4; /* Improved line height for readability */
+    flex-grow: 1; /* Allow paragraph to fill space */
+    margin: 10px 0; /* Space around paragraph */
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .card {
+        width: 100%; /* Full width on smaller screens */
+        height: auto; /* Allow cards to adjust height */
+    }
+}
+
+
+
+
+
+
+
+
+/* Mission Section Styles */
+.mission-section {
+    padding: 2rem 0; /* Adjust padding as necessary */
+}
+
+.mission-container {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: space-between; /* Space between image and content */
+    max-width: 1200px; /* Maximum width for the container */
+    margin: 0 auto; /* Center the container */
+}
+
+.mission-image,
+.mission-content {
+    flex: 1; /* Allow both sections to take equal space */
+    text-align: center; /* Center text in the content section */
+}
+
+.mission-image img {
+    width: 100%; /* Make the image responsive */
+    max-width: 400px; /* Set a max width for the image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional: Add border radius */
+}
+
+.mission-content {
+    margin-left: 2rem; /* Space between image and text */
+}
+
+.mission-content h2 {
+    font-size: 2rem; /* Adjust heading size */
+    font-weight: 700; /* Bold heading */
+    margin-bottom: 1rem;
+}
+
+.mission-content p {
+    color: var(--muted-foreground); /* Use your existing color variable */
+}
+
+
+
+
+
+
+
+
+/*LOGO ICON*/
+
+header {
+    background-color: #ffffff; /* Background color for the header */
+    padding: 10px; /* Padding around the header */
+}
+
+.logo {
+    display: flex; /* Make logo a flex container */
+    align-items: center; /* Center items vertically */
+}
+
+.logo-icon {
+    width: 150px; /* Balanced width */
+    height: 60px; /* Increased height for proportion */
+    border-radius: 30px; /* Curved corners */
+    border: none; /* Remove the border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animation effects */
+}
+
+.logo-icon:hover {
+    transform: scale(1.05); /* Slightly scale up the icon on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+
+
+
+
+
+
+/* Review Section Styles */
+.review-section {
+    background-color: #ffffff;
+    padding: 40px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    width: 100%;
+    position: relative;
+}
+
+/* Decorative Element (Optional) */
+.review-section::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, #007BFF, #0056b3);
+    border-radius: 5px;
+}
+
+/* Title Styles */
+.review-section h2 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.testimonial-title {
+    font-size: 24px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Review Form Styles */
+.review-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Star Rating Styles */
+.rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.rating input {
+    display: none; /* Hide radio buttons */
+}
+
+.rating label {
+    font-size: 30px; /* Star size */
+    color: #ccc; /* Default star color */
+    cursor: pointer;
+    transition: color 0.2s; /* Smooth color transition */
+}
+
+/* Change star color on hover and selected */
+.rating label:hover,
+.rating input:checked + label {
+    color: #FFD700; /* Gold color for selected stars */
+}
+
+/* Testimonial Message Area */
+.testimonial-message {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd; /* Slightly thicker border */
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    resize: vertical; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transition for focus effect */
+}
+
+/* Focus effect on testimonial message */
+.testimonial-message:focus {
+    border-color: #007BFF; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Enhanced shadow effect */
+}
+
+/* Enhanced Submit Button Styles */
+.btn-submit-testimonial {
+    background-color: #007BFF; /* Blue background */
+    color: white; /* Button text color */
+    padding: 10px 20px; /* Adjust padding for better appearance */
+    border: 1px solid transparent; /* Thinner or no border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 14px; /* Smaller font size */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    align-self: flex-start; /* Aligns button to the start (left) */
+}
+
+/* Button hover effect */
+.btn-submit-testimonial:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover for depth */
+}
+
+/* Updated Submit Button Styles */
+.btn {
+    background-color: #007BFF; /* Blue background */
+    color: white; /* Button text color */
+    padding: 8px 16px; /* Reduced padding for a smaller button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Slightly smaller border radius */
+    cursor: pointer; /* Change cursor on hover */
+    font-size: 14px; /* Smaller font size */
+    width: 100%; /* Full width for better usability */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover for depth */
+}
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover for depth */
+}
+
+/* Star Rating Styles */
+.rating {
+    display: flex; /* Flexbox for alignment */
+    justify-content: center; /* Center stars */
+    margin-bottom: 10px; /* Space below stars */
+}
+
+.rating input {
+    display: none; /* Hide radio buttons */
+}
+
+.rating label {
+    font-size: 30px; /* Size of stars */
+    color: #ccc; /* Default color for stars */
+    cursor: pointer; /* Pointer cursor for interactiveness */
+    transition: color 0.2s; /* Smooth color transition */
+}
+
+/* Change color based on checked state using sibling selector */
+.rating input:checked ~ label,
+.rating input:checked + label {
+    color: #FFD700; /* Gold color for selected stars */
+}
+
+/* Shade all previous stars */
+.rating input:checked ~ label {
+    color: #FFD700; /* Gold color for highlighted stars */
+}
+
+/* Testimonial Message Area */
+textarea {
+    width: 100%; /* Full width for better UX */
+    padding: 15px; /* Inner padding */
+    border: 2px solid #ddd; /* Light border */
+    border-radius: 6px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    line-height: 1.5; /* Line height for readability */
+    margin-bottom: 20px; /* Space below textarea */
+    resize: vertical; /* Allow vertical resizing */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transition for focus effects */
+}
+
+/* Focus effect on textarea */
+textarea:focus {
+    border-color: #007BFF; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Enhanced shadow effect */
+}
+
+/* Reviews List */
+.reviews-list {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+/* Individual Review */
+.review {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+/* Optional decorative style for reviews */
+.review::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 5px;
+    height: 5px;
+    background-color: #007BFF; /* Dot indicator */
+    border-radius: 50%; /* Circular dot */
+}
+
+
+
+/* MAP H2 */
+
+.section-title {
+    font-size: 28px; /* Set font size */
+    color: #333333; /* Text color */
+    text-align: center; /* Center align */
+    margin: 20px 0; /* Add vertical margin */
+    font-weight: bold; /* Ensure the text is bold */
+    line-height: 1.4; /* Adjust line height for readability */
+    text-transform: uppercase; /* Uppercase letters for emphasis */
+    font-family: 'Arial', sans-serif; /* Specify font family */
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 24px; /* Reduce font size on smaller screens */
+    }
+}
+
+
+.map-container {
+    margin-top: 20px; /* Space above the map */
+    border-radius: 15px; /* Rounded corners for the container */
+    overflow: hidden; /* Ensures child elements respect the border radius */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #f9f9f9; /* Light background color for contrast */
+}
+
+.map-container iframe {
+    border: none; /* Remove default border */
+    border-radius: 15px; /* Match the iframe border radius with the container */
+}
+
+
+
+.karla {
+  font-family: "Karla", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+
+/* WhatsApp Button Styles */
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px; /* Position from the bottom */
+    right: 20px; /* Position from the right */
+    background-color: #25D366; /* WhatsApp Green */
+    color: white; /* Icon color */
+    border-radius: 50%; /* Circle shape */
+    width: 60px; /* Button size */
+    height: 60px; /* Button size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: box-shadow 0.3s ease; /* Transition for hover effect */
+    text-decoration: none; /* No underline */
+    z-index: 1000; /* Ensure it's on top */
+    font-size: 30px; /* Icon size */
+}
+
+.whatsapp-button:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+
+
+
+
+
+
+/* =========================
+   CHATBOT FLOATING BUTTON
+========================= */
+.chatbot-button {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 12px 28px rgba(0,0,0,.3), 0 0 6px rgba(0,123,255,0.4);
+    transition: transform .25s ease, box-shadow .25s ease;
+    z-index: 1000;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Hover (unchanged behavior) */
+.chatbot-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 18px 34px rgba(0,0,0,.35), 0 0 14px rgba(0,123,255,0.6);
+}
+
+/* Unread Badge */
+.chatbot-button::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 12px;
+    height: 12px;
+    background: #dc3545;
+    border-radius: 50%;
+    display: none; /* show via JS */
+}
+
+/* =========================
+   NON-INTRUSIVE ENHANCEMENTS
+   (NO visual or layout change)
+========================= */
+
+/* Smoother rendering & performance */
+.chatbot-button {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform, box-shadow;
+    transform: translateZ(0); /* GPU acceleration */
+    user-select: none;
+    touch-action: manipulation;
+}
+
+/* Accessibility: clean focus handling */
+.chatbot-button:focus-visible {
+    outline: none;
+}
+
+/* Badge rendering polish (no visible change) */
+.chatbot-button::after {
+    image-rendering: auto;
+}
+
+/* High-DPI display stability */
+@media (min-resolution: 2dppx) {
+    .chatbot-button {
+        box-shadow:
+            0 12px 28px rgba(0,0,0,.3),
+            0 0 6px rgba(0,123,255,0.4);
+    }
+}
+
+
+
+/* =========================
+   ATTENTION ANIMATION WITH COLOR CHANGE
+========================= */
+
+/* Only active when .attention class is applied */
+.chatbot-button.attention {
+    animation: attractPulseColor 2.8s ease-in-out infinite;
+}
+
+/* Glow ripple with dynamic color */
+.chatbot-button.attention::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(0,123,255,0.45);
+    animation: glowRippleColor 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* =========================
+   KEYFRAMES
+========================= */
+
+/* Slight scale + subtle color tint */
+@keyframes attractPulseColor {
+    0% {
+        transform: translateZ(0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        transform: translateZ(0) scale(1.06);
+        filter: hue-rotate(15deg);
+    }
+    100% {
+        transform: translateZ(0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* Expanding glow ring with color shift */
+@keyframes glowRippleColor {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0,123,255,0.45);
+        opacity: 1;
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        box-shadow: 0 0 0 14px rgba(0,123,255,0.3);
+        opacity: 0.6;
+        filter: hue-rotate(25deg);
+    }
+    100% {
+        box-shadow: 0 0 0 14px rgba(0,123,255,0);
+        opacity: 0;
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* =========================
+   CHATBOX CONTAINER
+========================= */
+.chatbox {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 140px;
+    right: 20px;
+    width: 340px;
+    height: 520px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+    z-index: 999;
+    box-shadow: 0 28px 60px rgba(0,0,0,0.25), 0 12px 28px rgba(0,0,0,0.15);
+    transition: all 0.3s ease, transform 0.3s ease;
+}
+
+.chatbox:hover { transform: translateY(-2px); }
+
+/* =========================
+   HEADER
+========================= */
+.chatbox-header {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.chatbox-header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+}
+
+.chatbox-header-main { display: flex; align-items: center; justify-content: center; flex: 1; }
+
+/* =========================
+   CHAT ICON (UNCHANGED)
+========================= */
+.chatbox-header-main .chat-icon {
+    width: 110px;
+    height: 56px;
+    border-radius: 999px;
+    object-fit: cover;
+    background: #fff;
+    padding: 3px;
+    border: 2px solid rgba(255,255,255,0.45);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transition: all 0.25s ease;
+}
+
+.chatbox-header-main .chat-icon:hover { transform: scale(1.08); }
+
+.chatbox-header-actions { display: flex; align-items: center; gap: 8px; }
+.header-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.header-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+
+/* =========================
+   CHAT BODY
+========================= */
+.chatbox-body {
+    flex: 1;
+    min-height: 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    background: #f4f6fa;
+    background-image: radial-gradient(circle at top, rgba(255,255,255,0.7), transparent 60%);
+    scroll-behavior: smooth;
+}
+
+.chatbox-body::-webkit-scrollbar { width: 6px; }
+.chatbox-body::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
+
+/* =========================
+   MESSAGE BUBBLES
+========================= */
+.user-message,
+.bot-message {
+    padding: 12px 16px;
+    border-radius: 20px;
+    max-width: 75%;
+    line-height: 1.45;
+    word-wrap: break-word;
+    position: relative;
+    animation: softPop 0.25s ease-out;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.user-message {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 6px;
+}
+
+.user-message::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    transform: rotate(45deg);
+}
+
+.bot-message {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+}
+
+.bot-message::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    left: -6px;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    transform: rotate(45deg);
+}
+
+/* =========================
+   TYPING INDICATOR
+========================= */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+}
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    animation: bounce 0.6s infinite alternate;
+}
+
+/* =========================
+   QUICK REPLIES
+========================= */
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 12px;
+}
+.quick-reply {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.quick-reply:hover { background: #007BFF; color: #fff; }
+
+/* =========================
+   BOT PRODUCT CARD
+========================= */
+.bot-message ul { padding-left: 18px; margin: 8px 0 0 0; }
+.bot-message img {
+    border-radius: 12px;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.bot-message button {
+    margin-top: 8px;
+    padding: 7px 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.bot-message button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #0056b3, #007BFF);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.chatbox-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+    position: relative;
+}
+
+/* =========================
+   FOOTER ACTIONS + PLUS BUTTON
+========================= */
+.footer-actions {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.action-group {
+    display: flex;
+    gap: 6px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-40px) scale(0.9);
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.footer-actions.active .action-group {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50px) scale(1);
+}
+
+/* =========================
+   PLUS BUTTON TOGGLE EFFECT
+========================= */
+.toggle-actions {
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.25s ease, background 0.2s ease;
+}
+
+/* Rotate + when active */
+.footer-actions.active .toggle-actions {
+    transform: rotate(45deg); /* + becomes × */
+    background: #ef4444;
+    color: #fff;
+}
+
+
+
+
+
+
+/* =========================
+   FOOTER ACTIONS + PLUS BUTTON
+========================= */
+.footer-actions {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.action-group {
+    display: flex;
+    gap: 6px;
+    position: absolute;
+    bottom: 82px;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-40px) scale(0.9);
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.footer-actions.active .action-group {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50px) scale(1);
+}
+
+/* =========================
+   PLUS BUTTON TOGGLE EFFECT
+========================= */
+.toggle-actions {
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.25s ease, background 0.2s ease;
+}
+
+/* Rotate + when active */
+.footer-actions.active .toggle-actions {
+    transform: rotate(45deg); /* + becomes × */
+    background: #ef4444;
+    color: #fff;
+}
+
+/* =========================
+   FOOTER BUTTONS
+========================= */
+.footer-btn {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+}
+
+.footer-btn:hover {
+    background: #4f8cff;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(79,140,255,0.35);
+}
+.footer-btn:active { transform: scale(0.95); }
+
+
+
+
+
+/* =========================
+   INPUT
+========================= */
+.chatbox-footer input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    outline: none;
+    font-size: 14px;
+    min-width: 0;
+    background: #ffffff;
+}
+
+.chatbox-footer input:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 10px rgba(79,140,255,0.35);
+}
+
+/* =========================
+   SEND BUTTON
+========================= */
+#sendButton {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 14px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    box-shadow: 0 6px 16px rgba(16,185,129,0.35);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+}
+
+#sendButton:hover { transform: scale(1.1); }
+#sendButton:active { transform: scale(0.95); }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+    .chatbox { width: 90%; height: 480px; bottom: 80px; right: 5%; }
+    .footer-btn, #sendButton { width: 30px; height: 30px; font-size: 14px; }
+    .chatbox-footer { gap: 6px; padding: 8px 10px; }
+    .action-group { transform: translateY(-40px) scale(0.9); }
+    .footer-actions.active .action-group { transform: translateY(-48px) scale(1); }
+}
+
+
+/* =========================
+   QUICK REPLIES
+========================= */
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 12px;
+}
+.quick-reply {
+    background: linear-gradient(135deg, #f8f9fa, #e5e7eb);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.quick-reply:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* =========================
+   BOT PRODUCT CARD
+========================= */
+.bot-message ul {
+    padding-left: 18px;
+    margin: 8px 0 0;
+}
+.bot-message img {
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+.bot-message button {
+    margin-top: 8px;
+    padding: 7px 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.bot-message button:hover { transform: scale(1.05); }
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes softPop {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes bounce {
+    from { transform: translateY(0); opacity: 0.4; }
+    to { transform: translateY(-6px); opacity: 1; }
+}
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 480px) {
+    .chatbox {
+        right: 10px;
+        bottom: 90px;
+        width: calc(100% - 20px);
+        height: 520px;
+    }
+}
+
+/* =========================
+   DARK MODE
+========================= */
+.chatbox.dark-mode {
+    background: rgba(30,30,30,0.92);
+}
+.chatbox.dark-mode .chatbox-body {
+    background: #121212;
+}
+.chatbox.dark-mode .chatbox-footer {
+    background: #1e1e1e;
+}
+.chatbox.dark-mode input {
+    background: #121212;
+    color: #fff;
+    border: 1px solid #444;
+}
+.chatbox.dark-mode .bot-message { background: linear-gradient(135deg, #218838, #28a745); }
+.chatbox.dark-mode .user-message { background: linear-gradient(135deg, #0062cc, #0056b3); }
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 480px) {
+    .chatbox {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        height: 85vh;
+    }
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes bounce {
+    from { transform: translateY(0); opacity: 0.4; }
+    to { transform: translateY(-6px); opacity: 1; }
+}
+@keyframes softPop {
+    from { transform: scale(0.96); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+
+
+
+.emoji-menu span {
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+.emoji-menu span:hover {
+    transform: scale(1.3);
+}
+
+
+
+/* =========================
+   VOICE BUTTON (RECORDING)
+========================= */
+.footer-btn.recording {
+    color: #ff3b3b;
+    animation: pulse 1.2s infinite;
+}
+
+/* Pulse effect when recording */
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* =========================
+   WAVEFORM ANIMATION
+========================= */
+.waveform {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 10px;
+}
+
+.waveform span {
+    width: 4px;
+    height: 10px;
+    background: linear-gradient(180deg, #4CAF50, #2e7d32);
+    border-radius: 6px;
+    animation: wave 1s infinite ease-in-out;
+}
+
+/* Stagger animation */
+.waveform span:nth-child(1) { animation-delay: 0s; }
+.waveform span:nth-child(2) { animation-delay: 0.1s; }
+.waveform span:nth-child(3) { animation-delay: 0.2s; }
+.waveform span:nth-child(4) { animation-delay: 0.3s; }
+.waveform span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0%, 100% { height: 8px; opacity: 0.6; }
+    50%      { height: 26px; opacity: 1; }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+.hidden {
+    display: none;
+}
+
+/* =========================
+   DARK MODE SUPPORT
+========================= */
+.chatbox.dark-mode .waveform span {
+    background: linear-gradient(180deg, #81c784, #388e3c);
+}
+
+.chatbox.dark-mode .footer-btn.recording {
+    color: #ff7676;
+}
+
+/*HIDE BOT AFTER REFRESH*/
+#bot,
+.bot,
+.chatbot {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+/* Navbar LOG IN AND REGISTER Button Styles */
+.nav-button {
+    background-color: #007BFF; /* Bright blue for button */
+    color: white; /* Button text color */
+    padding: 6px 10px; /* Smaller padding for a more compact size */
+    border: none; /* No border */
+    border-radius: 4px; /* Slightly rounded corners */
+    text-decoration: none; /* No underline */
+    font-weight: 500; /* Normal to slightly bold text */
+    margin-right: 10px; /* Space between buttons and nav links */
+    margin-left: auto; /* Push buttons to the right */
+    transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+    font-size: 0.85rem; /* Smaller font size for a more compact button */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Reduced shadow for less prominence */
+}
+
+.nav-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Ensure the navbar is a flex container */
+.nav {
+    display: flex; /* Make the navbar a flex container */
+    align-items: center; /* Align items vertically */
+}
+}
+
+
+
+/*MY ADD TO CART AND QUICK VIEW BUTTONS*/
+
+/* ===============================
+   PRODUCT IMAGE WRAPPER
+================================ */
+.product-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+/* subtle overlay on hover */
+.product-image-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.35),
+        rgba(0,0,0,0.1),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+.product-image-wrapper:hover::after {
+    opacity: 1;
+}
+
+/* ===============================
+   SHARED BUTTON STYLES
+================================ */
+
+.quick-view,
+.add-to-cart-hover {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    padding: 8px 14px;          /* smaller padding */
+    font-size: 13px;             /* smaller font */
+    font-weight: 600;
+    border-radius: 30px;         /* pill shape */
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 20;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-rendering: optimizeLegibility;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ===============================
+   QUICK VIEW (SECONDARY)
+================================ */
+
+.quick-view {
+    bottom: 70px;                  /* position higher */
+    background: rgba(255, 255, 255, 0.85);
+    color: #111;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.quick-view:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+}
+
+/* ===============================
+   ADD TO CART (PRIMARY)
+================================ */
+
+.add-to-cart-hover {
+    bottom: 18px;                  /* lower than quick view */
+    background: #000;
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+.add-to-cart-hover:hover {
+    transform: translateX(-50%) translateY(-2px) scale(1.05);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* ===============================
+   SHOW ON HOVER
+================================ */
+
+.product-card:hover .quick-view,
+.product-card:hover .add-to-cart-hover {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ===============================
+   MOBILE SUPPORT
+================================ */
+
+@media (max-width: 768px) {
+    .quick-view,
+    .add-to-cart-hover {
+        opacity: 1;
+        transform: translateX(-50%);
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    .product-image-wrapper::after {
+        opacity: 1;
+    }
+}
+
+
+/* sparkle particles */
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.9;
+    animation: sparkle-fade 0.8s ease-out forwards;
+}
+
+@keyframes sparkle-fade {
+    0% { transform: scale(0.3); opacity: 1; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+
+/* Bottom-right icons (clean flat look) */
+.product-action-icons-corner {
+    position: absolute;
+    bottom: 5px;
+    right: 12px;
+    display: flex;
+    gap: 10px;
+    z-index: 15;
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hide icons when hovering product card */
+.product-card:hover .product-action-icons-corner {
+    opacity: 0;
+    transform: translateY(5px);
+    pointer-events: none;
+}
+
+/* Keep visible when hovering icons */
+.product-action-icons-corner:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* FLAT ICON STYLE (no circle, no border) */
+.product-action-icons-corner span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    height: auto;
+
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    font-size: 18px;
+    color: #000; /* black icons */
+    opacity: 0.85;
+
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.product-action-icons-corner span:last-child:hover svg {
+    stroke: #1a73e8;
+}
+
+/* Subtle hover effect */
+.product-action-icons-corner span:hover {
+    transform: scale(1.15);
+    opacity: 1;
+}
