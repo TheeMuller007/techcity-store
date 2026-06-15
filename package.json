@@ -5,17 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "setup-db": "node setup_db.cjs",
+    "check": "node --check server.js && node --check controllers/authController.js && node --check controllers/orderController.js && node --check controllers/productController.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheeMuller007/tech-city-ecommerce.git"
+    "url": "git+https://github.com/TheeMuller007/techcity-store.git"
   },
   "keywords": [],
   "author": "",
   "type": "module",
   "bugs": {},
-  "homepage": "https://github.com/TheeMuller007/tech-city-ecommerce#readme",
+  "homepage": "https://github.com/TheeMuller007/techcity-store#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",

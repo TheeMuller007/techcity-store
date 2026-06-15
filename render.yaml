@@ -1,16 +1,34 @@
+# ============================================
+# TechCity Store — Render Blueprint
+# Deploy: Connect this repo on render.com
+# ============================================
 services:
   - type: web
     name: techcity-backend
     runtime: node
     plan: free
-    repo: https://github.com/TheeMuller007/tech-city-ecommerce
+    repo: https://github.com/TheeMuller007/techcity-store
     branch: main
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
     envVars:
+      # --- Required ---
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        sync: false  # Set manually in Render dashboard
+        sync: false  # Paste your Supabase pooler connection string in the Render dashboard
       - key: JWT_SECRET
-        sync: false  # Set manually in Render dashboard
+        sync: false  # Set a strong secret in the Render dashboard
+      # --- Optional: Email notifications ---
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_SECURE
+        value: "false"
+      - key: EMAIL_USER
+        sync: false  # Set in the Render dashboard
+      - key: EMAIL_PASS
+        sync: false  # Set in the Render dashboard
