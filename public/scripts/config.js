@@ -9,9 +9,6 @@
     window.location.hostname !== "localhost" &&
     window.location.hostname !== "127.0.0.1";
 
-  // In production (Netlify), point to the Render backend.
-  // In local dev, use same-origin (empty string).
-  window.TECHCITY_API_BASE = isProduction
-    ? "https://techcity-backend.onrender.com"
-    : "";
+  // Use same-origin API paths so Netlify can proxy /api/* to the Render backend.
+  window.TECHCITY_API_BASE = "";
 })();

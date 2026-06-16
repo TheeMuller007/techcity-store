@@ -7,12 +7,24 @@ let currentPage = 1;
 const ITEMS_PER_PAGE = 15; // Reverting to original page size
 let fetchError = null;
 
+function getProductContainer() {
+    if (document.getElementById('categoryProducts')) {
+        return document.getElementById('categoryProducts');
+    }
+
+    if (document.querySelector('.shop-main #allProducts')) {
+        return document.querySelector('.shop-main #allProducts');
+    }
+
+    return document.getElementById('allProducts') || document.getElementById('productContainer');
+}
+
 /**
  * Define rendering functions globally
  */
 window.renderProducts = function() {
     console.log("renderProducts execution started.");
-    const container = document.getElementById('allProducts') || document.getElementById('productContainer') || document.getElementById('categoryProducts');
+    const container = getProductContainer();
     if (!container) return;
 
     if (fetchError) {
@@ -547,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-            const container = document.getElementById('allProducts') || document.getElementById('productContainer') || document.getElementById('categoryProducts');
+            const container = getProductContainer();
             if (container) container.innerHTML = filtered.map(p => createProductCard(p)).join('');
         });
     }
