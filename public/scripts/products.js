@@ -12,7 +12,7 @@ let fetchError = null;
  */
 window.renderProducts = function() {
     console.log("renderProducts execution started.");
-    const container = document.getElementById('allProducts') || document.getElementById('productContainer');
+    const container = document.getElementById('allProducts') || document.getElementById('productContainer') || document.getElementById('categoryProducts');
     if (!container) return;
 
     if (fetchError) {
@@ -547,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-            const container = document.getElementById('allProducts') || document.getElementById('productContainer');
+            const container = document.getElementById('allProducts') || document.getElementById('productContainer') || document.getElementById('categoryProducts');
             if (container) container.innerHTML = filtered.map(p => createProductCard(p)).join('');
         });
     }
