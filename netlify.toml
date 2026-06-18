@@ -1,6 +1,48 @@
 [build]
   publish = "public"
 
+[[redirects]]
+  from = "/shop.html"
+  to = "/shop/index.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/laptops"
+  to = "/Laptops/index.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/laptops.html"
+  to = "/Laptops/index.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/smartphones.html"
+  to = "/smartphones/index.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessories.html"
+  to = "/accessories/index.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/printers.html"
+  to = "/printers/index.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bags.html"
+  to = "/bags/bags.html"
+  status = 301
+  force = true
+
 # Proxy API requests to the Render backend
 [[redirects]]
   from = "/api/*"
