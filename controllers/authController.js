@@ -72,6 +72,11 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password." });
         }
 
+        if (!process.env.JWT_SECRET) {
+            console.error("Login configuration error: JWT_SECRET is not set.");
+            return res.status(500).json({ message: "Login is not configured on the server." });
+        }
+
         // Create JWT token including role
         const token = jwt.sign(
             { id: user.id, username: user.username, role: user.role }, 
