@@ -68,6 +68,8 @@ body {
 .header-actions {
     gap: 0.2rem;
     flex-shrink: 0;
+    position: relative;
+    z-index: 10001;
 }
 
 .header-actions .nav-button {
@@ -83,6 +85,10 @@ body {
 
 .mobile-menu-btn {
     display: flex;
+    position: relative;
+    z-index: 10002;
+    pointer-events: auto;
+    touch-action: manipulation;
 }
 
 /* ─── Mobile nav drawer ───────────────────────────────────── */

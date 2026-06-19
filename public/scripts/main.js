@@ -3,17 +3,34 @@ console.log('[main.js] Script parsed and running v8');
 
 // Mobile menu toggle
 (function() {
+    window.toggleMobileMenu = function(e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
+
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const nav = document.getElementById('mainNav');
+
+        if (!menuBtn || !nav) {
+            console.warn('[Mobile Menu] mobileMenuBtn or mainNav not found');
+            return;
+        }
+
+        nav.classList.toggle('active');
+        menuBtn.classList.toggle('menu-open', nav.classList.contains('active'));
+        console.log('[Mobile Menu] Toggled:', nav.classList.contains('active'));
+    };
+
     const menuBtn = document.getElementById('mobileMenuBtn');
     const nav = document.getElementById('mainNav');
-    
+
     if (menuBtn && nav) {
-        // Toggle menu on hamburger click
-        menuBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            nav.classList.toggle('active');
-            menuBtn.classList.toggle('menu-open');
-            console.log('[Mobile Menu] Toggled:', nav.classList.contains('active'));
+        // Direct binding for normal page loads.
+        menuBtn.addEventListener('click', window.toggleMobileMenu);
+
+        // Delegated binding catches taps when scripts inject/replace header markup.
+        document.body.addEventListener('click', function(e) {
+            const btn = e.target.closest && e.target.closest('#mobileMenuBtn');
+            if (btn) window.toggleMobileMenu(e);
         });
 
         // Close menu when a nav link is clicked
